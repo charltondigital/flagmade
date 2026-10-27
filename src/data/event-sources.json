@@ -287,6 +287,96 @@
       "cadence": "monthly",
       "include": "fine craft exhibitions, demonstrations and artisan openings",
       "exclude": "exclude routine store opening hours"
+    },
+    {
+      "id": "cocoop",
+      "name": "Coco-op Makerspace",
+      "url": "https://www.cocoop.org/event-list",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "public sewing, ceramics, woodworking, stained glass, welding and skill-sharing workshops",
+      "exclude": "omit member-only facilities and ordinary marketing tours"
+    },
+    {
+      "id": "threaded",
+      "name": "Threaded Together",
+      "url": "https://www.threadedtogether.org/textile-programs",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "public adult sewing, quilting, crochet, textile and fiber classes",
+      "exclude": "exclude youth-only programs"
+    },
+    {
+      "id": "tynk",
+      "name": "Tynkertopia / TynkerSpace",
+      "url": "https://www.tynkertopia.org/workshops",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "adult-accessible woodworking, sewing, crochet, printmaking, leatherwork, electronics and crafts",
+      "exclude": "exclude children-only sessions; verify dates and series fees"
+    },
+    {
+      "id": "raven",
+      "name": "Raven's Nest Yarn & Fiber",
+      "url": "https://ravensnestyarn.com/",
+      "tier": "specialist",
+      "cadence": "weekly",
+      "include": "public knitting, spinning, crochet and fiber craft workshops",
+      "exclude": "exclude private meetups and unsupported recurrence"
+    },
+    {
+      "id": "fana",
+      "name": "Fiber Artists of Northern Arizona",
+      "url": "https://www.fiberartistsnaz.org/work/project-two-plzt8",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "public textile workshops, demonstrations, guild programs when nonmembers welcome",
+      "exclude": "exclude internal guild business and social-only meetings"
+    },
+    {
+      "id": "coconinoquilts",
+      "name": "Coconino Quilters Guild",
+      "url": "https://coconinoquiltersguild.regfox.com/northern-arizona-quilters-gathering",
+      "tier": "seasonal",
+      "cadence": "monthly",
+      "include": "quilting classes, guild exhibitions, public maker gatherings",
+      "exclude": "confirm next-year event dates; exclude members-only meetings"
+    },
+    {
+      "id": "clay-center",
+      "name": "Clay Center Flagstaff",
+      "url": "https://www.claycenterflag.com/classes",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "public handbuilding, pottery wheel classes and ceramic workshops",
+      "exclude": "verify individual class schedules"
+    },
+    {
+      "id": "willowbend",
+      "name": "Willow Bend Environmental Education Center",
+      "url": "https://www.willowbendcenter.org/adult-education/",
+      "tier": "core",
+      "cadence": "monthly",
+      "include": "plant identification, food growing, basket weaving, environmental workshops",
+      "exclude": "exclude pseudoscientific wellness presentations and children-only programs"
+    },
+    {
+      "id": "ccc-community",
+      "name": "CCC Community Education / CourseStorm",
+      "url": "https://ccc-flagstaff.coursestorm.com/browse",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "public woodworking, stained glass, agriculture, traditional crafts and science lectures",
+      "exclude": "use course-specific links and prices where available"
+    },
+    {
+      "id": "tynker-courses",
+      "name": "TynkerSpace Individual Workshops",
+      "url": "https://www.tynkertopia.org/workshops",
+      "tier": "secondary",
+      "cadence": "weekly",
+      "include": "specific November classes with age, time and fee",
+      "exclude": "deduplicate against Tynkertopia parent source"
     }
   ]
 }
