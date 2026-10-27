@@ -18,3 +18,58 @@ footer{background:var(--forest);color:#eff1e8}.footer-inner{min-height:130px;dis
 .filter-panel{margin-top:24px}
 .footer-inner{min-height:85px}
 @media(max-width:650px){.calendar-shell{padding-top:35px}.calendar-heading h1{font-size:45px}.header-inner{height:68px}.header-inner nav a{padding:25px 0}}
+
+/* Flagmade / newspaper edition */
+:root{--ink:#161616;--muted:#626262;--forest:#171717;--accent:#171717;--cream:#fff;--paper:#fff;--line:#d1d1d1;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+body{background:#fff}
+.container{max-width:1100px}
+.site-header{border-bottom:3px double #171717}
+.header-inner{height:80px;gap:38px}
+.brand{font-family:Georgia,'Times New Roman',serif;font-size:42px;font-weight:700;letter-spacing:-2.3px}
+.brand-mark{display:none}
+.brand-period,.heading-period{color:#171717}
+.header-inner nav{margin-left:auto;font-size:12px;text-transform:uppercase;letter-spacing:1px}
+.header-inner nav a{padding:30px 0;border-bottom:2px solid #171717}
+.header-location{color:#555;letter-spacing:1px;font-size:10px;margin-left:0}
+.location-dot{display:none}
+.calendar-shell{padding:34px 0 70px;background:#fff}
+.calendar-heading{padding-bottom:17px;margin-bottom:16px;border-bottom:1px solid #171717}
+.calendar-heading h1{font-family:Georgia,'Times New Roman',serif;font-size:40px;font-weight:700;letter-spacing:-1px;margin:0 0 4px}
+.calendar-heading p{font-size:13px;line-height:1.4;color:#555}
+.filter-panel{background:#f7f7f7;border:1px solid #d5d5d5;margin-top:12px;padding:12px;gap:10px}
+.filter-panel label{color:#333;font-size:10px;letter-spacing:.5px;margin-bottom:6px}
+.filter-panel select,.filter-panel input{background:#fff;border:1px solid #bbb;border-radius:0;height:38px;color:#171717}
+.search-input svg{top:10px;color:#444}
+.category-strip{margin:16px 0;gap:6px}
+.chip{border-radius:0;border:1px solid #b7b7b7;color:#333;font-weight:600;padding:7px 10px}
+.chip.selected{background:#171717;border-color:#171717;color:#fff}
+.results-bar{padding-bottom:10px;font-size:11px;color:#555}
+.event-card{grid-template-columns:62px minmax(0,1fr) 24px;gap:20px;padding:17px 2px}
+.date-badge{height:auto;min-height:65px;border:0;border-right:1px solid #ccc;padding-right:11px}
+.date-badge strong{font-family:Georgia,'Times New Roman',serif;font-size:30px}
+.date-badge span,.date-badge small{font-size:9px;color:#555}
+.event-topline{font-size:10px;color:#555;letter-spacing:.25px}
+.event-category{color:#171717}
+.event-detail h3{font-family:Georgia,'Times New Roman',serif;font-size:23px;line-height:1.2;margin:6px 0 6px;font-weight:700}
+.event-detail h3 a:hover{text-decoration-color:#171717}
+.event-detail h3 span{color:#555;font-size:12px}
+.event-description{font-size:12px;line-height:1.45;margin-bottom:7px;color:#555}
+.event-meta{font-size:11px;color:#555;gap:12px}
+.event-arrow{font-size:19px;color:#333}
+.empty-symbol{color:#555}
+footer{background:white;color:#333;border-top:3px double #171717}
+.footer-inner{min-height:72px}
+.footer-brand{font-family:Georgia,'Times New Roman',serif;font-size:25px}
+.footer-brand span{color:#171717}
+.footer-inner>span:not(:first-child){color:#555}
+@media(max-width:650px){
+.header-inner{height:66px;gap:12px}.brand{font-size:32px}
+.header-inner nav a{padding:24px 0}
+.calendar-shell{padding-top:23px}
+.calendar-heading h1{font-size:35px}
+.event-card{grid-template-columns:49px minmax(0,1fr);gap:10px;padding:14px 0}
+.date-badge{padding-right:7px;min-height:60px}
+.date-badge strong{font-size:26px}
+.event-detail h3{font-size:20px}
+.filter-panel{padding:10px}
+}
