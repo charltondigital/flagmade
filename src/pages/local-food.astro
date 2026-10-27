@@ -1,76 +1,87 @@
 ---
 import '../styles/global.css';
 const marketDates = [
-  {date:'2026-10-28',name:'Wednesday Farmers Market',operator:'Mountain Town Market',time:'3–7 PM',location:'Heritage Square',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
-  {date:'2026-12-05',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'City Hall',url:'https://www.flagstaffmarket.com/'},
-  {date:'2026-12-06',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'City Hall',url:'https://www.flagstaffmarket.com/'}
+ {date:'2026-10-28',name:'Wednesday Farmers Market',operator:'Flagstaff Mountain Town Market',time:'3–7 PM',location:'Heritage Square, downtown Flagstaff',details:'Seasonal farmers market featuring regional food producers.',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
+ {date:'2026-12-05',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'Flagstaff City Hall, 211 W Aspen Ave',details:'Holiday market with local makers and some specialty food vendors. Selection varies.',url:'https://www.flagstaffmarket.com/'},
+ {date:'2026-12-06',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'Flagstaff City Hall, 211 W Aspen Ave',details:'Holiday market with local makers and some specialty food vendors. Selection varies.',url:'https://www.flagstaffmarket.com/'}
 ];
-const groups=[
-{heading:'Markets',items:[
-{name:'Flagstaff Community Market',markets:[
-{name:'Sunday Farmers Market',location:'City Hall, 211 W Aspen Ave',schedule:'Sundays, 8 AM–1 PM · May–October',url:'https://www.flagstaffmarket.com/sunday-farmers-market.html'},
-{name:'Urban Flea Market',location:'City Hall, 211 W Aspen Ave',schedule:'Second & fourth Saturdays, 9 AM–2 PM · June–October',url:'https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html'},
-{name:'Sleigh Winter Market',location:'City Hall, 211 W Aspen Ave',schedule:'December 5–6, 2026 · 11 AM–3 PM',url:'https://www.flagstaffmarket.com/sleigh-holiday-market.html'}
-],products:'Farmers market: produce, meat, eggs and honey. Flea and winter markets: crafts, specialty foods and changing vendor selections.'},
-{name:'Flagstaff Mountain Town Market',markets:[
-{name:'Wednesday Farmers Market',location:'Heritage Square',schedule:'Wednesdays, 3–7 PM · May–October',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
-{name:'Saturday Farmers Market',location:'Pine Forest School, Fourth & Cedar',schedule:'Saturdays, 9 AM–1 PM · May–October',url:'https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/'},
-{name:'Winter / Spring Sunday Market',location:'City Hall, 211 W Aspen Ave',schedule:'Sundays, 9 AM–1 PM · November–April (check current season)',url:'https://downtownflagstaff.org/do/flagstaff-mountain-town-market-1'}
-],products:'Regional produce, bread, meat, dairy, eggs, honey, plants and other local foods; vendor availability varies.'},
-{name:'East Flagstaff Community Market',location:'Flagstaff Mall parking lot, near Desert Financial Credit Union',schedule:'Third Saturdays, 8 AM–1 PM · May–September',products:'Mainly crafts, art and prepared food; farm produce not regularly confirmed',url:'https://eastflagcm.com/'}
-]},
-{heading:'Stores & farmstands',items:[
-{name:'Flagstaff CSA & Local Market',location:'116 W Cottage Ave',schedule:'Mon–Sat, 10 AM–6 PM; Sun, 10 AM–2 PM',products:'Arizona produce, meat, dairy, eggs and pantry staples; not all inventory is Northern Arizona-grown',url:'https://www.flagcsa.com/local-market'},
-{name:'Forestdale Farmstand',location:'455 S Beech Dr',schedule:'Daytime self-service; seasonal produce generally mid-May to early December (confirm before visiting)',products:'Flagstaff-grown produce, eggs and honey',url:'https://forestdalefarm.com/farmstand-2/'}
-]},
-{heading:'Order & pickup',items:[
-{name:'Flagstaff CSA subscriptions and online orders',location:'Pickup at 116 W Cottage Ave; delivery options',schedule:'Weekly produce boxes and à-la-carte online ordering',products:'Produce and groceries; verify each item’s farm origin',url:'https://www.flagcsa.com/csa-subscriptions'},
-{name:'Forestdale Farm CSA',location:'Forestdale Farm, 455 S Beech Dr',schedule:'Seasonal farm shares; check current enrollment',products:'Locally grown vegetables and herbs',url:'https://forestdalefarm.com/'}
-]}
+const hosts=[
+ {name:'Flagstaff Community Market',id:'community'},
+ {name:'Flagstaff Mountain Town Market',id:'mountain'},
+ {name:'East Flagstaff Community Market',id:'east'}
 ];
 ---
 <!doctype html>
 <html lang="en">
-<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Local Food — Flagmade</title><meta name="description" content="Where to buy locally grown and produced food in Flagstaff, Arizona: markets, farmstands, groceries and CSA pickup."/><link rel="canonical" href="https://flagmade.pages.dev/local-food/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head>
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Local Food — Flagmade</title><meta name="description" content="A calendar of farmers, flea, and artisan markets in Flagstaff, organized by host."/><link rel="canonical" href="https://flagmade.pages.dev/local-food/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head>
 <body>
 <div class="construction-banner" role="status"><strong>Under construction.</strong> Flagmade is being developed; listings and schedules may change.</div>
 <header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/" aria-current="page">Local Food</a><a href="/directory/">Directory</a><a href="/search/">Search</a></nav></div></header>
-<main class="container food-page">
-<h1>Local Food</h1>
-<p class="food-intro">Where to buy food grown, raised or produced in Northern Arizona.</p>
-{groups.map(group=><section class="food-section"><h2>{group.heading}</h2><div class="food-grid">{group.items.map(item=><article class="food-card"><h3>{item.markets ? item.name : <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name} ↗</a>}</h3>{item.markets ? <div class="market-options">{item.markets.map(market=><div class="market-option"><a href={market.url} target="_blank" rel="noopener noreferrer"><strong>{market.name} ↗</strong></a><p>{market.location}</p><p>{market.schedule}</p></div>)}</div> : <><p><strong>Where:</strong> {item.location}</p><p><strong>When:</strong> {item.schedule}</p></>}<p><strong>Food:</strong> {item.products}</p></article>)}</div></section>)}
+<main class="container food-page market-only">
+<h1>Local Market Calendar</h1>
+<p class="food-intro">Farmers, flea, and artisan markets around Flagstaff. Select a market to see its hours, location, organizer, and source.</p>
+<div class="market-legend" aria-label="Market organizers">
+{hosts.map(host=><div class={"market-legend-item host-"+host.id}><span class="market-swatch" aria-hidden="true"></span>{host.name}</div>)}
+</div>
 <section class="market-calendar" aria-labelledby="market-calendar-title">
-<h2 id="market-calendar-title">Market calendar</h2>
+<h2 id="market-calendar-title">Markets by date</h2>
 <div class="market-cal-controls"><button id="market-prev" type="button" aria-label="Previous month">←</button><strong id="market-month"></strong><button id="market-next" type="button" aria-label="Next month">→</button><button id="market-today" type="button">Current month</button></div>
 <div class="market-cal-grid" id="market-grid" aria-label="Calendar by month"></div>
 <div id="market-month-events" class="market-cal-events" aria-live="polite"></div>
-<p class="market-cal-note">Only dates confirmed from published schedules are displayed. Seasonal or tentative markets remain in the listings above until new dates are confirmed.</p>
+<p class="market-cal-note">Only confirmed dates are shown. Future seasonal schedules will be added when organizers publish them; a blank month does not mean no markets will take place.</p>
 </section>
+<dialog id="market-detail" class="market-detail-dialog" aria-labelledby="market-detail-name"><div class="market-dialog-head"><h2 id="market-detail-name"></h2><button type="button" id="market-dialog-close" aria-label="Close details">×</button></div><p id="market-detail-host"></p><dl><dt>Date</dt><dd id="market-detail-date"></dd><dt>Hours</dt><dd id="market-detail-time"></dd><dt>Location</dt><dd id="market-detail-location"></dd></dl><p id="market-detail-description"></p><a id="market-detail-url" target="_blank" rel="noopener noreferrer">Official event information ↗</a></dialog>
+</main>
 <script id="market-data" type="application/json" set:html={JSON.stringify(marketDates).replace(/</g,'\\u003c')}></script>
 <script>
 const records=JSON.parse(document.getElementById('market-data').textContent);
-const now=new Date();
-const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(now);
-let year=Number(parts.find(p=>p.type==='year').value);
-let month=Number(parts.find(p=>p.type==='month').value)-1;
-const monthName=document.querySelector('#market-month'),grid=document.querySelector('#market-grid'),details=document.querySelector('#market-month-events');
-const maxMonth = new Date(Date.UTC(2027,11,1));const minMonth=new Date(Date.UTC(2026,0,1));
-const escapeHTML=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function draw(){
-  const first=new Date(Date.UTC(year,month,1));
-  monthName.textContent=first.toLocaleDateString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
-  const prefix=first.getUTCDay(),count=new Date(Date.UTC(year,month+1,0)).getUTCDate(),key=`${year}-${String(month+1).padStart(2,'0')}`;
-  grid.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(day=>`<div class="market-weekday">${day}</div>`).join('');
-  for(let i=0;i<prefix;i++)grid.insertAdjacentHTML('beforeend','<div class="market-day blank"></div>');
-  const monthEvents=records.filter(e=>e.date.startsWith(key));
-  for(let d=1;d<=count;d++){const date=`${key}-${String(d).padStart(2,'0')}`,events=monthEvents.filter(e=>e.date===date);grid.insertAdjacentHTML('beforeend',`<div class="market-day"><span class="day-num">${d}</span>${events.map(e=>`<a href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer" class="market-calendar-event" title="${escapeHTML(e.operator+' — '+e.name)}">${escapeHTML(e.name)}<small>${escapeHTML(e.time)}</small></a>`).join('')}</div>`);}
-  details.innerHTML=monthEvents.length?monthEvents.map(e=>`<div class="market-cal-detail"><strong>${escapeHTML(e.date.slice(5))}</strong> <a href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(e.name)}</a> · ${escapeHTML(e.operator)} · ${escapeHTML(e.time)} · ${escapeHTML(e.location)}</div>`).join(''):'<p>No confirmed market dates for this month.</p>';
-  document.querySelector('#market-prev').disabled=first<=minMonth;
-  document.querySelector('#market-next').disabled=first>=maxMonth;
+const dateParts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(new Date());
+const todayYear=Number(dateParts.find(p=>p.type==='year').value),todayMonth=Number(dateParts.find(p=>p.type==='month').value)-1;
+let year=todayYear,month=todayMonth;
+const grid=document.getElementById('market-grid'),monthName=document.getElementById('market-month'),details=document.getElementById('market-month-events');
+const dialog=document.getElementById('market-detail');
+const hostClass=host=>host==='Flagstaff Community Market'?'community':host==='Flagstaff Mountain Town Market'?'mountain':'east';
+const prettyDate=date=>new Date(date+'T12:00:00Z').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric',timeZone:'UTC'});
+function openDetail(e){
+ document.getElementById('market-detail-name').textContent=e.name;
+ document.getElementById('market-detail-host').textContent=e.operator;
+ document.getElementById('market-detail-date').textContent=prettyDate(e.date);
+ document.getElementById('market-detail-time').textContent=e.time;
+ document.getElementById('market-detail-location').textContent=e.location;
+ document.getElementById('market-detail-description').textContent=e.details||'';
+ document.getElementById('market-detail-url').href=e.url;
+ if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');
 }
-document.querySelector('#market-prev').addEventListener('click',()=>{month--;if(month<0){month=11;year--;}draw();});
-document.querySelector('#market-next').addEventListener('click',()=>{month++;if(month>11){month=0;year++;}draw();});
-document.querySelector('#market-today').addEventListener('click',()=>{year=Number(parts.find(p=>p.type==='year').value);month=Number(parts.find(p=>p.type==='month').value)-1;draw();});
+document.getElementById('market-dialog-close').onclick=()=>dialog.close();
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+function makeEvent(e){
+ const btn=document.createElement('button');btn.type='button';btn.className='market-calendar-event host-'+hostClass(e.operator);
+ const label=document.createElement('span');label.textContent=e.name;
+ const when=document.createElement('small');when.textContent=e.time;
+ btn.append(label,when);btn.addEventListener('click',()=>openDetail(e));return btn;
+}
+function draw(){
+ const first=new Date(Date.UTC(year,month,1)),key=year+'-'+String(month+1).padStart(2,'0');
+ monthName.textContent=first.toLocaleDateString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+ grid.replaceChildren();
+ for(const name of ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']){const el=document.createElement('div');el.className='market-weekday';el.textContent=name;grid.append(el);}
+ for(let i=0;i<first.getUTCDay();i++){const el=document.createElement('div');el.className='market-day blank';grid.append(el);}
+ const events=records.filter(e=>e.date.startsWith(key));
+ const days=new Date(Date.UTC(year,month+1,0)).getUTCDate();
+ for(let d=1;d<=days;d++){
+  const cell=document.createElement('div');cell.className='market-day';
+  const num=document.createElement('span');num.className='day-num';num.textContent=d;cell.append(num);
+  const date=key+'-'+String(d).padStart(2,'0');
+  events.filter(e=>e.date===date).forEach(e=>cell.append(makeEvent(e)));
+  grid.append(cell);
+ }
+ details.replaceChildren();
+ if(!events.length){const p=document.createElement('p');p.textContent='No confirmed market dates for this month.';details.append(p);}
+ else for(const e of events){const row=document.createElement('div');row.className='market-cal-detail';const button=document.createElement('button');button.type='button';button.textContent=prettyDate(e.date)+' · '+e.name+' · '+e.time;button.className='market-list-button host-'+hostClass(e.operator);button.onclick=()=>openDetail(e);row.append(button);details.append(row);}
+}
+document.getElementById('market-prev').onclick=()=>{month--;if(month<0){month=11;year--;}draw();};
+document.getElementById('market-next').onclick=()=>{month++;if(month>11){month=0;year++;}draw();};
+document.getElementById('market-today').onclick=()=>{year=todayYear;month=todayMonth;draw();};
 draw();
 </script>
 <p class="food-note">Dates, hours and availability can change. Check the linked source before visiting. The focus is food produced in Northern Arizona; some retailers also carry products from elsewhere.</p>
