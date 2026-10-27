@@ -47,6 +47,8 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
       map=L.map('directory-map',{scrollWheelZoom:false});
       // Cover Kachina Village (southwest) through Doney Park (northeast) at initial load.
       map.fitBounds([[35.075,-111.715],[35.265,-111.475]],{padding:[12,12]});
+      // Zoom one level closer and anchor around the downtown Orpheum Theater.
+      map.setView([35.1985,-111.6510],map.getZoom()+1);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors',className:'flagmade-tiles'}).addTo(map);
       cluster=L.markerClusterGroup({showCoverageOnHover:false,spiderfyOnMaxZoom:true,maxClusterRadius:22});
       cluster.addTo(map);
