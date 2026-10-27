@@ -112,3 +112,14 @@
 #event-dialog-link{text-decoration:underline;font-size:13px}
 
 .farmstand-intro{font-size:13px;color:#666;margin:0 0 16px}.farmstand-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}.farmstand-list{display:grid;grid-template-columns:1fr;gap:10px}.farmstand-map-wrap{align-self:start;position:sticky;top:12px}#farmstand-map{width:100%;height:480px;border:1px solid #ddd}.farmstand-map-note{font-size:11px;color:#666;line-height:1.5}.farmstand-card h3{margin-bottom:7px}.farmstand-actions{display:flex;gap:15px;flex-wrap:wrap;margin-top:13px}.farmstand-actions button{background:transparent;border:0;text-decoration:underline;padding:0;font-size:12px}.farmstand-actions a{font-size:12px;text-decoration:underline}@media(max-width:740px){.farmstand-layout{grid-template-columns:1fr}.farmstand-map-wrap{position:static;grid-row:1}#farmstand-map{height:310px}}
+
+/* Farmstand rankings, pagination, and persistent map */
+.farmstand-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+.farmstand-list-column{min-width:0}
+.farmstand-pagination{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:14px;font-size:12px}
+.farmstand-pagination button{padding:8px 10px;border:1px solid #b7b7b7;border-radius:3px;background:#fff}
+.farmstand-pagination button:disabled{opacity:.4;cursor:default}
+.farmstand-rank{font-size:11px;color:#53655a;margin-bottom:7px;font-weight:700}
+.farmstand-marker{border:2px solid #fff;border-radius:50%;background:#23704f;color:#fff;text-align:center;box-shadow:0 1px 5px #0005}
+.farmstand-marker span{line-height:24px;display:block;font-weight:700;font-size:11px}
+@media(max-width:740px){.farmstand-layout{grid-template-columns:1fr}.farmstand-map-wrap{grid-row:auto}}
