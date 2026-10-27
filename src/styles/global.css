@@ -9,3 +9,12 @@ footer{background:var(--forest);color:#eff1e8}.footer-inner{min-height:130px;dis
 [hidden]{display:none!important}
 @media(max-width:1000px){.header-inner{gap:35px}.header-location{display:none}.heading-layout{grid-template-columns:1fr 210px}.intro-art{height:230px}.filter-panel{grid-template-columns:repeat(3,1fr)}.search-box{grid-column:span 3}.editorial{grid-template-columns:120px 1fr}.editorial-stamp{display:none}}
 @media(max-width:650px){.container{width:min(100% - 34px,1200px)}.header-inner{height:76px;gap:20px}.brand{font-size:24px}.brand-mark{width:35px;height:35px;font-size:26px}.header-inner nav{margin-left:auto;gap:13px;font-size:12px}.nav-future{display:none}.header-inner nav a{padding:29px 0}.intro{padding-top:50px}.heading-layout{display:block}.intro h1{font-size:clamp(48px,11vw,68px);letter-spacing:-1.8px;margin-top:24px}.intro-art{display:none}.intro-copy{font-size:16px;margin-bottom:27px}.intro-footer span:last-child{display:none}.calendar-shell{padding:46px 0 70px}.calendar-heading{display:block}.calendar-heading p{margin-top:15px}.filter-panel{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px;gap:11px}.search-box{grid-column:span 2}.filter-sort{grid-column:span 2}.filter-panel input,.filter-panel select{font-size:12px;padding-left:9px}.search-input input{padding-left:35px}.chip{font-size:11px;padding:9px 12px}.event-card{grid-template-columns:57px 1fr;gap:14px;padding:22px 0}.date-badge{height:73px}.date-badge strong{font-size:28px}.date-badge span,.date-badge small{font-size:9px}.event-detail h3{font-size:23px}.event-arrow{display:none}.editorial{display:block;padding-top:65px;padding-bottom:70px}.editorial-number{margin-bottom:20px}.editorial h2{font-size:42px}.footer-inner{min-height:120px;flex-wrap:wrap;justify-content:start;gap:8px 18px}.footer-brand{width:100%}.footer-inner>span:not(:first-child){font-size:9px}}
+
+/* Calendar-first, quiet publication layout */
+.calendar-shell{border-top:0;padding-top:52px}
+.calendar-heading{margin-bottom:26px;display:block}
+.calendar-heading h1{font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:clamp(42px,5vw,66px);letter-spacing:-1.4px;margin:0 0 7px}
+.calendar-heading p{max-width:none;font-size:15px;color:var(--muted);margin:0}
+.filter-panel{margin-top:24px}
+.footer-inner{min-height:85px}
+@media(max-width:650px){.calendar-shell{padding-top:35px}.calendar-heading h1{font-size:45px}.header-inner{height:68px}.header-inner nav a{padding:25px 0}}
