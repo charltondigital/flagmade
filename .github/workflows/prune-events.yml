@@ -1,0 +1,33 @@
+name: Delete expired event JSON
+on:
+  schedule:
+    - cron: '30 15 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prune-events
+  cancel-in-progress: false
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Delete events whose final Arizona date has passed
+        run: node scripts/prune-events.mjs
+      - name: Commit permanent deletions
+        run: |
+          if [ -n "$(git status --porcelain -- src/data/events)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A src/data/events
+            git commit -m "Remove expired events"
+            git push
+          else
+            echo "No expired events to delete"
+          fi

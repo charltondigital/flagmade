@@ -55,3 +55,11 @@ Flagmade serves Flagstaff residents, not general tourism. Focus on arts, science
 ## Next stages
 
 Populate verified upcoming events; introduce a reviewed ingestion workflow from source calendars; add calendar subscriptions (iCal); optionally add recurring exhibitions as a separate experience from date-specific events.
+
+## Event ingestion and permanent expiration
+
+Published event records live in `src/data/events/<unique-id>.json`, one occurrence per file. The home page builds its calendar from all JSON records in that folder. Never publish an event without a verified organizer source and date. The `src/data/events.json` legacy array is no longer used.
+
+A GitHub Actions cron job runs daily at 08:30 Arizona time (15:30 UTC) and runs `node scripts/prune-events.mjs`. The script **deletes** any JSON event whose final date is strictly earlier than the current Arizona calendar date. Its commit then rebuilds the published Cloudflare Pages site, assuming GitHub deployment is connected. Run manually using GitHub Actions → Delete expired event JSON → Run workflow. Deletion is permanent on the current branch, although Git history retains past commits; Git history is not purged.
+
+For performance, event data is bundled at build time, with no runtime event-feed fetches. Add new events in reviewable batches, deduplicated by `id` and organizer URL. For long-running productions with multiple showtimes, create each confirmed performance separately rather than treating the entire run as one uninterrupted show. The calendar does not currently perform automated source scraping or review; source ingestion is a separate next-stage workflow.

@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import events from '../data/events.json';
+const events = Object.values(import.meta.glob('../data/events/*.json', { eager: true, import: 'default' }));
 const title = 'Flagmade | Local Arts, Culture & Commerce';
 const categories = ['Arts & Performance','Science & Discovery','History & Heritage','Farms & Food','Makers & Commerce'];
 const formatter = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',month:'short',day:'numeric',year:'numeric'});
