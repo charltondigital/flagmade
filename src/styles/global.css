@@ -12,3 +12,5 @@
 .food-card strong{color:#222}
 .food-note{border-top:1px solid #ddd;padding-top:17px;color:#666;font-size:12px;line-height:1.6}
 @media(max-width:650px){.food-grid{grid-template-columns:1fr}.food-page{padding-top:22px}.food-card{padding:15px}}
+
+.market-option{padding:9px 0;border-bottom:1px solid #e5e5e5}.market-option:first-child{padding-top:0}.market-option:last-child{border-bottom:0}.market-option a{font-size:13px}.market-option p{margin:3px 0}.market-options{margin-bottom:10px}

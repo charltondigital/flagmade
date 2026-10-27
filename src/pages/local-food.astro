@@ -2,9 +2,11 @@
 import '../styles/global.css';
 const groups=[
 {heading:'Markets',items:[
-{name:'Sunday Farmers Market',location:'City Hall, 211 W Aspen Ave',schedule:'Sundays, 8 AM–1 PM · May–October (2026 season ended Oct 25)',products:'Regional produce, meat, eggs, honey and prepared foods',url:'https://www.flagstaffmarket.com/'},
-{name:'Saturday Mountain Town Market',location:'Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)',schedule:'Saturdays, 9 AM–1 PM · May–October',products:'Locally grown produce, starter plants, bread and other foods',url:'https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/'},
-{name:'Wednesday Farmers Market',location:'Heritage Square, downtown Flagstaff',schedule:'Wednesdays, 3–7 PM · May 27–Oct 28, 2026',products:'Seasonal produce, yogurt, bread, honey, meat and regional foods',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
+{name:'Flagstaff Farmers Markets',markets:[
+{name:'Sunday Farmers Market',location:'City Hall, 211 W Aspen Ave',schedule:'Sundays, 8 AM–1 PM · May–October',url:'https://www.flagstaffmarket.com/'},
+{name:'Wednesday Mountain Town Market',location:'Heritage Square',schedule:'Wednesdays, 3–7 PM · May–October',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
+{name:'Saturday Mountain Town Market',location:'Pine Forest School, Fourth & Cedar',schedule:'Saturdays, 9 AM–1 PM · May–October',url:'https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/'}
+],products:'Produce, eggs, meat, dairy, bread, honey and other regional foods'},
 {name:'Sleigh Winter Market',location:'City Hall, 211 W Aspen Ave',schedule:'December 5–6, 2026 · 11 AM–3 PM',products:'Seasonal local makers and producers; individual food vendors vary',url:'https://www.flagstaffmarket.com/'}
 ]},
 {heading:'Stores & farmstands',items:[
@@ -25,6 +27,6 @@ const groups=[
 <main class="container food-page">
 <h1>Local Food</h1>
 <p class="food-intro">Where to buy food grown, raised or produced in Northern Arizona.</p>
-{groups.map(group=><section class="food-section"><h2>{group.heading}</h2><div class="food-grid">{group.items.map(item=><article class="food-card"><h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name} ↗</a></h3><p><strong>Where:</strong> {item.location}</p><p><strong>When:</strong> {item.schedule}</p><p><strong>Food:</strong> {item.products}</p></article>)}</div></section>)}
+{groups.map(group=><section class="food-section"><h2>{group.heading}</h2><div class="food-grid">{group.items.map(item=><article class="food-card"><h3>{item.markets ? item.name : <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name} ↗</a>}</h3>{item.markets ? <div class="market-options">{item.markets.map(market=><div class="market-option"><a href={market.url} target="_blank" rel="noopener noreferrer"><strong>{market.name} ↗</strong></a><p>{market.location}</p><p>{market.schedule}</p></div>)}</div> : <><p><strong>Where:</strong> {item.location}</p><p><strong>When:</strong> {item.schedule}</p></>}<p><strong>Food:</strong> {item.products}</p></article>)}</div></section>)}
 <p class="food-note">Dates, hours and availability can change. Check the linked source before visiting. The focus is food produced in Northern Arizona; some retailers also carry products from elsewhere.</p>
 </main></body></html>
