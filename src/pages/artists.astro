@@ -1,0 +1,21 @@
+---
+import '../styles/global.css';
+import { artists } from '../data/artists.js';
+const mediums = [...new Set(artists.map(a=>a.medium))].sort();
+---
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Local Artists — Flagmade</title><meta name="description" content="Artists and makers in Flagstaff and Northern Arizona, with links to their artwork and portfolios."/><meta name="robots" content="noindex, nofollow, noarchive"/></head><body>
+<div class="construction-banner" role="status"><strong>Under construction.</strong> Flagmade is being developed; listings and schedules may change.</div>
+<header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/">Local Food</a><a href="/directory/">Directory</a><a href="/artists/" aria-current="page">Artists</a><a href="/search/">Search</a></nav></div></header>
+<main class="container artist-page"><h1>Local Artists</h1><p>Artists and makers based in Flagstaff and Northern Arizona. Follow each portfolio link to see their work.</p>
+<div class="artist-controls"><label for="artist-search">Search artists<input id="artist-search" type="search" placeholder="Name, medium or work"/></label><label for="artist-medium">Medium<select id="artist-medium"><option value="">All mediums</option>{mediums.map(m=><option value={m}>{m}</option>)}</select></label></div>
+<p id="artist-count">{artists.length} artists</p>
+<div class="artist-grid">{artists.map(artist=><article class="artist-card" data-name={artist.name.toLowerCase()} data-medium={artist.medium} data-search={(artist.name+' '+artist.medium+' '+artist.description).toLowerCase()}>
+{artist.thumbnail && <img class="artist-thumbnail" src={artist.thumbnail} alt={artist.alt||('Artwork by '+artist.name)} loading="lazy"/>}
+<p class="artist-medium">{artist.medium}</p><h2>{artist.name}</h2><p>{artist.description}</p><a href={artist.portfolio} target="_blank" rel="noopener noreferrer">View artist portfolio ↗</a></article>)}</div>
+<p class="artist-note">Initial selection based on publicly available portfolios and local gallery listings. Artwork images may be added with the artist's permission; no thumbnail is required.</p>
+</main>
+<script>
+const input=document.getElementById('artist-search'),sel=document.getElementById('artist-medium'),cards=[...document.querySelectorAll('.artist-card')],count=document.getElementById('artist-count');
+function filter(){const q=input.value.trim().toLowerCase(),m=sel.value;let n=0;for(const card of cards){const visible=(!q||card.dataset.search.includes(q))&&(!m||card.dataset.medium===m);card.hidden=!visible;if(visible)n++;}count.textContent=n+' '+(n===1?'artist':'artists');}
+input.addEventListener('input',filter);sel.addEventListener('change',filter);
+</script></body></html>
