@@ -9,6 +9,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.16.0"
+    "astro": "^5.16.0",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3"
   }
 }

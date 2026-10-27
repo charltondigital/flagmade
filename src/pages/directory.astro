@@ -12,13 +12,18 @@ const listings=[
  {id:'chocolate',coordinates:[35.19905,-111.6502],name:'Flagstaff Chocolate Company',type:'Makers & shops',address:'120 N Leroux St, Flagstaff, AZ 86001',description:'Chocolate and confectionery shop.',url:'https://downtownflagstaff.org/shop-and-dine/shopping'}
 ];
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Directory — Flagmade</title><meta name="description" content="Independent restaurants, local food shops, farmstands, makers and shops in Flagstaff."/><link rel="canonical" href="https://flagmade.pages.dev/directory/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/><link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/><link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/></head><body>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Directory — Flagmade</title><meta name="description" content="Independent restaurants, local food shops, farmstands, makers and shops in Flagstaff."/><link rel="canonical" href="https://flagmade.pages.dev/directory/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/></head><body>
 <header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/">Local Food</a><a href="/directory/" aria-current="page">Directory</a></nav></div></header>
 <main class="container directory-page"><h1>Directory</h1><p>Local restaurants, food stands, makers & shops in Flagstaff.</p>
 <div class="directory-layout"><section><label for="place-search">Search</label><input id="place-search" type="search" placeholder="Business or product"><label for="place-type">Category</label><select id="place-type"><option value="">All categories</option><option>Restaurants</option><option>Food & farmstands</option><option>Makers & shops</option></select><div class="directory-items">{listings.map(p=><article class="directory-item" data-type={p.type} data-id={p.id}><p class="directory-kind">{p.type}</p><h2><a href={p.url} target="_blank" rel="noopener noreferrer">{p.name} ↗</a></h2><p>{p.description}</p><p class="directory-address">{p.address}</p><button class="map-focus" data-id={p.id}>Show on map</button></article>)}</div></section><aside><div id="directory-map" role="region" aria-label="Map of directory locations"></div><p class="map-status" id="map-status">Map pins are approximate until individually verified.</p></aside></div></main>
 <script id="places-data" type="application/json" set:html={JSON.stringify(listings).replace(/</g,'\\u003c')}></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-<script is:inline>
+
+<script>
+import L from 'leaflet';
+import 'leaflet.markercluster';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 (function(){
   const status=document.getElementById('map-status');
   const records=JSON.parse(document.getElementById('places-data').textContent||'[]');
@@ -38,7 +43,7 @@ const listings=[
   // Filters work independently of map CDN availability.
   select.addEventListener('change',update);
   search.addEventListener('input',update);
-  if(window.L&&typeof L.markerClusterGroup==='function'){
+  if(typeof L.markerClusterGroup==='function'){
     try{
       map=L.map('directory-map',{scrollWheelZoom:false}).setView([35.1978,-111.6485],14);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
@@ -46,7 +51,7 @@ const listings=[
       cluster.addTo(map);
       for(const p of records){
         if(!Array.isArray(p.coordinates))continue;
-        const marker=L.marker(p.coordinates).bindPopup('<strong>'+safe(p.name)+'</strong><p>'+safe(p.address)+'</p>');
+        const marker=L.marker(p.coordinates,{icon:L.divIcon({className:'directory-point',html:'<span></span>',iconSize:[18,18],iconAnchor:[9,9]})}).bindPopup('<strong>'+safe(p.name)+'</strong><p>'+safe(p.address)+'</p>');
         markers.set(p.id,marker);
       }
       update();
