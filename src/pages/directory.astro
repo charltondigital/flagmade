@@ -1,47 +1,69 @@
 ---
 import '../styles/global.css';
+// Map coordinates are approximate downtown placements pending address-level validation. Unverified sites have no pin.
 const listings=[
- {id:'shift',name:'Shift Kitchen & Bar',type:'Restaurants',address:'107 N San Francisco St, Flagstaff, AZ 86001',description:'Independent restaurant serving contemporary shared plates.',url:'https://shiftflg.com/'},
- {id:'pizzicletta',name:'Pizzicletta',type:'Restaurants',address:'203 W Phoenix Ave, Flagstaff, AZ 86001',description:'Wood-fired Neapolitan pizza and house-made gelato.',url:'https://www.pizzicletta.com/'},
- {id:'flagcsa',name:'Flagstaff CSA & Local Market',type:'Food & farmstands',address:'116 W Cottage Ave, Flagstaff, AZ 86001',description:'Produce, groceries, and CSA pickup; check the origin of individual products.',url:'https://www.flagcsa.com/local-market'},
+ {id:'shift',coordinates:[35.19855,-111.6475],name:'Shift Kitchen & Bar',type:'Restaurants',address:'107 N San Francisco St, Flagstaff, AZ 86001',description:'Independent restaurant serving contemporary shared plates.',url:'https://shiftflg.com/'},
+ {id:'pizzicletta',coordinates:[35.1959,-111.6502],name:'Pizzicletta',type:'Restaurants',address:'203 W Phoenix Ave, Flagstaff, AZ 86001',description:'Wood-fired Neapolitan pizza and house-made gelato.',url:'https://www.pizzicletta.com/'},
+ {id:'flagcsa',coordinates:[35.1975,-111.6518],name:'Flagstaff CSA & Local Market',type:'Food & farmstands',address:'116 W Cottage Ave, Flagstaff, AZ 86001',description:'Produce, groceries, and CSA pickup; check the origin of individual products.',url:'https://www.flagcsa.com/local-market'},
  {id:'forestdale',name:'Forestdale Farmstand',type:'Food & farmstands',address:'455 S Beech Dr, Flagstaff, AZ 86001',description:'Seasonal farmstand selling produce, eggs, and honey.',url:'https://forestdalefarm.com/farmstand-2/'},
- {id:'brightside',name:'Bright Side Bookshop',type:'Makers & shops',address:'18 N San Francisco St, Flagstaff, AZ 86001',description:'Independent bookstore with regional titles and author events.',url:'https://brightsidebookshop.com/'},
- {id:'azhandmade',name:'Arizona Handmade Art Gallery',type:'Makers & shops',address:'20 N San Francisco St, Flagstaff, AZ 86001',description:'Handmade art, jewelry, ceramics and craft.',url:'https://arizonahandmade.com/'},
- {id:'artistsgallery',name:"Artists' Gallery",type:'Makers & shops',address:'17 N San Francisco St, Flagstaff, AZ 86001',description:'Local artists’ gallery exhibiting fine art and crafts.',url:'https://flagstaff-arts.org/'},
- {id:'chocolate',name:'Flagstaff Chocolate Company',type:'Makers & shops',address:'120 N Leroux St, Flagstaff, AZ 86001',description:'Chocolate and confectionery shop.',url:'https://downtownflagstaff.org/shop-and-dine/shopping'}
+ {id:'brightside',coordinates:[35.197684713190604,-111.64749023432498],name:'Bright Side Bookshop',type:'Makers & shops',address:'18 N San Francisco St, Flagstaff, AZ 86001',description:'Independent bookstore with regional titles and author events.',url:'https://brightsidebookshop.com/'},
+ {id:'azhandmade',coordinates:[35.19773,-111.64749],name:'Arizona Handmade Art Gallery',type:'Makers & shops',address:'20 N San Francisco St, Flagstaff, AZ 86001',description:'Handmade art, jewelry, ceramics and craft.',url:'https://arizonahandmade.com/'},
+ {id:'artistsgallery',coordinates:[35.19767,-111.64749],name:"Artists' Gallery",type:'Makers & shops',address:'17 N San Francisco St, Flagstaff, AZ 86001',description:'Local artists’ gallery exhibiting fine art and crafts.',url:'https://flagstaff-arts.org/'},
+ {id:'chocolate',coordinates:[35.19905,-111.6502],name:'Flagstaff Chocolate Company',type:'Makers & shops',address:'120 N Leroux St, Flagstaff, AZ 86001',description:'Chocolate and confectionery shop.',url:'https://downtownflagstaff.org/shop-and-dine/shopping'}
 ];
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Directory — Flagmade</title><meta name="description" content="Independent restaurants, local food shops, farmstands, makers and shops in Flagstaff."/><link rel="canonical" href="https://flagmade.pages.dev/directory/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzxU3REaH1tZpGh4R2gfE+k=" crossorigin=""/></head><body>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Directory — Flagmade</title><meta name="description" content="Independent restaurants, local food shops, farmstands, makers and shops in Flagstaff."/><link rel="canonical" href="https://flagmade.pages.dev/directory/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/><link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"/><link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"/></head><body>
 <header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/">Local Food</a><a href="/directory/" aria-current="page">Directory</a></nav></div></header>
 <main class="container directory-page"><h1>Directory</h1><p>Local restaurants, food stands, makers & shops in Flagstaff.</p>
-<div class="directory-layout"><section><label for="place-type">Category</label><select id="place-type"><option value="">All categories</option><option>Restaurants</option><option>Food & farmstands</option><option>Makers & shops</option></select><div class="directory-items">{listings.map(p=><article class="directory-item" data-type={p.type} data-id={p.id}><p class="directory-kind">{p.type}</p><h2><a href={p.url} target="_blank" rel="noopener noreferrer">{p.name} ↗</a></h2><p>{p.description}</p><p class="directory-address">{p.address}</p><button class="map-focus" data-id={p.id}>Show on map</button></article>)}</div></section><aside><div id="directory-map" role="region" aria-label="Map of directory locations"></div><p class="map-status" id="map-status">Map locations are matched to listed street addresses.</p></aside></div></main>
+<div class="directory-layout"><section><label for="place-search">Search</label><input id="place-search" type="search" placeholder="Business or product"><label for="place-type">Category</label><select id="place-type"><option value="">All categories</option><option>Restaurants</option><option>Food & farmstands</option><option>Makers & shops</option></select><div class="directory-items">{listings.map(p=><article class="directory-item" data-type={p.type} data-id={p.id}><p class="directory-kind">{p.type}</p><h2><a href={p.url} target="_blank" rel="noopener noreferrer">{p.name} ↗</a></h2><p>{p.description}</p><p class="directory-address">{p.address}</p><button class="map-focus" data-id={p.id}>Show on map</button></article>)}</div></section><aside><div id="directory-map" role="region" aria-label="Map of directory locations"></div><p class="map-status" id="map-status">Map pins are approximate until individually verified.</p></aside></div></main>
 <script id="places-data" type="application/json" set:html={JSON.stringify(listings).replace(/</g,'\\u003c')}></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script is:inline>
-(()=>{
-const root=document.getElementById('directory-map'),status=document.getElementById('map-status');
-const data=JSON.parse(document.getElementById('places-data').textContent);
-const select=document.getElementById('place-type');
-const map=window.L?.map(root,{scrollWheelZoom:false}).setView([35.1983,-111.6513],13);
-if(!map){status.textContent='Map unavailable. Use the addresses in the listings.';return;}
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
-const pins=new Map();const cache=new Map();
-function filter(){const category=select.value;document.querySelectorAll('.directory-item').forEach(el=>{el.hidden=Boolean(category&&el.dataset.type!==category);});for(const item of data){const marker=pins.get(item.id);if(marker){if(!category||item.type===category)marker.addTo(map);else map.removeLayer(marker);}}}
-select.addEventListener('change',filter);
-const safe=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function locate(item){
- if(cache.has(item.id))return cache.get(item.id);
- const u='https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q='+encodeURIComponent(item.address);
- try{const res=await fetch(u,{headers:{'Accept':'application/json'}});const results=await res.json();const result=results[0];if(!result)return null;const coords=[Number(result.lat),Number(result.lon)];if(!Number.isFinite(coords[0])||!Number.isFinite(coords[1])||Math.abs(coords[0]-35.198)>0.14||Math.abs(coords[1]+111.65)>0.2)return null;cache.set(item.id,coords);return coords;}catch{return null;}
-}
-let pending=0;
-async function focus(item){
- status.textContent='Locating '+item.name+'…';const pt=await locate(item);if(!pt){status.textContent='Could not locate '+item.name+'. See its street address in the listing.';return;}
- let marker=pins.get(item.id);if(!marker){marker=L.marker(pt).bindPopup('<strong>'+safe(item.name)+'</strong><p>'+safe(item.address)+'</p>');pins.set(item.id,marker);}
- if(!select.value||item.type===select.value)marker.addTo(map);
- map.setView(pt,16);marker.openPopup();status.textContent='Showing '+item.name;
-}
-document.querySelectorAll('.map-focus').forEach(btn=>btn.addEventListener('click',()=>{const item=data.find(x=>x.id===btn.dataset.id);if(item)focus(item);}));
-status.textContent='Choose “Show on map” to locate a listing.';
+(function(){
+  const status=document.getElementById('map-status');
+  const records=JSON.parse(document.getElementById('places-data').textContent||'[]');
+  const select=document.getElementById('place-type');
+  const search=document.getElementById('place-search');
+  const cards=[...document.querySelectorAll('.directory-item')];
+  let map=null, cluster=null;
+  const markers=new Map();
+  const safe=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function matches(p){return (!select.value||select.value===p.type)&&(!search.value.trim()||[p.name,p.type,p.description,p.address].join(' ').toLowerCase().includes(search.value.trim().toLowerCase()));}
+  function update(){
+    const visible=new Set(records.filter(matches).map(p=>p.id));
+    for(const card of cards)card.hidden=!visible.has(card.dataset.id);
+    if(cluster){cluster.clearLayers();for(const id of visible){const marker=markers.get(id);if(marker)cluster.addLayer(marker);}}
+    status.textContent=visible.size+' listings shown'+(markers.size<records.length?'; some addresses are not yet mapped':'');
+  }
+  // Filters work independently of map CDN availability.
+  select.addEventListener('change',update);
+  search.addEventListener('input',update);
+  if(window.L&&typeof L.markerClusterGroup==='function'){
+    try{
+      map=L.map('directory-map',{scrollWheelZoom:false}).setView([35.1978,-111.6485],14);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+      cluster=L.markerClusterGroup({showCoverageOnHover:false,spiderfyOnMaxZoom:true,maxClusterRadius:42});
+      cluster.addTo(map);
+      for(const p of records){
+        if(!Array.isArray(p.coordinates))continue;
+        const marker=L.marker(p.coordinates).bindPopup('<strong>'+safe(p.name)+'</strong><p>'+safe(p.address)+'</p>');
+        markers.set(p.id,marker);
+      }
+      update();
+    }catch(error){status.textContent='Map unavailable; directory filters are still active.';map=null;cluster=null;}
+  }else{
+    status.textContent='Map unavailable; directory filters are still active.';
+  }
+  for(const button of document.querySelectorAll('.map-focus')){
+    button.addEventListener('click',()=>{
+      const p=records.find(x=>x.id===button.dataset.id);
+      if(!p)return;
+      if(!matches(p)){select.value=p.type;search.value='';update();}
+      const marker=markers.get(p.id);
+      if(!map||!cluster||!marker){status.textContent='Map pin not verified for '+p.name+'. Use the address above.';return;}
+      cluster.zoomToShowLayer(marker,()=>{map.setView(marker.getLatLng(),17);marker.openPopup();});
+    });
+  }
+  update();
 })();
 </script></body></html>
