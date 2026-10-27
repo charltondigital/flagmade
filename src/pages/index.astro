@@ -23,21 +23,15 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
   <header class="site-header">
     <div class="header-inner container">
       <a class="brand" href="/" aria-label="Flagmade home"><span class="brand-mark" aria-hidden="true">f<span>.</span></span><span>flagmade<span class="brand-period">.</span></span></a>
-      <nav aria-label="Main navigation"><a class="active" href="/">Calendar</a><span class="nav-future" title="Coming later">Discover <span class="soon">soon</span></span><span class="nav-future" title="Coming later">Stories <span class="soon">soon</span></span></nav>
+      <nav aria-label="Main navigation"><a class="active" href="/">Events</a></nav>
       <span class="header-location">FLAGSTAFF, ARIZONA <span class="location-dot">✳</span></span>
     </div>
   </header>
 
   <main>
-    <section class="intro container">
-      <div class="eyebrow"><span class="eyebrow-rule"></span> THE CULTURAL CALENDAR <span class="edition">/ FLAGSTAFF, AZ</span></div>
-      <div class="heading-layout"><div><h1>Worth <em>showing up</em> for.</h1><p class="intro-copy">A thoughtfully curated calendar of local arts, science, culture, craft, and commerce. Fewer listings. Better discoveries.</p></div><div class="intro-art" aria-hidden="true"><span class="art-circle c1"></span><span class="art-circle c2"></span><span class="art-grid"></span><span class="art-label">35°11′ N<br/>111°39′ W</span></div></div>
-      <div class="intro-footer"><span>INDEPENDENTLY CURATED · ALWAYS LOCAL</span><span>SCROLL TO EXPLORE <span aria-hidden="true">↓</span></span></div>
-    </section>
-
     <section class="calendar-shell">
       <div class="container">
-        <div class="calendar-heading"><div><div class="eyebrow small">THE GOOD STUFF / 01</div><h2>On the calendar<span class="heading-period">.</span></h2></div><p>Concerts, exhibitions, lectures, markets, workshops, and other things worth leaving the house for.</p></div>
+        <div class="calendar-heading"><div><h1>Events</h1><p>Arts, culture & commerce in Flagstaff.</p></div></div>
 
         <div class="filter-panel" aria-label="Filter and sort events">
           <div class="search-box"><label for="search">SEARCH EVENTS</label><div class="search-input"><svg width="19" height="19" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Event, place, or keyword…" autocomplete="off" /></div></div>
@@ -50,12 +44,11 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
         <div class="category-strip" aria-label="Quick category filters"><button class="chip selected" data-chip="" aria-pressed="true">All events</button>{categories.map(c=><button class="chip" data-chip={c} aria-pressed="false">{c}</button>)}</div>
         <div class="results-bar"><span id="result-count" aria-live="polite">Checking the calendar…</span><button id="clear" class="clear-btn" hidden>Clear filters ↗</button></div>
         <div id="event-list" class="events" aria-live="polite"></div>
-        <div id="empty-state" class="empty-state" hidden><div class="empty-symbol" aria-hidden="true">✳</div><h3 id="empty-title">A good calendar is worth curating.</h3><p id="empty-copy">We're assembling the first set of independently selected Flagstaff events. Check back as the calendar takes shape.</p><button type="button" id="empty-reset" hidden>Reset filters</button></div>
+        <div id="empty-state" class="empty-state" hidden><div class="empty-symbol" aria-hidden="true">✳</div><h3 id="empty-title">No upcoming events.</h3><p id="empty-copy">Check back for new events.</p><button type="button" id="empty-reset" hidden>Reset filters</button></div>
       </div>
     </section>
-    <section class="editorial container"><div class="editorial-number">02 / OUR APPROACH</div><div><h2>Not everything.<br/><em>Just the worthwhile things.</em></h2><p>Flagmade is an independent guide to Flagstaff's arts, culture, science, food, and local commerce. We choose events for their broader community appeal—not because someone paid to be listed. No nightlife listings, generic promotions, or routine student recitals.</p></div><div class="editorial-stamp" aria-hidden="true">CURATED<br/>WITH<br/>INTENT <span>✳</span></div></section>
   </main>
-  <footer><div class="container footer-inner"><span class="footer-brand">flagmade<span>.</span></span><span>LOCAL ARTS · CULTURE · COMMERCE</span><span>MADE FOR FLAGSTAFFERS</span></div></footer>
+  <footer><div class="container footer-inner"><span class="footer-brand">flagmade<span>.</span></span><span>LOCAL ARTS · CULTURE · COMMERCE</span></div></footer>
 
   <script id="events-json" type="application/json" set:html={JSON.stringify(validEvents).replace(/</g,'\\u003c')}></script>
   <script>
@@ -99,8 +92,8 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
       count.textContent=rows.length+' '+(rows.length===1?'event':'events')+(filtered?' matching your filters':' on the calendar');
       list.innerHTML=rows.map(e=>{const d=new Date(e.start);const end=e.end?new Date(e.end):null;const time=e.allDay?'All day':fmtTime.format(d)+(end&&dateFor(e.end)===dateFor(e.start)?' – '+fmtTime.format(end):'');const url=new URL(e.url,location.origin);if(!['http:','https:'].includes(url.protocol))return '';return `<article class="event-card"><div class="date-badge"><span>${fmtMonth.format(d)}</span><strong>${fmtDay.format(d)}</strong><small>${new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',weekday:'short'}).format(d)}</small></div><div class="event-detail"><div class="event-topline"><span class="event-category">${esc(e.category)}</span><span class="event-divider">/</span><span class="event-org">${esc(e.organization)}</span></div><h3><a href="${esc(url.href)}" target="_blank" rel="noopener noreferrer">${esc(e.title)} <span aria-hidden="true">↗</span></a></h3>${e.description?`<p class="event-description">${esc(e.description)}</p>`:''}<div class="event-meta"><span>◷ ${esc(time)}${end&&dateFor(e.end)!==dateFor(e.start)?' – '+fmtDate.format(end):''}</span>${e.venue?`<span>⌖ ${esc(e.venue)}${e.city?', '+esc(e.city):''}</span>`:''}${e.price?`<span>${esc(e.price)}</span>`:''}</div></div><a class="event-arrow" href="${esc(url.href)}" target="_blank" rel="noopener noreferrer" aria-label="See details for ${esc(e.title)}">↗</a></article>`}).join('');
       empty.hidden=rows.length!==0;list.hidden=rows.length===0;
-      document.querySelector('#empty-title').textContent=filtered?'Nothing in this particular slice.':upcoming.length?'Nothing upcoming just yet.':'A good calendar is worth curating.';
-      document.querySelector('#empty-copy').textContent=filtered?'Try a different category, organization, month, or search term.':upcoming.length?'New events will appear here as they are added and approved.':"We're assembling the first set of independently selected Flagstaff events. Check back as the calendar takes shape.";
+      document.querySelector('#empty-title').textContent=filtered?'No matching events.':'No upcoming events.';
+      document.querySelector('#empty-copy').textContent=filtered?'Try removing a filter.':'Check back for new events.';
       const next=new URL(location.href);['q','category','organization','month'].forEach(k=>next.searchParams.delete(k));if(q)next.searchParams.set('q',search.value.trim());if(cat)next.searchParams.set('category',cat);if(org)next.searchParams.set('organization',org);if(mo)next.searchParams.set('month',mo);history.replaceState(null,'',next.pathname+next.search+next.hash);
     }
     [search,category,organization,month,sort].forEach(el=>el.addEventListener(el===search?'input':'change',render));
