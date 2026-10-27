@@ -1,10 +1,25 @@
 ---
 import '../styles/global.css';
-const marketDates = [
- {date:'2026-10-28',name:'Wednesday Farmers Market',operator:'Flagstaff Mountain Town Market',time:'3–7 PM',location:'Heritage Square, downtown Flagstaff',details:'Seasonal farmers market featuring regional food producers.',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
- {date:'2026-12-05',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'Flagstaff City Hall, 211 W Aspen Ave',details:'Holiday market with local makers and some specialty food vendors. Selection varies.',url:'https://www.flagstaffmarket.com/'},
- {date:'2026-12-06',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'Flagstaff City Hall, 211 W Aspen Ave',details:'Holiday market with local makers and some specialty food vendors. Selection varies.',url:'https://www.flagstaffmarket.com/'}
-];
+const marketDates = [];
+function addMarket(date,name,operator,time,location,details,url,sourceType='published recurring schedule'){
+ marketDates.push({date,name,operator,time,location,details,url,sourceType});
+}
+function repeatWeekly(start,end,weekday,details){
+ const cur=new Date(start+'T12:00:00Z'),finish=new Date(end+'T12:00:00Z');
+ while(cur<=finish){if(cur.getUTCDay()===weekday) addMarket(cur.toISOString().slice(0,10),...details);cur.setUTCDate(cur.getUTCDate()+1);}
+}
+repeatWeekly('2026-07-01','2026-10-25',0,['Sunday Farmers Market','Flagstaff Community Market','8 AM–1 PM','City Hall, 211 W Aspen Ave','Farmers, ranchers, food producers, artisans and prepared food.','https://www.flagstaffmarket.com/sunday-farmers-market.html']);
+repeatWeekly('2026-07-01','2026-10-28',3,['Wednesday Farmers Market','Flagstaff Mountain Town Market','3–7 PM','Heritage Square, downtown Flagstaff','Seasonal produce, local foods and rotating vendors.','https://downtownflagstaff.org/events/wednesday-farmers-market']);
+repeatWeekly('2026-07-01','2026-10-31',6,['Saturday Farmers Market','Flagstaff Mountain Town Market','9 AM–1 PM','Pine Forest School, Fourth & Cedar','Regional farm produce, baked goods and other foods; check organizer for weekly details.','https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/']);
+for(let m=6;m<=9;m++){
+ const d=new Date(Date.UTC(2026,m,1,12));
+ while(d.getUTCDay()!==6)d.setUTCDate(d.getUTCDate()+1);
+ d.setUTCDate(d.getUTCDate()+7);
+ for(let k=0;k<2;k++){addMarket(d.toISOString().slice(0,10),'Flagstaff Urban Flea Market','Flagstaff Community Market','9 AM–2 PM','City Hall, 211 W Aspen Ave','Vintage goods, crafts, makers and changing food vendors.','https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html');d.setUTCDate(d.getUTCDate()+14);}
+}
+for(const date of ['2026-07-18','2026-08-15','2026-09-19'])addMarket(date,'East Flagstaff Community Market','East Flagstaff Community Market','8 AM–1 PM','Flagstaff Mall, 4650 US Highway 89','Local artists, craft vendors and food trucks.','https://eastflagcm.com/','published event dates');
+for(const date of ['2026-12-05','2026-12-06'])addMarket(date,'Sleigh Winter Market','Flagstaff Community Market','11 AM–3 PM','City Hall, 211 W Aspen Ave','Holiday crafts, makers and some specialty food vendors.','https://www.flagstaffmarket.com/','published event dates');
+marketDates.sort((a,b)=>a.date.localeCompare(b.date)||a.name.localeCompare(b.name));
 const hosts=[
  {name:'Flagstaff Community Market',id:'community'},
  {name:'Flagstaff Mountain Town Market',id:'mountain'},
@@ -18,8 +33,10 @@ const hosts=[
 <div class="construction-banner" role="status"><strong>Under construction.</strong> Flagmade is being developed; listings and schedules may change.</div>
 <header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/" aria-current="page">Local Food</a><a href="/directory/">Directory</a><a href="/search/">Search</a></nav></div></header>
 <main class="container food-page market-only">
-<h1>Local Market Calendar</h1>
-<p class="food-intro">Farmers, flea, and artisan markets around Flagstaff. Select a market to see its hours, location, organizer, and source.</p>
+<h1>Local Food</h1>
+<p class="food-intro">Flagstaff markets, farmstands and community-supported agriculture.</p>
+<div class="food-tabs" role="tablist" aria-label="Local food categories"><button class="food-tab active" id="tab-markets" type="button" role="tab" aria-selected="true" aria-controls="panel-markets">Markets</button><button class="food-tab" id="tab-farmstands" type="button" role="tab" aria-selected="false" aria-controls="panel-farmstands" tabindex="-1">Farmstands</button><button class="food-tab" id="tab-csas" type="button" role="tab" aria-selected="false" aria-controls="panel-csas" tabindex="-1">CSAs</button></div>
+<div id="panel-markets" role="tabpanel" aria-labelledby="tab-markets">
 <div class="market-legend" aria-label="Market organizers">
 {hosts.map(host=><div class={"market-legend-item host-"+host.id}><span class="market-swatch" aria-hidden="true"></span>{host.name}</div>)}
 </div>
@@ -28,9 +45,18 @@ const hosts=[
 <div class="market-cal-controls"><button id="market-prev" type="button" aria-label="Previous month">←</button><strong id="market-month"></strong><button id="market-next" type="button" aria-label="Next month">→</button><button id="market-today" type="button">Current month</button></div>
 <div class="market-cal-grid" id="market-grid" aria-label="Calendar by month"></div>
 <div id="market-month-events" class="market-cal-events" aria-live="polite"></div>
-<p class="market-cal-note">Only confirmed dates are shown. Future seasonal schedules will be added when organizers publish them; a blank month does not mean no markets will take place.</p>
+<p class="market-cal-note">July–October 2026 dates are generated from published recurring schedules, not individually verified attendance. Weather and cancellations may affect individual dates. Future seasons will appear when their schedules are confirmed.</p>
 </section>
 <dialog id="market-detail" class="market-detail-dialog" aria-labelledby="market-detail-name"><div class="market-dialog-head"><h2 id="market-detail-name"></h2><button type="button" id="market-dialog-close" aria-label="Close details">×</button></div><p id="market-detail-host"></p><dl><dt>Date</dt><dd id="market-detail-date"></dd><dt>Hours</dt><dd id="market-detail-time"></dd><dt>Location</dt><dd id="market-detail-location"></dd></dl><p id="market-detail-description"></p><a id="market-detail-url" target="_blank" rel="noopener noreferrer">Official event information ↗</a></dialog>
+</div>
+<section class="food-tab-panel" id="panel-farmstands" role="tabpanel" aria-labelledby="tab-farmstands" hidden><h2>Farmstands & shops</h2><div class="food-grid">
+<article class="food-card"><h3>Forestdale Farmstand</h3><p>455 S Beech Dr, Flagstaff</p><p>Seasonal local produce, eggs and honey; hours and inventory vary.</p><a href="https://forestdalefarm.com/farmstand-2/" target="_blank" rel="noopener noreferrer">Farmstand information ↗</a></article>
+<article class="food-card"><h3>Flagstaff CSA & Local Market</h3><p>116 W Cottage Ave, Flagstaff</p><p>Produce, meat, dairy and groceries; not all items are grown in Northern Arizona.</p><a href="https://www.flagcsa.com/local-market" target="_blank" rel="noopener noreferrer">Shop information ↗</a></article>
+</div></section>
+<section class="food-tab-panel" id="panel-csas" role="tabpanel" aria-labelledby="tab-csas" hidden><h2>CSAs</h2><p>Community-supported agriculture programs offer produce shares or subscriptions. Check enrollment and pickup schedules with the farm.</p><div class="food-grid">
+<article class="food-card"><h3>Forestdale Farm CSA</h3><p>Flagstaff-grown seasonal produce shares.</p><a href="https://forestdalefarm.com/" target="_blank" rel="noopener noreferrer">CSA information ↗</a></article>
+<article class="food-card"><h3>Flagstaff CSA</h3><p>Produce boxes and online groceries, with pickup at 116 W Cottage Ave and possible delivery options.</p><a href="https://www.flagcsa.com/csa-subscriptions" target="_blank" rel="noopener noreferrer">Subscription information ↗</a></article>
+</div></section>
 </main>
 <script id="market-data" type="application/json" set:html={JSON.stringify(marketDates).replace(/</g,'\\u003c')}></script>
 <script>
@@ -83,6 +109,10 @@ document.getElementById('market-prev').onclick=()=>{month--;if(month<0){month=11
 document.getElementById('market-next').onclick=()=>{month++;if(month>11){month=0;year++;}draw();};
 document.getElementById('market-today').onclick=()=>{year=todayYear;month=todayMonth;draw();};
 draw();
+const tabs=[...document.querySelectorAll('.food-tab')];
+function showTab(btn){for(const tab of tabs){const active=tab===btn;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;document.getElementById(tab.getAttribute('aria-controls')).hidden=!active;}}
+for(const tab of tabs){tab.addEventListener('click',()=>{showTab(tab);history.replaceState(null,'','#'+tab.id.slice(4));});tab.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const next=tabs[(tabs.indexOf(tab)+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];showTab(next);next.focus();}});}
+const initial=tabs.find(t=>'#'+t.id.slice(4)===location.hash);if(initial)showTab(initial);
 </script>
 <p class="food-note">Dates, hours and availability can change. Check the linked source before visiting. The focus is food produced in Northern Arizona; some retailers also carry products from elsewhere.</p>
 </main></body></html>

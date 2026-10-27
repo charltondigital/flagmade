@@ -65,3 +65,5 @@
 .market-detail-dialog dl{display:grid;grid-template-columns:75px 1fr;gap:9px 15px;font-size:13px;margin:20px 0}
 .market-detail-dialog dt{font-weight:bold}.market-detail-dialog dd{margin:0}
 .market-detail-dialog>a{text-decoration:underline;font-size:13px}
+
+.food-tabs{display:flex;border-bottom:1px solid #ccc;gap:4px;margin:20px 0 25px}.food-tab{border:0;border-bottom:3px solid transparent;padding:11px 18px;background:transparent;color:#555}.food-tab.active{border-color:#2d7650;color:#222;font-weight:700}.food-tab-panel[hidden]{display:none!important}.food-tab-panel h2{font-size:19px}.food-tab-panel .food-card a{text-decoration:underline;font-size:13px}
