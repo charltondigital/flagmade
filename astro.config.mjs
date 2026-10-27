@@ -1,2 +1,2 @@
 import { defineConfig } from 'astro/config';
-export default defineConfig({ site: 'https://flagmade.org' });
+export default defineConfig({ site: 'https://flagmade.pages.dev' });
