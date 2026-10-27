@@ -17,7 +17,7 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
   <meta name="description" content="An independent, carefully curated calendar of Flagstaff arts, culture, science, local food, makers, and commerce." />
   <title>{title}</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="canonical" href="https://flagmade.org/" />
+  <link rel="canonical" href="https://flagmade.pages.dev/" />
 </head>
 <body>
   <header class="site-header">
@@ -72,13 +72,14 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
     const clear = document.querySelector('#clear');
     const reset = document.querySelector('#empty-reset');
     const now = new Date();
-    const today = new Intl.DateTimeFormat('en-CA',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
+    const localParts = (value, includeDay=true) => {const parts = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit',...(includeDay?{day:'2-digit'}:{})}).formatToParts(new Date(value));const get = t => parts.find(p=>p.type===t)?.value;return [get('year'),get('month'),...(includeDay?[get('day')]:[])].join('-');};
+    const today = localParts(now);
     const fmtDay = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',day:'2-digit'});
     const fmtMonth = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',month:'short'});
     const fmtDate = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',month:'short',day:'numeric',year:'numeric'});
     const fmtTime = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',hour:'numeric',minute:'2-digit',hour12:true});
-    const keyFor = value => {const d = new Date(value);return new Intl.DateTimeFormat('en-CA',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).format(d)};
-    const dateFor = value => new Intl.DateTimeFormat('en-CA',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(value));
+    const keyFor = value => localParts(value,false);
+    const dateFor = value => localParts(value);
     const esc = str => String(str ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const upcoming = events.filter(e => e.end ? dateFor(e.end)>=today : dateFor(e.start)>=today);
     const months = [...new Set(upcoming.map(e=>keyFor(e.start)))].sort();
