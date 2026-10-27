@@ -170,6 +170,123 @@
       "cadence": "weekly",
       "include": "leads for relevant original sources only",
       "exclude": "never treat aggregator as primary when organizer page exists"
+    },
+    {
+      "id": "theatrikos",
+      "name": "Theatrikos Theatre Company",
+      "url": "https://theatrikos.com/",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "mainstage theater and public literary productions",
+      "exclude": "exclude youth productions, generic fundraisers"
+    },
+    {
+      "id": "flagshakes",
+      "name": "Flagstaff Shakespeare Festival",
+      "url": "https://flagshakes.org/2026-season/",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "public Shakespeare and professionally staged plays",
+      "exclude": "exclude youth-targeted productions"
+    },
+    {
+      "id": "library",
+      "name": "Flagstaff City-Coconino County Public Library",
+      "url": "https://flagstaffpubliclibrary.libcal.com/",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "adult lectures, author visits, history and science talks",
+      "exclude": "exclude storytimes, kids clubs, school programs and general hobby social groups"
+    },
+    {
+      "id": "riordan",
+      "name": "Riordan Mansion State Historic Park",
+      "url": "https://azstateparks.com/riordan-mansion",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "heritage tours, history lectures and special programming",
+      "exclude": "exclude routine tour schedules unless special"
+    },
+    {
+      "id": "nau-music",
+      "name": "NAU Kitt School of Music",
+      "url": "https://nau.edu/college-arts-letters/music/",
+      "tier": "specialist",
+      "cadence": "weekly",
+      "include": "faculty recitals, visiting performers, major public ensemble concerts",
+      "exclude": "exclude routine student and youth recitals"
+    },
+    {
+      "id": "nau-cline",
+      "name": "NAU Cline Library",
+      "url": "https://nau.edu/library/",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "historical archive exhibitions, author talks and public lectures",
+      "exclude": "exclude internal university meetings"
+    },
+    {
+      "id": "parks",
+      "name": "Flagstaff Area National Monuments / NPS",
+      "url": "https://www.nps.gov/waca/planyourvisit/calendar.htm",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "Walnut Canyon, Wupatki and Sunset Crater ranger-led programs on archaeology and geology",
+      "exclude": "exclude generic visitor hours"
+    },
+    {
+      "id": "foodlink",
+      "name": "Flagstaff Foodlink",
+      "url": "https://flagstafffoodlink.com/projects/",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "gardening, seed swaps, small farms, educational workshops",
+      "exclude": "exclude unrelated fundraising and generic social events"
+    },
+    {
+      "id": "artwalk-original",
+      "name": "Flagstaff First Friday ArtWalk — Creative Flagstaff",
+      "url": "https://creativeflagstaff.org/art-walk/",
+      "tier": "core",
+      "cadence": "monthly",
+      "include": "gallery openings and fine-art events",
+      "exclude": "exclude bar stops, nightlife and restaurant specials"
+    },
+    {
+      "id": "urban-flea",
+      "name": "Flagstaff Urban Flea Market",
+      "url": "https://www.flagstaffmarket.com/",
+      "tier": "seasonal",
+      "cadence": "weekly-in-season",
+      "include": "regional arts, crafts and maker markets",
+      "exclude": "exclude nonmarket promotions"
+    },
+    {
+      "id": "downtown-wed-market",
+      "name": "Downtown Flagstaff Wednesday Farmers Market",
+      "url": "https://downtownflagstaff.org/events/wednesday-farmers-market",
+      "tier": "seasonal",
+      "cadence": "weekly-in-season",
+      "include": "regional farm produce and food producers",
+      "exclude": "exclude unrelated downtown entertainment"
+    },
+    {
+      "id": "artists-gallery",
+      "name": "The Artists' Gallery",
+      "url": "https://flagstaff-arts.org/",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "local gallery exhibitions, featured artists and studio demonstrations",
+      "exclude": "exclude retail promotions without cultural programming"
+    },
+    {
+      "id": "az-handmade",
+      "name": "Arizona Handmade / Fire on the Mountain",
+      "url": "https://arizonahandmade.com/",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "fine craft exhibitions, demonstrations and artisan openings",
+      "exclude": "exclude routine store opening hours"
     }
   ]
 }
