@@ -6,4 +6,21 @@ export function getStaticPaths(){
 }
 const {place}=Astro.props;
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={place.description}/><title>{place.name} — Flagmade</title></head><body><header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav><a href="/">Events</a><a href="/directory/">Directory</a><a href="/search/">Search</a></nav></div></header><main class="container"><article data-pagefind-body><h1>{place.name}</h1><p>{place.type}</p><p>{place.description}</p><p>{place.address}</p><div class="place-detail-links"><a href={place.url} target="_blank" rel="noopener noreferrer">Official website ↗</a><a href={"https://www.openstreetmap.org/search?query="+encodeURIComponent(place.address)} target="_blank" rel="noopener noreferrer">View on OpenStreetMap ↗</a></div></article><p><a href="/directory/">Back to Directory</a></p></main></body></html>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content={place.description}/><title>{place.name} — Flagmade</title></head><body><header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav><a href="/">Events</a><a href="/directory/">Directory</a><a href="/search/">Search</a></nav></div></header><main class="container"><article data-pagefind-body><h1>{place.name}</h1><p>{place.type}</p><p>{place.description}</p><p>{place.address}</p><div class="place-detail-links"><a href={place.url} target="_blank" rel="noopener noreferrer">Official website ↗</a><a class="get-directions" href={"https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(place.address)} data-address={place.address} target="_blank" rel="noopener noreferrer">Get directions ↗</a></div></article><p><a href="/directory/">Back to Directory</a></p></main>
+<script>
+  // One visible link: delegate to native mapping URL handlers on mobile,
+  // with a conventional HTTPS destination for desktop/unsupported clients.
+  const link = document.querySelector('.get-directions');
+  if (link) {
+    const address = link.dataset.address;
+    const encoded = encodeURIComponent(address);
+    const ua = navigator.userAgent || '';
+    if (/iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+      link.href = 'https://maps.apple.com/?daddr=' + encoded;
+    } else if (/Android/i.test(ua)) {
+      link.href = 'geo:0,0?q=' + encoded;
+      link.removeAttribute('target');
+    }
+  }
+</script>
+</body></html>
