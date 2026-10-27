@@ -76,7 +76,7 @@
 .food-page .food-tabs button:hover{background:#e5eae6;border-color:#84958b}
 .food-page .food-tabs button[aria-selected="true"]{background:#233b30;color:#fff;border-color:#233b30;box-shadow:0 1px 2px #0002}
 .food-page .host-community{--market-color:#21764b;--market-bg:#e1f3e7}
-.food-page .host-mountain{--market-color:#2559aa;--market-bg:#e4ecfc}
-.food-page .host-east{--market-color:#a44d80;--market-bg:#f8e6f0}
+.food-page .host-mountain{--market-color:#7543a1;--market-bg:#efe5f8}
+.food-page .host-east{--market-color:#b36b09;--market-bg:#fff1ce}
 .food-page .market-calendar-event{background:var(--market-bg)!important;border-left:4px solid var(--market-color)!important;color:#202020}
 .food-page .market-legend-item .market-swatch{background:var(--market-color)}
