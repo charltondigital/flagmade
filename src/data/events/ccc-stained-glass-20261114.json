@@ -6,13 +6,14 @@
   "category": "Makers & Commerce",
   "start": "2026-11-14T09:00:00-07:00",
   "end": "2026-11-14T16:00:00-07:00",
-  "venue": "Coconino Community College",
+  "venue": "Instructor's studio (address provided to registrants)",
   "city": "Flagstaff",
   "description": "A community education workshop introducing stained-glass craft. Check the college for registration and location.",
-  "url": "https://www.coconino.edu/community-education",
+  "url": "https://ccc-flagstaff.coursestorm.com/browse",
   "tags": [
     "glass",
     "craft",
     "workshop"
-  ]
+  ],
+  "price": "$110"
 }
