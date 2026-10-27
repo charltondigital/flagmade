@@ -620,7 +620,7 @@ const hosts=[
 <h2 id="market-calendar-title">Markets by date</h2>
 <div class="market-cal-controls"><button id="market-prev" type="button" aria-label="Previous month">←</button><strong id="market-month"></strong><button id="market-next" type="button" aria-label="Next month">→</button><button id="market-today" type="button">Current month</button></div>
 <div class="market-cal-grid" id="market-grid" aria-label="Calendar by month"></div>
-<div id="market-month-events" class="market-cal-events" aria-live="polite"></div>
+
 <p class="market-cal-note">July–October 2026 dates are generated from published recurring schedules, not individually verified attendance. Weather and cancellations may affect individual dates. Future seasons will appear when their schedules are confirmed.</p>
 </section>
 </div>
@@ -655,7 +655,7 @@ if(['markets','farmstands','csas'].includes(location.hash.slice(1)))activateTab(
 const dateParts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(new Date());
 const todayYear=Number(dateParts.find(p=>p.type==='year').value),todayMonth=Number(dateParts.find(p=>p.type==='month').value)-1;
 let year=todayYear,month=todayMonth;
-const grid=document.getElementById('market-grid'),monthName=document.getElementById('market-month'),details=document.getElementById('market-month-events');
+const grid=document.getElementById('market-grid'),monthName=document.getElementById('market-month');
 const dialog=document.getElementById('market-detail');
 const hostClass=host=>host==='Flagstaff Community Market'?'community':host==='Flagstaff Mountain Town Market'?'mountain':'east';
 const prettyDate=date=>new Date(date+'T12:00:00Z').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric',timeZone:'UTC'});
@@ -692,9 +692,6 @@ function draw(){
   events.filter(e=>e.date===date).forEach(e=>cell.append(makeEvent(e)));
   grid.append(cell);
  }
- details.replaceChildren();
- if(!events.length){const p=document.createElement('p');p.textContent='No confirmed market dates for this month.';details.append(p);}
- else for(const e of events){const row=document.createElement('div');row.className='market-cal-detail';const button=document.createElement('button');button.type='button';button.textContent=prettyDate(e.date)+' · '+e.name+' · '+e.time;button.className='market-list-button host-'+hostClass(e.operator);button.onclick=()=>openDetail(e);row.append(button);details.append(row);}
 }
 document.getElementById('market-prev').onclick=()=>{month--;if(month<0){month=11;year--;}draw();};
 document.getElementById('market-next').onclick=()=>{month++;if(month>11){month=0;year++;}draw();};

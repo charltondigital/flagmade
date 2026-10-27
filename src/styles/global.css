@@ -69,3 +69,14 @@
 .food-tabs{display:flex;border-bottom:1px solid #ccc;gap:4px;margin:20px 0 25px}.food-tab{border:0;border-bottom:3px solid transparent;padding:11px 18px;background:transparent;color:#555}.food-tab.active{border-color:#2d7650;color:#222;font-weight:700}.food-tab-panel[hidden]{display:none!important}.food-tab-panel h2{font-size:19px}.food-tab-panel .food-card a{text-decoration:underline;font-size:13px}
 
 .food-tabs{display:flex;border-bottom:1px solid #ccc;gap:22px;margin:22px 0}.food-tabs button{padding:11px 2px;background:transparent;border:0;border-bottom:2px solid transparent;font-weight:500;color:#666}.food-tabs button[aria-selected="true"]{border-bottom-color:#222;color:#222}.food-tabs button:focus-visible{outline:2px solid #315f97;outline-offset:2px}.food-page [role="tabpanel"][hidden]{display:none}.food-page [role="tabpanel"]>h2{font-size:18px}
+
+/* More visible food-page tabs and distinct organizer event colors */
+.food-page .food-tabs{border-bottom:0;gap:8px;margin:22px 0 24px;flex-wrap:wrap}
+.food-page .food-tabs button{border:1px solid #bfc5c1;border-radius:5px;background:#f1f3f1;color:#354039;font-weight:650;padding:11px 20px;min-width:112px;text-align:center;transition:background .12s,border-color .12s}
+.food-page .food-tabs button:hover{background:#e5eae6;border-color:#84958b}
+.food-page .food-tabs button[aria-selected="true"]{background:#233b30;color:#fff;border-color:#233b30;box-shadow:0 1px 2px #0002}
+.food-page .host-community{--market-color:#21764b;--market-bg:#e1f3e7}
+.food-page .host-mountain{--market-color:#2559aa;--market-bg:#e4ecfc}
+.food-page .host-east{--market-color:#a44d80;--market-bg:#f8e6f0}
+.food-page .market-calendar-event{background:var(--market-bg)!important;border-left:4px solid var(--market-color)!important;color:#202020}
+.food-page .market-legend-item .market-swatch{background:var(--market-color)}
