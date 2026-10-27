@@ -91,3 +91,17 @@ export const listings=[
  {id:"phoenix-avenue-gallery",name:"Phoenix Avenue Gallery",type:"Makers & shops",address:"2 S Beaver St #125, Flagstaff, AZ 86001",description:"Independent local art gallery.",url:"https://downtownflagstaff.org/shop-and-dine/shopping"},
  {id:"creative-spirits",name:"Creative Spirits",type:"Makers & shops",address:"13 N San Francisco St, Flagstaff, AZ 86001",description:"Creative retail and workshop space.",url:"https://downtownflagstaff.org/shop-and-dine/shopping"}
 ];
+
+// Canonical URL for a place. Directory cards, map popups, and generated pages
+// all derive their paths from the same record ID.
+export const placePath = (place) => '/places/' + encodeURIComponent(place.id) + '/';
+
+// Fail builds on duplicate or malformed IDs instead of silently generating
+// conflicting detail pages.
+const ids = new Set();
+for (const place of listings) {
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(place.id) || ids.has(place.id)) {
+    throw new Error('Invalid or duplicate directory place ID: ' + place.id);
+  }
+  ids.add(place.id);
+}
