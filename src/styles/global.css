@@ -36,3 +36,5 @@
 .directory-pagination{display:flex;gap:12px;align-items:center;padding:16px 0}.directory-pagination button{border:1px solid #ccc;background:#fff;padding:7px 12px}.directory-pagination button:disabled{opacity:.35}.directory-count{font-size:12px;color:#555}.flagmade-tiles{filter:saturate(.66) sepia(.13) hue-rotate(36deg)}
 
 .directory-links{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:9px}.directory-links>a{font-size:12px}.directory-links .map-focus{margin:0}.place-detail-links{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0}.place-detail-links a{font-size:14px}
+
+.place-about,.place-visit{max-width:660px;margin:26px 0}.place-about h2,.place-visit h2{font-size:17px;margin-bottom:9px}.place-about p,.place-visit p{font-size:15px;line-height:1.65}.place-type{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.05em}
