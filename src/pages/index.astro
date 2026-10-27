@@ -54,6 +54,12 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
     </section>
   </main>
 
+<dialog id="event-detail-dialog" class="event-detail-dialog" aria-labelledby="event-dialog-title">
+<div class="event-dialog-heading"><div><span id="event-dialog-category"></span><h2 id="event-dialog-title"></h2></div><button id="event-dialog-close" type="button" aria-label="Close event details">×</button></div>
+<p id="event-dialog-description"></p>
+<dl><dt>Organizer</dt><dd id="event-dialog-org"></dd><dt>When</dt><dd id="event-dialog-when"></dd><dt>Where</dt><dd id="event-dialog-where"></dd><dt>Admission</dt><dd id="event-dialog-price"></dd></dl>
+<a id="event-dialog-link" target="_blank" rel="noopener noreferrer">View details on organizer website ↗</a>
+</dialog>
   <script id="events-json" type="application/json" set:html={JSON.stringify(validEvents).replace(/</g,'\\u003c')}></script>
   <script>
     const events = JSON.parse(document.getElementById('events-json')?.textContent || '[]');
@@ -86,6 +92,25 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
     if(params.has('organization') && [...organization.options].some(o=>o.value===params.get('organization'))) organization.value=params.get('organization');
     if(params.has('month') && months.includes(params.get('month'))) month.value=params.get('month');
     if(params.has('q')) search.value=params.get('q') || '';
+    const eventDialog=document.querySelector('#event-detail-dialog');
+    function showEvent(e){
+      document.querySelector('#event-dialog-title').textContent=e.title;
+      const categoryEl=document.querySelector('#event-dialog-category');
+      categoryEl.textContent=e.category||'Event';
+      categoryEl.className=catClass(e.category);
+      document.querySelector('#event-dialog-description').textContent=e.description||'Please check the organizer for a full event description.';
+      document.querySelector('#event-dialog-org').textContent=e.organization||'Not specified';
+      const start=new Date(e.start),end=e.end?new Date(e.end):null;
+      document.querySelector('#event-dialog-when').textContent=fmtDate.format(start)+' · '+(e.allDay?'All day':fmtTime.format(start)+(end?' – '+(dateFor(e.end)===dateFor(e.start)?fmtTime.format(end):fmtDate.format(end)+' '+fmtTime.format(end)):''));
+      document.querySelector('#event-dialog-where').textContent=[e.venue,e.city].filter(Boolean).join(', ')||'See organizer';
+      document.querySelector('#event-dialog-price').textContent=e.price||'See organizer';
+      const link=document.querySelector('#event-dialog-link');
+      const url=new URL(e.url,location.origin);
+      link.href=['http:','https:'].includes(url.protocol)?url.href:'#';
+      if(!eventDialog.open)eventDialog.showModal();
+    }
+    document.querySelector('#event-dialog-close').onclick=()=>eventDialog.close();
+    eventDialog.addEventListener('click',e=>{if(e.target===eventDialog)eventDialog.close();});
     const eventsCalendarGrid=document.querySelector('#events-cal-grid');
     const eventsCalendarMonth=document.querySelector('#events-month');
     const currentParts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(new Date());
@@ -111,14 +136,13 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
         if(matches.length){btn.onclick=()=>{selectedDay=selectedDay===key?'':key;renderCalendar();render();document.querySelector('#result-count').scrollIntoView({behavior:'smooth',block:'center'});};}
         node.append(btn);
         for(const event of matches.sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){
-          const link=document.createElement('a');
-          link.className='calendar-event-title '+catClass(event.category);
-          link.href=event.url;
-          link.target='_blank';
-          link.rel='noopener noreferrer';
-          link.textContent=event.title;
-          link.title=event.title+' — '+event.organization;
-          node.append(link);
+          const button=document.createElement('button');
+          button.type='button';
+          button.className='calendar-event-title '+catClass(event.category);
+          button.textContent=event.title;
+          button.title=event.title+' — '+event.organization;
+          button.addEventListener('click',()=>showEvent(event));
+          node.append(button);
         }
         eventsCalendarGrid.append(node);
       }
