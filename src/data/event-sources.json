@@ -377,6 +377,15 @@
       "cadence": "weekly",
       "include": "specific November classes with age, time and fee",
       "exclude": "deduplicate against Tynkertopia parent source"
+    },
+    {
+      "id": "orpheum",
+      "name": "Orpheum Theater",
+      "url": "https://orpheumflagstaff.com/calendar/",
+      "tier": "specialist",
+      "cadence": "weekly",
+      "include": "Traditional music, documentaries and culturally relevant public markets and talks",
+      "exclude": "Rock/pop concerts, DJs, nightlife, paranormal or psychic shows, routine entertainment"
     }
   ]
 }
