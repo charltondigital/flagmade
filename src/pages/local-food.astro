@@ -1,25 +1,601 @@
 ---
 import '../styles/global.css';
-const marketDates = [];
-function addMarket(date,name,operator,time,location,details,url,sourceType='published recurring schedule'){
- marketDates.push({date,name,operator,time,location,details,url,sourceType});
-}
-function repeatWeekly(start,end,weekday,details){
- const cur=new Date(start+'T12:00:00Z'),finish=new Date(end+'T12:00:00Z');
- while(cur<=finish){if(cur.getUTCDay()===weekday) addMarket(cur.toISOString().slice(0,10),...details);cur.setUTCDate(cur.getUTCDate()+1);}
-}
-repeatWeekly('2026-07-01','2026-10-25',0,['Sunday Farmers Market','Flagstaff Community Market','8 AM–1 PM','City Hall, 211 W Aspen Ave','Farmers, ranchers, food producers, artisans and prepared food.','https://www.flagstaffmarket.com/sunday-farmers-market.html']);
-repeatWeekly('2026-07-01','2026-10-28',3,['Wednesday Farmers Market','Flagstaff Mountain Town Market','3–7 PM','Heritage Square, downtown Flagstaff','Seasonal produce, local foods and rotating vendors.','https://downtownflagstaff.org/events/wednesday-farmers-market']);
-repeatWeekly('2026-07-01','2026-10-31',6,['Saturday Farmers Market','Flagstaff Mountain Town Market','9 AM–1 PM','Pine Forest School, Fourth & Cedar','Regional farm produce, baked goods and other foods; check organizer for weekly details.','https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/']);
-for(let m=6;m<=9;m++){
- const d=new Date(Date.UTC(2026,m,1,12));
- while(d.getUTCDay()!==6)d.setUTCDate(d.getUTCDate()+1);
- d.setUTCDate(d.getUTCDate()+7);
- for(let k=0;k<2;k++){addMarket(d.toISOString().slice(0,10),'Flagstaff Urban Flea Market','Flagstaff Community Market','9 AM–2 PM','City Hall, 211 W Aspen Ave','Vintage goods, crafts, makers and changing food vendors.','https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html');d.setUTCDate(d.getUTCDate()+14);}
-}
-for(const date of ['2026-07-18','2026-08-15','2026-09-19'])addMarket(date,'East Flagstaff Community Market','East Flagstaff Community Market','8 AM–1 PM','Flagstaff Mall, 4650 US Highway 89','Local artists, craft vendors and food trucks.','https://eastflagcm.com/','published event dates');
-for(const date of ['2026-12-05','2026-12-06'])addMarket(date,'Sleigh Winter Market','Flagstaff Community Market','11 AM–3 PM','City Hall, 211 W Aspen Ave','Holiday crafts, makers and some specialty food vendors.','https://www.flagstaffmarket.com/','published event dates');
-marketDates.sort((a,b)=>a.date.localeCompare(b.date)||a.name.localeCompare(b.name));
+const marketDates = [
+  {
+    "date": "2026-07-01",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-07-04",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-07-05",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-07-08",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-07-11",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-07-11",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-07-12",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-07-15",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-07-18",
+    "name": "East Flagstaff Community Market",
+    "operator": "East Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff Mall parking lot, near Desert Financial Credit Union",
+    "details": "Local arts, crafts and prepared-food vendors; farm produce not consistently confirmed.",
+    "url": "https://eastflagcm.com/"
+  },
+  {
+    "date": "2026-07-18",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-07-19",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-07-22",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-07-25",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-07-25",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-07-26",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-07-29",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-08-01",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-08-02",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-08-05",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-08-08",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-08-08",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-08-09",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-08-12",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-08-15",
+    "name": "East Flagstaff Community Market",
+    "operator": "East Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff Mall parking lot, near Desert Financial Credit Union",
+    "details": "Local arts, crafts and prepared-food vendors; farm produce not consistently confirmed.",
+    "url": "https://eastflagcm.com/"
+  },
+  {
+    "date": "2026-08-15",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-08-16",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-08-19",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-08-22",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-08-22",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-08-23",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-08-26",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-08-29",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-08-30",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-09-02",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-09-05",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-09-06",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-09-09",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-09-12",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-09-12",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-09-13",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-09-16",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-09-19",
+    "name": "East Flagstaff Community Market",
+    "operator": "East Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff Mall parking lot, near Desert Financial Credit Union",
+    "details": "Local arts, crafts and prepared-food vendors; farm produce not consistently confirmed.",
+    "url": "https://eastflagcm.com/"
+  },
+  {
+    "date": "2026-09-19",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-09-20",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-09-23",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-09-26",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-09-26",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-09-27",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-09-30",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-10-03",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-10-04",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-10-07",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-10-10",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-10-10",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-10-11",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-10-14",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-10-17",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-10-18",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-10-21",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-10-24",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-10-24",
+    "name": "Urban Flea Market",
+    "operator": "Flagstaff Community Market",
+    "time": "9 AM–2 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Vintage, antiques, handmade goods, plants and varying local food vendors.",
+    "url": "https://www.flagstaffmarket.com/flagstaff-urban-flea-market.html"
+  },
+  {
+    "date": "2026-10-25",
+    "name": "Sunday Farmers Market",
+    "operator": "Flagstaff Community Market",
+    "time": "8 AM–1 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Farmers, ranchers, local food producers and other small vendors.",
+    "url": "https://www.flagstaffmarket.com/sunday-farmers-market.html"
+  },
+  {
+    "date": "2026-10-28",
+    "name": "Wednesday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "3–7 PM",
+    "location": "Heritage Square, downtown Flagstaff",
+    "details": "Seasonal produce, baked goods and other food from regional producers.",
+    "url": "https://downtownflagstaff.org/events/wednesday-farmers-market"
+  },
+  {
+    "date": "2026-10-31",
+    "name": "Saturday Farmers Market",
+    "operator": "Flagstaff Mountain Town Market",
+    "time": "9 AM–1 PM",
+    "location": "Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)",
+    "details": "Local produce, plants, bread and regional food vendors.",
+    "url": "https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/"
+  },
+  {
+    "date": "2026-12-05",
+    "name": "Sleigh Winter Market",
+    "operator": "Flagstaff Community Market",
+    "time": "11 AM–3 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Holiday market with local makers and some specialty food vendors. Selection varies.",
+    "url": "https://www.flagstaffmarket.com/"
+  },
+  {
+    "date": "2026-12-06",
+    "name": "Sleigh Winter Market",
+    "operator": "Flagstaff Community Market",
+    "time": "11 AM–3 PM",
+    "location": "Flagstaff City Hall, 211 W Aspen Ave",
+    "details": "Holiday market with local makers and some specialty food vendors. Selection varies.",
+    "url": "https://www.flagstaffmarket.com/"
+  }
+];
 const hosts=[
  {name:'Flagstaff Community Market',id:'community'},
  {name:'Flagstaff Mountain Town Market',id:'mountain'},
@@ -47,6 +623,15 @@ const hosts=[
 <div id="market-month-events" class="market-cal-events" aria-live="polite"></div>
 <p class="market-cal-note">July–October 2026 dates are generated from published recurring schedules, not individually verified attendance. Weather and cancellations may affect individual dates. Future seasons will appear when their schedules are confirmed.</p>
 </section>
+</div>
+<section id="panel-farmstands" role="tabpanel" aria-labelledby="tab-farmstands" hidden><h2>Farmstands & local food shops</h2><div class="food-grid">
+<article class="food-card"><h3>Forestdale Farmstand</h3><p>455 S Beech Dr · Seasonal, generally mid-May through early December. Flagstaff-grown vegetables, eggs and honey.</p><a href="https://forestdalefarm.com/farmstand-2/" target="_blank" rel="noopener noreferrer">Farmstand information ↗</a></article>
+<article class="food-card"><h3>Flagstaff CSA & Local Market</h3><p>116 W Cottage Ave · Mon–Sat, 10 AM–6 PM; Sun, 10 AM–2 PM. Arizona produce, meat, dairy, eggs and groceries; not everything is Northern Arizona-grown.</p><a href="https://www.flagcsa.com/local-market" target="_blank" rel="noopener noreferrer">Store information ↗</a></article>
+</div></section>
+<section id="panel-csas" role="tabpanel" aria-labelledby="tab-csas" hidden><h2>Community-supported agriculture</h2><div class="food-grid">
+<article class="food-card"><h3>Flagstaff CSA</h3><p>Weekly produce subscriptions and online ordering, with pickup at 116 W Cottage Ave and delivery options. Farm origins vary.</p><a href="https://www.flagcsa.com/csa-subscriptions" target="_blank" rel="noopener noreferrer">Subscriptions & pickup ↗</a></article>
+<article class="food-card"><h3>Forestdale Farm CSA</h3><p>Seasonal shares of locally grown vegetables and herbs. Check the farm for current enrollment.</p><a href="https://forestdalefarm.com/" target="_blank" rel="noopener noreferrer">Farm shares ↗</a></article>
+</div></section>
 <dialog id="market-detail" class="market-detail-dialog" aria-labelledby="market-detail-name"><div class="market-dialog-head"><h2 id="market-detail-name"></h2><button type="button" id="market-dialog-close" aria-label="Close details">×</button></div><p id="market-detail-host"></p><dl><dt>Date</dt><dd id="market-detail-date"></dd><dt>Hours</dt><dd id="market-detail-time"></dd><dt>Location</dt><dd id="market-detail-location"></dd></dl><p id="market-detail-description"></p><a id="market-detail-url" target="_blank" rel="noopener noreferrer">Official event information ↗</a></dialog>
 </div>
 <section class="food-tab-panel" id="panel-farmstands" role="tabpanel" aria-labelledby="tab-farmstands" hidden><h2>Farmstands & shops</h2><div class="food-grid">
@@ -57,10 +642,16 @@ const hosts=[
 <article class="food-card"><h3>Forestdale Farm CSA</h3><p>Flagstaff-grown seasonal produce shares.</p><a href="https://forestdalefarm.com/" target="_blank" rel="noopener noreferrer">CSA information ↗</a></article>
 <article class="food-card"><h3>Flagstaff CSA</h3><p>Produce boxes and online groceries, with pickup at 116 W Cottage Ave and possible delivery options.</p><a href="https://www.flagcsa.com/csa-subscriptions" target="_blank" rel="noopener noreferrer">Subscription information ↗</a></article>
 </div></section>
-</main>
 <script id="market-data" type="application/json" set:html={JSON.stringify(marketDates).replace(/</g,'\\u003c')}></script>
 <script>
 const records=JSON.parse(document.getElementById('market-data').textContent);
+const tabs=[...document.querySelectorAll('.food-tabs [role="tab"]')];
+function activateTab(id,focus=false){
+ for(const tab of tabs){const chosen=tab.id===id;tab.setAttribute('aria-selected',String(chosen));tab.tabIndex=chosen?0:-1;document.getElementById(tab.getAttribute('aria-controls')).hidden=!chosen;if(chosen&&focus)tab.focus();}
+ if(history.replaceState)history.replaceState(null,'','#'+id.slice(4));
+}
+tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>activateTab(tab.id));tab.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();activateTab(tabs[(index+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length].id,true);}});});
+if(['markets','farmstands','csas'].includes(location.hash.slice(1)))activateTab('tab-'+location.hash.slice(1));
 const dateParts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(new Date());
 const todayYear=Number(dateParts.find(p=>p.type==='year').value),todayMonth=Number(dateParts.find(p=>p.type==='month').value)-1;
 let year=todayYear,month=todayMonth;
