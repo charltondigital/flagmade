@@ -44,7 +44,9 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
   back.addEventListener('click',()=>{page--;update();});forward.addEventListener('click',()=>{page++;update();});
   if(typeof L.markerClusterGroup==='function'){
     try{
-      map=L.map('directory-map',{scrollWheelZoom:false}).setView([35.1978,-111.6485],14);
+      map=L.map('directory-map',{scrollWheelZoom:false});
+      // Cover Kachina Village (southwest) through Doney Park (northeast) at initial load.
+      map.fitBounds([[35.075,-111.715],[35.265,-111.475]],{padding:[12,12]});
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors',className:'flagmade-tiles'}).addTo(map);
       cluster=L.markerClusterGroup({showCoverageOnHover:false,spiderfyOnMaxZoom:true,maxClusterRadius:42});
       cluster.addTo(map);
