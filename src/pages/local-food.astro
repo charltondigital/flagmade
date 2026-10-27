@@ -697,10 +697,6 @@ document.getElementById('market-prev').onclick=()=>{month--;if(month<0){month=11
 document.getElementById('market-next').onclick=()=>{month++;if(month>11){month=0;year++;}draw();};
 document.getElementById('market-today').onclick=()=>{year=todayYear;month=todayMonth;draw();};
 draw();
-const tabs=[...document.querySelectorAll('.food-tab')];
-function showTab(btn){for(const tab of tabs){const active=tab===btn;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;document.getElementById(tab.getAttribute('aria-controls')).hidden=!active;}}
-for(const tab of tabs){tab.addEventListener('click',()=>{showTab(tab);history.replaceState(null,'','#'+tab.id.slice(4));});tab.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const next=tabs[(tabs.indexOf(tab)+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];showTab(next);next.focus();}});}
-const initial=tabs.find(t=>'#'+t.id.slice(4)===location.hash);if(initial)showTab(initial);
 </script>
 <p class="food-note">Dates, hours and availability can change. Check the linked source before visiting. The focus is food produced in Northern Arizona; some retailers also carry products from elsewhere.</p>
 </main></body></html>
