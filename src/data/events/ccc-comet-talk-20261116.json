@@ -9,8 +9,9 @@
   "venue": "Coconino Community College",
   "city": "Flagstaff",
   "description": "A community lecture in CCC's Comet Talk series.",
-  "url": "https://www.coconino.edu/community-education",
+  "url": "https://ccc-flagstaff.coursestorm.com/browse",
   "tags": [
     "lecture"
-  ]
+  ],
+  "price": "Free"
 }
