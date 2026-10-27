@@ -1,5 +1,10 @@
 ---
 import '../styles/global.css';
+const marketDates = [
+  {date:'2026-10-28',name:'Wednesday Farmers Market',operator:'Mountain Town Market',time:'3–7 PM',location:'Heritage Square',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
+  {date:'2026-12-05',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'City Hall',url:'https://www.flagstaffmarket.com/'},
+  {date:'2026-12-06',name:'Sleigh Winter Market',operator:'Flagstaff Community Market',time:'11 AM–3 PM',location:'City Hall',url:'https://www.flagstaffmarket.com/'}
+];
 const groups=[
 {heading:'Markets',items:[
 {name:'Flagstaff Community Market',markets:[
@@ -33,5 +38,39 @@ const groups=[
 <h1>Local Food</h1>
 <p class="food-intro">Where to buy food grown, raised or produced in Northern Arizona.</p>
 {groups.map(group=><section class="food-section"><h2>{group.heading}</h2><div class="food-grid">{group.items.map(item=><article class="food-card"><h3>{item.markets ? item.name : <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name} ↗</a>}</h3>{item.markets ? <div class="market-options">{item.markets.map(market=><div class="market-option"><a href={market.url} target="_blank" rel="noopener noreferrer"><strong>{market.name} ↗</strong></a><p>{market.location}</p><p>{market.schedule}</p></div>)}</div> : <><p><strong>Where:</strong> {item.location}</p><p><strong>When:</strong> {item.schedule}</p></>}<p><strong>Food:</strong> {item.products}</p></article>)}</div></section>)}
+<section class="market-calendar" aria-labelledby="market-calendar-title">
+<h2 id="market-calendar-title">Market calendar</h2>
+<div class="market-cal-controls"><button id="market-prev" type="button" aria-label="Previous month">←</button><strong id="market-month"></strong><button id="market-next" type="button" aria-label="Next month">→</button><button id="market-today" type="button">Current month</button></div>
+<div class="market-cal-grid" id="market-grid" aria-label="Calendar by month"></div>
+<div id="market-month-events" class="market-cal-events" aria-live="polite"></div>
+<p class="market-cal-note">Only dates confirmed from published schedules are displayed. Seasonal or tentative markets remain in the listings above until new dates are confirmed.</p>
+</section>
+<script id="market-data" type="application/json" set:html={JSON.stringify(marketDates).replace(/</g,'\\u003c')}></script>
+<script>
+const records=JSON.parse(document.getElementById('market-data').textContent);
+const now=new Date();
+const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(now);
+let year=Number(parts.find(p=>p.type==='year').value);
+let month=Number(parts.find(p=>p.type==='month').value)-1;
+const monthName=document.querySelector('#market-month'),grid=document.querySelector('#market-grid'),details=document.querySelector('#market-month-events');
+const maxMonth = new Date(Date.UTC(2027,11,1));const minMonth=new Date(Date.UTC(2026,0,1));
+const escapeHTML=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function draw(){
+  const first=new Date(Date.UTC(year,month,1));
+  monthName.textContent=first.toLocaleDateString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
+  const prefix=first.getUTCDay(),count=new Date(Date.UTC(year,month+1,0)).getUTCDate(),key=`${year}-${String(month+1).padStart(2,'0')}`;
+  grid.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(day=>`<div class="market-weekday">${day}</div>`).join('');
+  for(let i=0;i<prefix;i++)grid.insertAdjacentHTML('beforeend','<div class="market-day blank"></div>');
+  const monthEvents=records.filter(e=>e.date.startsWith(key));
+  for(let d=1;d<=count;d++){const date=`${key}-${String(d).padStart(2,'0')}`,events=monthEvents.filter(e=>e.date===date);grid.insertAdjacentHTML('beforeend',`<div class="market-day"><span class="day-num">${d}</span>${events.map(e=>`<a href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer" class="market-calendar-event" title="${escapeHTML(e.operator+' — '+e.name)}">${escapeHTML(e.name)}<small>${escapeHTML(e.time)}</small></a>`).join('')}</div>`);}
+  details.innerHTML=monthEvents.length?monthEvents.map(e=>`<div class="market-cal-detail"><strong>${escapeHTML(e.date.slice(5))}</strong> <a href="${escapeHTML(e.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(e.name)}</a> · ${escapeHTML(e.operator)} · ${escapeHTML(e.time)} · ${escapeHTML(e.location)}</div>`).join(''):'<p>No confirmed market dates for this month.</p>';
+  document.querySelector('#market-prev').disabled=first<=minMonth;
+  document.querySelector('#market-next').disabled=first>=maxMonth;
+}
+document.querySelector('#market-prev').addEventListener('click',()=>{month--;if(month<0){month=11;year--;}draw();});
+document.querySelector('#market-next').addEventListener('click',()=>{month++;if(month>11){month=0;year++;}draw();});
+document.querySelector('#market-today').addEventListener('click',()=>{year=Number(parts.find(p=>p.type==='year').value);month=Number(parts.find(p=>p.type==='month').value)-1;draw();});
+draw();
+</script>
 <p class="food-note">Dates, hours and availability can change. Check the linked source before visiting. The focus is food produced in Northern Arizona; some retailers also carry products from elsewhere.</p>
 </main></body></html>
