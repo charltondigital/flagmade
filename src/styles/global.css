@@ -32,3 +32,5 @@
 .directory-layout input[type=search]{display:block;width:100%;height:38px;border:1px solid #ccc;padding:0 9px;margin:0 0 14px;background:#fff}.directory-layout .directory-item[hidden]{display:none!important}
 
 .directory-point{background:transparent;border:0}.directory-point span{display:block;width:14px;height:14px;border:2px solid white;border-radius:50%;background:#222;box-shadow:0 0 0 1px #222}.directory-page .leaflet-container{font-family:Arial, sans-serif}
+
+.directory-pagination{display:flex;gap:12px;align-items:center;padding:16px 0}.directory-pagination button{border:1px solid #ccc;background:#fff;padding:7px 12px}.directory-pagination button:disabled{opacity:.35}.directory-count{font-size:12px;color:#555}.flagmade-tiles{filter:saturate(.66) sepia(.13) hue-rotate(36deg)}
