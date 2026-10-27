@@ -38,3 +38,6 @@
 .directory-links{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:9px}.directory-links>a{font-size:12px}.directory-links .map-focus{margin:0}.place-detail-links{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0}.place-detail-links a{font-size:14px}
 
 .place-about,.place-visit{max-width:660px;margin:26px 0}.place-about h2,.place-visit h2{font-size:17px;margin-bottom:9px}.place-about p,.place-visit p{font-size:15px;line-height:1.65}.place-type{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.05em}
+
+/* Remove this banner and the noindex policy together at public launch; see LAUNCH-CHECKLIST.md */
+.construction-banner{padding:9px 16px;text-align:center;background:#e8ebdf;color:#273629;border-bottom:1px solid #bfc8b2;font-size:12px;line-height:1.45}.construction-banner strong{font-weight:700}
