@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "lastReviewed": "2026-10-27",
+  "policy": {
+    "audience": "Flagstaff residents",
+    "include": "Public-facing arts, culture, science, history, archaeology, scholarly talks, classical/folk music, significant exhibitions, craft fairs, local producers and farmers markets",
+    "exclude": [
+      "nightlife",
+      "bar and brewery events",
+      "rock and pop concerts",
+      "pseudoscience and spiritual wellness events",
+      "routine student/youth performances",
+      "school-only programs",
+      "generic promotions",
+      "fundraising-only events",
+      "member-only events"
+    ],
+    "notes": "Evening astronomy lectures and formal theater performances are not nightlife; evaluate content and setting. All scraped candidates require source/date verification before status published."
+  },
+  "sources": [
+    {
+      "id": "lowell",
+      "name": "Lowell Observatory",
+      "url": "https://lowell.edu/visit/event-calendar/",
+      "tier": "core",
+      "cadence": "twice-weekly",
+      "include": "astronomy talks, special scientific programs, observing events",
+      "exclude": "exclude routine movies and generic visitor experiences"
+    },
+    {
+      "id": "mna",
+      "name": "Museum of Northern Arizona",
+      "url": "https://musnaz.org/events/",
+      "tier": "core",
+      "cadence": "twice-weekly",
+      "include": "archaeology, history, art, museum tours, Indigenous culture, markets",
+      "exclude": "exclude mainly children's craft sessions"
+    },
+    {
+      "id": "cca",
+      "name": "Coconino Center for the Arts",
+      "url": "https://coconinoarts.org/",
+      "tier": "core",
+      "cadence": "twice-weekly",
+      "include": "art exhibitions, professional theater, artist workshops",
+      "exclude": "exclude rock/pop concerts, generic entertainment"
+    },
+    {
+      "id": "symphony",
+      "name": "Flagstaff Symphony Orchestra",
+      "url": "https://www.flagstaffsymphony.org/events/",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "orchestral concerts and notable collaborations",
+      "exclude": "exclude fundraisers lacking cultural programming and youth showcases"
+    },
+    {
+      "id": "nau-cal",
+      "name": "NAU College of Arts & Letters",
+      "url": "https://www.naucalevents.org/",
+      "tier": "core",
+      "cadence": "twice-weekly",
+      "include": "public faculty performances, opera, theater, lectures, film series",
+      "exclude": "exclude routine student recitals, club meetings and academic administration"
+    },
+    {
+      "id": "ccc",
+      "name": "Coconino Community College",
+      "url": "https://www.coconino.edu/events",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "science nights, public lectures, craft workshops",
+      "exclude": "exclude registration deadlines, student activities and career events"
+    },
+    {
+      "id": "creative",
+      "name": "Creative Flagstaff ArtWalk",
+      "url": "https://creativeflagstaff.org/art-walk/",
+      "tier": "core",
+      "cadence": "monthly",
+      "include": "gallery openings and substantive artist programming",
+      "exclude": "do not copy every pub, restaurant, or nightlife listing"
+    },
+    {
+      "id": "brightside",
+      "name": "Bright Side Bookshop",
+      "url": "https://brightsidebookshop.com/events",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "author readings, literary talks, local-history tours",
+      "exclude": "exclude storytime, youth book clubs, midnight parties, generic promotions"
+    },
+    {
+      "id": "ffotm",
+      "name": "Flagstaff Friends of Traditional Music",
+      "url": "https://ffotm.org/",
+      "tier": "core",
+      "cadence": "weekly",
+      "include": "folk/bluegrass festivals, selected traditional music presentations",
+      "exclude": "exclude weekly jams and bar entertainment"
+    },
+    {
+      "id": "market",
+      "name": "Flagstaff Community Market",
+      "url": "https://www.flagstaffmarket.com/",
+      "tier": "core",
+      "cadence": "weekly-in-season",
+      "include": "farmers markets and independent maker markets",
+      "exclude": "seasonal schedules must be confirmed"
+    },
+    {
+      "id": "cas",
+      "name": "Coconino Astronomical Society",
+      "url": "https://coconinoastro.org/Calendar.php",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "public astronomy presentations and star parties",
+      "exclude": "exclude members-only meetings"
+    },
+    {
+      "id": "darkskies",
+      "name": "Flagstaff Dark Skies Coalition",
+      "url": "https://flagstaffdarkskies.org/events/",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "public astronomy, dark-sky education and exhibits",
+      "exclude": "exclude unrelated social events"
+    },
+    {
+      "id": "scifest",
+      "name": "Flagstaff Festival of Science",
+      "url": "https://scifest.org/",
+      "tier": "seasonal",
+      "cadence": "weekly-in-season",
+      "include": "science lectures, demos, tours and field programs",
+      "exclude": "exclude fundraising galas and school-only programs"
+    },
+    {
+      "id": "arb",
+      "name": "The Arboretum at Flagstaff",
+      "url": "https://thearb.org/events/",
+      "tier": "seasonal",
+      "cadence": "weekly-in-season",
+      "include": "botany, natural science, plant sales, exhibitions",
+      "exclude": "exclude brewery talks and routine visitor hours"
+    },
+    {
+      "id": "chorale",
+      "name": "Master Chorale of Flagstaff",
+      "url": "https://www.masterchorale.net/seasonschedule",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "significant public choral performances",
+      "exclude": "exclude youth-focused performances"
+    },
+    {
+      "id": "artists-coalition",
+      "name": "Artists' Coalition of Flagstaff",
+      "url": "https://www.flagstaff-arts.org/general-events",
+      "tier": "specialist",
+      "cadence": "monthly",
+      "include": "open studios, plein air events, artist exhibits",
+      "exclude": "exclude member meetings and registration deadlines"
+    },
+    {
+      "id": "flagstaff365",
+      "name": "Flagstaff 365",
+      "url": "https://flagstaff365.com/",
+      "tier": "secondary",
+      "cadence": "weekly",
+      "include": "leads for relevant original sources only",
+      "exclude": "never treat aggregator as primary when organizer page exists"
+    }
+  ]
+}
