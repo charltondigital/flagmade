@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+const groups=[
+{heading:'Markets',items:[
+{name:'Sunday Farmers Market',location:'City Hall, 211 W Aspen Ave',schedule:'Sundays, 8 AM–1 PM · May–October (2026 season ended Oct 25)',products:'Regional produce, meat, eggs, honey and prepared foods',url:'https://www.flagstaffmarket.com/'},
+{name:'Saturday Mountain Town Market',location:'Pine Forest School, 2257 E Cedar Ave (Fourth & Cedar)',schedule:'Saturdays, 9 AM–1 PM · May–October',products:'Locally grown produce, starter plants, bread and other foods',url:'https://www.flagstaffarizona.org/blog/farmers-market-offer-fresh-vegetables-and-flowers/'},
+{name:'Wednesday Farmers Market',location:'Heritage Square, downtown Flagstaff',schedule:'Wednesdays, 3–7 PM · May 27–Oct 28, 2026',products:'Seasonal produce, yogurt, bread, honey, meat and regional foods',url:'https://downtownflagstaff.org/events/wednesday-farmers-market'},
+{name:'Sleigh Winter Market',location:'City Hall, 211 W Aspen Ave',schedule:'December 5–6, 2026 · 11 AM–3 PM',products:'Seasonal local makers and producers; individual food vendors vary',url:'https://www.flagstaffmarket.com/'}
+]},
+{heading:'Stores & farmstands',items:[
+{name:'Flagstaff CSA & Local Market',location:'116 W Cottage Ave',schedule:'Mon–Sat, 10 AM–6 PM; Sun, 10 AM–2 PM',products:'Arizona produce, meat, dairy, eggs and pantry staples; not all inventory is Northern Arizona-grown',url:'https://www.flagcsa.com/local-market'},
+{name:'Forestdale Farmstand',location:'455 S Beech Dr',schedule:'Daytime self-service; seasonal produce generally mid-May to early December (confirm before visiting)',products:'Flagstaff-grown produce, eggs and honey',url:'https://forestdalefarm.com/farmstand-2/'}
+]},
+{heading:'Order & pickup',items:[
+{name:'Flagstaff CSA subscriptions and online orders',location:'Pickup at 116 W Cottage Ave; delivery options',schedule:'Weekly produce boxes and à-la-carte online ordering',products:'Produce and groceries; verify each item’s farm origin',url:'https://www.flagcsa.com/csa-subscriptions'},
+{name:'Forestdale Farm CSA',location:'Forestdale Farm, 455 S Beech Dr',schedule:'Seasonal farm shares; check current enrollment',products:'Locally grown vegetables and herbs',url:'https://forestdalefarm.com/'}
+]}
+];
+---
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Local Food — Flagmade</title><meta name="description" content="Where to buy locally grown and produced food in Flagstaff, Arizona: markets, farmstands, groceries and CSA pickup."/><link rel="canonical" href="https://flagmade.pages.dev/local-food/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/></head>
+<body>
+<header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/" aria-current="page">Local Food</a></nav></div></header>
+<main class="container food-page">
+<h1>Local Food</h1>
+<p class="food-intro">Where to buy food grown, raised or produced in Northern Arizona.</p>
+{groups.map(group=><section class="food-section"><h2>{group.heading}</h2><div class="food-grid">{group.items.map(item=><article class="food-card"><h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name} ↗</a></h3><p><strong>Where:</strong> {item.location}</p><p><strong>When:</strong> {item.schedule}</p><p><strong>Food:</strong> {item.products}</p></article>)}</div></section>)}
+<p class="food-note">Dates, hours and availability can change. Check the linked source before visiting. The focus is food produced in Northern Arizona; some retailers also carry products from elsewhere.</p>
+</main></body></html>
