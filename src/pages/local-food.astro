@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import PageHero from '../components/PageHero.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 const marketDates = [
   {
@@ -607,11 +609,10 @@ const hosts=[
 <html lang="en">
 <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Local Food — Flagmade</title><meta name="description" content="A calendar of farmers, flea, and artisan markets in Flagstaff, organized by host."/><link rel="canonical" href="https://flagmade.pages.dev/local-food/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head>
 <body>
-<div class="construction-banner" role="status"><strong>Under construction.</strong> Flagmade is being developed; listings and schedules may change.</div>
-<header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/" aria-current="page">Local Food</a><a href="/directory/">Directory</a><a href="/search/">Search</a></nav></div></header>
+<SiteHeader active="Local Food" />
+<PageHero title="Local Food" subtitle="Flagstaff markets, farmstands and community-supported agriculture." />
 <main class="container food-page market-only">
-<h1>Local Food</h1>
-<p class="food-intro">Flagstaff markets, farmstands and community-supported agriculture.</p>
+
 <div class="food-tabs" role="tablist" aria-label="Local food categories"><button class="food-tab active" id="tab-markets" type="button" role="tab" aria-selected="true" aria-controls="panel-markets">Markets</button><button class="food-tab" id="tab-farmstands" type="button" role="tab" aria-selected="false" aria-controls="panel-farmstands" tabindex="-1">Farmstands</button><button class="food-tab" id="tab-csas" type="button" role="tab" aria-selected="false" aria-controls="panel-csas" tabindex="-1">CSAs</button></div>
 <div id="panel-markets" role="tabpanel" aria-labelledby="tab-markets">
 <div class="market-legend" aria-label="Market organizers">
