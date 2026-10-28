@@ -128,3 +128,10 @@
 @media(max-width:740px){.farmstand-layout{grid-template-columns:1fr}.farmstand-map-wrap{grid-row:auto}}
 
 }
+
+/* Compact chronological events list */
+#event-list .event-day-heading{font-size:16px;font-weight:700;line-height:1.4;margin:25px 0 6px;padding-bottom:9px;border-bottom:1px solid #d8d8d8}
+#event-list .event-day-heading:first-child{margin-top:12px}
+#event-list .event-card{grid-template-columns:82px minmax(0,1fr);gap:14px;padding:13px 0 13px 13px}
+#event-list .event-time-column{font-size:12px;font-weight:600;color:#333;padding-top:3px;white-space:nowrap}
+@media(max-width:540px){#event-list .event-card{grid-template-columns:68px minmax(0,1fr);gap:9px;padding-left:9px}#event-list .event-time-column{font-size:11px}}
