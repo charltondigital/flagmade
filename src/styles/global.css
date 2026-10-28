@@ -148,3 +148,13 @@
 .directory-kind .directory-icon{width:18px;height:18px;color:#26734d}
 .directory-point{background:#25694a;border:2px solid white;box-shadow:0 2px 7px #0005;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff}
 .directory-point .map-icon{width:17px;height:17px;stroke-width:2.2}
+
+/* The eight public-facing event categories. */
+.cat-art{--event-border:#8c4cab;--event-light:#f1e6f5}
+.cat-music{--event-border:#d04f52;--event-light:#fceaea}
+.cat-theater{--event-border:#a65f8f;--event-light:#f7eaf3}
+.cat-science{--event-border:#327d9f;--event-light:#e5f0f6}
+.cat-history{--event-border:#a56b32;--event-light:#f8ecdf}
+.cat-makers{--event-border:#c07832;--event-light:#faf0e1}
+.cat-markets{--event-border:#398153;--event-light:#e8f4e9}
+.cat-literature{--event-border:#4c679c;--event-light:#e8edf8}
