@@ -126,7 +126,8 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
     const dayKey=day=>day.toISOString().slice(0,10);
     const addDays=(key,days)=>{const day=utcDay(key);day.setUTCDate(day.getUTCDate()+days);return dayKey(day);};
     const weekBeginning=key=>addDays(key,-utcDay(key).getUTCDay());
-    let visibleWeek=weekBeginning(today);
+    let visibleWeek=month.value?weekBeginning(month.value+'-01'):weekBeginning(today);
+    if(month.value){const [year,number]=month.value.split('-').map(Number);viewYear=year;viewMonth=number-1;}
     const calendarDateLabel=key=>new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'short',day:'numeric'}).format(utcDay(key));
     const eventMatchesDate=(e,key)=>dateFor(e.start)<=key&&dateFor(e.end||e.start)>=key;
     const matchesCalendarFilters=e=>(!category.value||e.category===category.value)&&(!organization.value||e.organization===organization.value)&&(!month.value||keyFor(e.start)===month.value)&&(!search.value.trim()||[e.title,e.organization,e.category,e.venue,e.city,e.description,...(e.tags||[])].join(' ').toLowerCase().includes(search.value.trim().toLowerCase()));
