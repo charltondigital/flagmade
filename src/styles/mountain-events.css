@@ -138,6 +138,3 @@ html,body{background:#f8f5ed;color:#102f2c}
   .illustrated-footer .footer-content{font-size:10px;letter-spacing:0}
 }
 
-/* Keep the previous drawing visible until the actual banner image loads. */
-.calendar-heading .peaks-art .fallback-peaks{position:absolute;right:0;bottom:0;width:100%;height:auto}
-.calendar-heading .peaks-art.asset-ready .fallback-peaks{display:none}
