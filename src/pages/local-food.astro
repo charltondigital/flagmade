@@ -627,7 +627,7 @@ const hosts=[
 <dialog id="market-detail" class="market-detail-dialog" aria-labelledby="market-detail-name"><div class="market-dialog-head"><h2 id="market-detail-name"></h2><button type="button" id="market-dialog-close" aria-label="Close details">×</button></div><p id="market-detail-host"></p><dl><dt>Date</dt><dd id="market-detail-date"></dd><dt>Hours</dt><dd id="market-detail-time"></dd><dt>Location</dt><dd id="market-detail-location"></dd></dl><p id="market-detail-description"></p><a id="market-detail-url" target="_blank" rel="noopener noreferrer">Official event information ↗</a></dialog>
 <section class="food-tab-panel" id="panel-farmstands" role="tabpanel" aria-labelledby="tab-farmstands" hidden>
 <h2>Farmstands & local food shops</h2>
-<p class="farmstand-intro">Listed by approximate straight-line distance from the Orpheum Theater in downtown Flagstaff. Choose a place to locate it on the map. Addresses and opening hours should be checked before visiting.</p>
+<p class="farmstand-intro">Flagstaff locations are listed first (0 miles); other distances are approximate straight-line miles from central Flagstaff. Choose a place to locate it on the map. Addresses and opening hours should be checked before visiting.</p>
 <div class="farmstand-layout">
 <div class="farmstand-list-column">
 <div class="farmstand-list" id="farmstand-list"></div>
@@ -647,14 +647,14 @@ import 'leaflet/dist/leaflet.css';
 const farmRoot=document.getElementById('farmstand-map');
 const farmData=document.getElementById('farmstand-data');
 if(farmRoot&&farmData){
-  const orpheum=[35.1985,-111.6510];
+  const flagstaffCenter=[35.1985,-111.6510];
   function distanceMiles(a,b){
     const rad=Math.PI/180,lat1=a[0]*rad,lat2=b[0]*rad;
     const dlat=(b[0]-a[0])*rad,dlon=(b[1]-a[1])*rad;
     const h=Math.sin(dlat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dlon/2)**2;
     return 3958.76*2*Math.asin(Math.min(1,Math.sqrt(h)));
   }
-  const farms=JSON.parse(farmData.textContent).map(f=>({...f,distance:distanceMiles(orpheum,[f.lat,f.lng])})).sort((a,b)=>a.distance-b.distance);
+  const farms=JSON.parse(farmData.textContent).map(f=>({...f,distance:f.location.endsWith(', Flagstaff')?0:distanceMiles(flagstaffCenter,[f.lat,f.lng])})).sort((a,b)=>a.distance-b.distance);
   const pageSize=3;
   let page=1,map=null;
   const pins=new Map();
@@ -677,7 +677,7 @@ if(farmRoot&&farmData){
     const totalPages=Math.max(1,Math.ceil(farms.length/pageSize));
     page=Math.max(1,Math.min(page,totalPages));
     const visible=farms.slice((page-1)*pageSize,page*pageSize);
-    list.innerHTML=visible.map((f,i)=>`<article class="food-card farmstand-card"><div class="farmstand-rank">#${(page-1)*pageSize+i+1} · ≈ ${f.distance.toFixed(1)} mi from the Orpheum</div><h3>${safe(f.name)}</h3><p><strong>Address:</strong> ${safe(f.location)}</p><p>${safe(f.details)}</p><p><strong>Availability:</strong> ${safe(f.hours)}</p><div class="farmstand-actions"><button type="button" data-farm-pin="${safe(f.id)}">Show on map</button><a href="${safe(f.url)}" target="_blank" rel="noopener noreferrer">Official information ↗</a></div></article>`).join('');
+    list.innerHTML=visible.map((f,i)=>`<article class="food-card farmstand-card"><div class="farmstand-rank">#${(page-1)*pageSize+i+1} · ${f.distance===0?'0 miles from Flagstaff':`≈ ${f.distance.toFixed(1)} miles from Flagstaff`}</div><h3>${safe(f.name)}</h3><p><strong>Address:</strong> ${safe(f.location)}</p><p>${safe(f.details)}</p><p><strong>Availability:</strong> ${safe(f.hours)}</p><div class="farmstand-actions"><button type="button" data-farm-pin="${safe(f.id)}">Show on map</button><a href="${safe(f.url)}" target="_blank" rel="noopener noreferrer">Official information ↗</a></div></article>`).join('');
     list.querySelectorAll('[data-farm-pin]').forEach(btn=>btn.addEventListener('click',()=>focusFarm(btn.dataset.farmPin)));
     pageLabel.textContent=`Page ${page} of ${totalPages}`;
     prev.disabled=page<=1;next.disabled=page>=totalPages;
