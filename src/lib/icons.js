@@ -33,24 +33,26 @@ export function iconSvg(name, extraClass='') {
   return '<svg class="fm-icon '+extraClass+'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+shape+'</svg>';
 }
 export function eventIcon(event) {
-  const org=String(event.organization || '')+' '+String(event.venue || '');
-  const title=String(event.title || '');
+  const org=String(event.organization||'')+' '+String(event.venue||'');
+  const title=String(event.title||'');
   if (/lowell observatory/i.test(org)) return 'telescope';
-  if (/film|cinema|screening|movie/i.test(title)) return 'film';
-  if (/concert|music|band|jazz|symphony|orchestra|live at/i.test(title)) return 'music';
-  if (/play|theatre|theater|performance|dance|ballet/i.test(title)) return 'drama';
-  if (/art|gallery|exhibit|painting|photograph/i.test(title)) return 'palette';
-  switch(event.category) {
-    case 'Arts & Performance': return 'drama';
-    case 'Science & Discovery': return 'science';
-    case 'History & Heritage': return 'history';
-    case 'Farms & Food': return 'produce';
-    case 'Makers & Commerce': return 'makers';
-    default: return 'pin';
-  }
+  if (/\b(film|cinema|screening|movie)\b/i.test(title)) return 'film';
+  if (/\b(concert|music|band|jazz|symphony|orchestra|recital|choir)\b/i.test(title)) return 'music';
+  if (/\b(play|theatre|theater|performance|dance|ballet|comedy|improv)\b/i.test(title)) return 'drama';
+  if (/\b(gallery|exhibit|painting|photography|artwalk)\b/i.test(title)) return 'palette';
+  return categoryIcon(event.category);
 }
 export function categoryIcon(category) {
-  return ({'Arts & Performance':'drama','Science & Discovery':'science','History & Heritage':'history','Farms & Food':'produce','Makers & Commerce':'makers'})[category] || 'pin';
+  return ({
+    'Art':'palette',
+    'Music':'music',
+    'Theater':'drama',
+    'Science':'science',
+    'History':'history',
+    'Makers':'makers',
+    'Markets':'produce',
+    'Literature':'book'
+  })[category] || 'pin';
 }
 export function placeIcon(type) {
   const c=String(type).toLowerCase();
