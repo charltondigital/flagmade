@@ -3,16 +3,18 @@ import '../styles/global.css';
 // Map coordinates are approximate downtown placements pending address-level validation. Unverified sites have no pin.
 // Map coordinates are approximate street or neighborhood locations, not entrance-level survey points.
 import { listings, placePath } from '../data/directory.js';
+import {iconSvg,placeIcon} from '../lib/icons.js';
 ---
 <!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#fff"/><title>Directory — Flagmade</title><meta name="description" content="Independent restaurants, local food shops, farmstands, makers and shops in Flagstaff."/><link rel="canonical" href="https://flagmade.pages.dev/directory/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head><body>
 <div class="construction-banner" role="status"><strong>Under construction.</strong> Flagmade is being developed; listings and schedules may change.</div>
 <header class="site-header"><div class="header-inner container"><a class="brand" href="/">flagmade</a><nav aria-label="Main navigation"><a href="/">Events</a><a href="/local-food/">Local Food</a><a href="/directory/" aria-current="page">Directory</a><a href="/search/">Search</a></nav></div></header>
 <main class="container directory-page"><h1>Directory</h1><p>Local restaurants, food stands, makers & shops in Flagstaff.</p><div id="directory-full-search"></div>
-<div class="directory-layout"><section><label for="place-search">Search</label><input id="place-search" type="search" placeholder="Business or product"><label for="place-type">Category</label><select id="place-type"><option value="">All categories</option><option>Restaurants</option><option>Food & farmstands</option><option>Makers & shops</option></select><p id="directory-count" class="directory-count"></p><div class="directory-items">{listings.map(p=><article class="directory-item" data-type={p.type} data-id={p.id}><p class="directory-kind">{p.type}</p><h2><a href={placePath(p)}>{p.name}</a></h2><p>{p.description}</p><p class="directory-address">{p.address}</p><div class="directory-links"><a href={placePath(p)}>View details</a> {p.coordinates && <button class="map-focus" data-id={p.id}>Show on map</button>}</div></article>)}</div><nav class="directory-pagination" aria-label="Directory pages"><button id="dir-prev" type="button">Previous</button><span id="dir-page"></span><button id="dir-next" type="button">Next</button></nav></section><aside><div id="directory-map" role="region" aria-label="Map of directory locations"></div><p class="map-status" id="map-status">Verified street addresses are listed below; map pins are shown only where coordinates have been assigned.</p></aside></div></main>
+<div class="directory-layout"><section><label for="place-search">Search</label><input id="place-search" type="search" placeholder="Business or product"><label for="place-type">Category</label><select id="place-type"><option value="">All categories</option><option>Restaurants</option><option>Food & farmstands</option><option>Makers & shops</option></select><p id="directory-count" class="directory-count"></p><div class="directory-items">{listings.map(p=><article class="directory-item" data-type={p.type} data-id={p.id}><p class="directory-kind"><Fragment set:html={iconSvg(placeIcon(p.type), 'directory-icon')} />{p.type}</p><h2><a href={placePath(p)}>{p.name}</a></h2><p>{p.description}</p><p class="directory-address">{p.address}</p><div class="directory-links"><a href={placePath(p)}>View details</a> {p.coordinates && <button class="map-focus" data-id={p.id}>Show on map</button>}</div></article>)}</div><nav class="directory-pagination" aria-label="Directory pages"><button id="dir-prev" type="button">Previous</button><span id="dir-page"></span><button id="dir-next" type="button">Next</button></nav></section><aside><div id="directory-map" role="region" aria-label="Map of directory locations"></div><p class="map-status" id="map-status">Verified street addresses are listed below; map pins are shown only where coordinates have been assigned.</p></aside></div></main>
 <script id="places-data" type="application/json" set:html={JSON.stringify(listings).replace(/</g,'\\u003c')}></script>
 
 <script>
 import L from 'leaflet';
+import {iconSvg,placeIcon} from '../lib/icons.js';
 import 'leaflet.markercluster';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
@@ -55,7 +57,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
       cluster.addTo(map);
       for(const p of records){
         if(!Array.isArray(p.coordinates))continue;
-        const marker=L.marker(p.coordinates,{icon:L.divIcon({className:'directory-point',html:'<span></span>',iconSize:[26,26],iconAnchor:[13,13]})}).bindPopup('<strong><a href="/places/'+encodeURIComponent(p.id)+'/">'+safe(p.name)+'</a></strong><p>'+safe(p.address)+'</p><a href="/places/'+encodeURIComponent(p.id)+'/">View details</a>');
+        const marker=L.marker(p.coordinates,{icon:L.divIcon({className:'directory-point',html:iconSvg(placeIcon(p.type),'map-icon'),iconSize:[32,32],iconAnchor:[16,16]})}).bindPopup('<strong><a href="/places/'+encodeURIComponent(p.id)+'/">'+safe(p.name)+'</a></strong><p>'+safe(p.address)+'</p><a href="/places/'+encodeURIComponent(p.id)+'/">View details</a>');
         markers.set(p.id,marker);
       }
       update();
