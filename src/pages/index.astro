@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import SiteFooter from '../components/SiteFooter.astro';
 import {classifyEvent,eventCategories} from '../lib/event-categories.js';
 const events = Object.values(import.meta.glob('../data/events/*.json', { eager: true, import: 'default' }));
 const title = 'Flagmade — Events';
@@ -54,9 +55,7 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
       </div></div>
     </section>
   </main>
-  <footer class="illustrated-footer">
-    <div class="container footer-content"><span>FlagMade · Flagstaff, Arizona</span><span>Arts · Culture · Local Commerce</span></div>
-  </footer>
+  <SiteFooter />
 
 <dialog id="event-detail-dialog" class="event-detail-dialog" aria-labelledby="event-dialog-title">
 <div class="event-dialog-heading"><div><span id="event-dialog-category"></span><h2 id="event-dialog-title"></h2></div><button id="event-dialog-close" type="button" aria-label="Close event details">×</button></div>
