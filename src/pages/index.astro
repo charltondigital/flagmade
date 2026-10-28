@@ -67,6 +67,9 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
   <script id="events-json" type="application/json" set:html={JSON.stringify(validEvents).replace(/</g,'\\u003c')}></script>
   <script>
     import {iconSvg, eventIcon} from '../lib/icons.js';
+    const bannerArt=new Image();
+    bannerArt.onload=()=>document.querySelector('.peaks-art')?.classList.add('asset-ready');
+    bannerArt.src='/flagmade-mountain-banner.webp';
     const events = JSON.parse(document.getElementById('events-json')?.textContent || '[]');
     const search = document.querySelector('#search');
     const category = document.querySelector('#category');
