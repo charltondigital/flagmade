@@ -1,10 +1,12 @@
 ---
 import '../styles/global.css';
+import {classifyEvent,eventCategories} from '../lib/event-categories.js';
 const events = Object.values(import.meta.glob('../data/events/*.json', { eager: true, import: 'default' }));
 const title = 'Flagmade — Events';
-const categories = ['Arts & Performance','Science & Discovery','History & Heritage','Farms & Food','Makers & Commerce'];
+const categories = eventCategories;
 
 const validEvents = events.filter((e) => e && e.status === 'published' && e.id && e.title && e.start && e.organization && e.category && e.url && !Number.isNaN(Date.parse(e.start)))
+  .map(e=>({...e,sourceCategory:e.category,category:classifyEvent(e)}))
   .sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
 const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.localeCompare(b));
 ---
@@ -41,7 +43,7 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
         </div>
         <div class="event-view-switch" role="group" aria-label="Events display"><button id="view-week" type="button" aria-pressed="true">Week</button><button id="view-month" type="button" aria-pressed="false">Month</button><button id="view-list" type="button" aria-pressed="false">List</button></div>
 <section class="events-calendar-section" aria-labelledby="events-calendar-heading">
-<h2 id="events-calendar-heading" class="sr-only">Event calendar</h2><div class="event-category-legend" aria-label="Event category colors">{categories.map(cat=><span class={"category-legend-item cat-"+cat.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/-$/,"")}><i aria-hidden="true"></i>{cat}</span>)}</div>
+<h2 id="events-calendar-heading" class="sr-only">Event calendar</h2>
 <div class="market-cal-controls"><button type="button" id="events-prev" aria-label="Previous period">←</button><strong id="events-month" aria-live="polite"></strong><button type="button" id="events-next" aria-label="Next period">→</button><button type="button" id="events-today">Today</button></div>
 <div id="events-cal-grid" class="market-cal-grid"></div>
 <p class="calendar-hint">Select an event for organizer details. Times use Arizona time.</p>
@@ -61,7 +63,7 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
 </dialog>
   <script id="events-json" type="application/json" set:html={JSON.stringify(validEvents).replace(/</g,'\\u003c')}></script>
   <script>
-    import {iconSvg, eventIcon, categoryIcon} from '../lib/icons.js';
+    import {iconSvg, eventIcon} from '../lib/icons.js';
     const events = JSON.parse(document.getElementById('events-json')?.textContent || '[]');
     const search = document.querySelector('#search');
     const category = document.querySelector('#category');
@@ -111,7 +113,6 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
     }
     document.querySelector('#event-dialog-close').onclick=()=>eventDialog.close();
     eventDialog.addEventListener('click',e=>{if(e.target===eventDialog)eventDialog.close();});
-    for (const legend of document.querySelectorAll('.category-legend-item')) { const label=legend.textContent.trim(); const swatch=legend.querySelector('i'); if(swatch) swatch.outerHTML=iconSvg(categoryIcon(label),'legend-icon'); }
     const eventsCalendarGrid=document.querySelector('#events-cal-grid');
     const eventsCalendarMonth=document.querySelector('#events-month');
     const currentParts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(new Date());
