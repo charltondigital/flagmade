@@ -95,6 +95,48 @@ export const listings=[
  {id:"mi-tesoro-mall",coordinates:[35.22321,-111.58159],name:"Mi Tesoro Mexican Restaurant",type:"Restaurants",address:"Flagstaff Mall, 4650 N US Hwy 89, Flagstaff, AZ 86004",description:"Locally founded Mexican restaurant in the Flagstaff Mall food court, serving Sonoran-influenced dishes.",url:"https://flagstaffmall.com/directory/"},
  {id:"acapulco-tropical-mall",coordinates:[35.22321,-111.58159],name:"Acapulco Tropical",type:"Food & farmstands",address:"Flagstaff Mall, 4650 N US Hwy 89, Flagstaff, AZ 86004",description:"Independent Flagstaff Mall counter serving fresh fruit drinks, smoothies, ice cream desserts and Mexican snacks.",url:"https://flagstaffmall.com/stores/acapulco-tropical"}
 ];
+
+// Specific public-facing business categories. Broad `type` remains available for grouping.
+const categoriesById = {
+  "Bookstores": ["brightside"],
+  "Art Galleries": ["azhandmade","artistsgallery","shane","phoenix-avenue-gallery","artists-coalition-mall","winter"],
+  "Gift Shops": ["blackhound","flaggeneral","golden-hive","zani-gifts","wild-west-traders","western-post","west-moon","heart-box","creativecasita","pjchilcottage"],
+  "Clothing Boutiques": ["upcoming","sagebrush","basement","rainbows","shoes","northend","fairy-godmother","22-leroux","high-style","incahoots"],
+  "Outdoor Gear": ["mountainsports","babbitts","snow-mountain-river","aspen-sports"],
+  "Bike Shops": ["sweetshoppes","flag-bike"],
+  "Running Stores": ["run-flagstaff"],
+  "Record Stores": ["sunday-records","flagstaff-records"],
+  "Art Studios": ["meadowlark","box-studio","clay-center","creative-spirits"],
+  "Art Supplies": ["aris"],
+  "Jewelry Stores": ["frederick-fisher"],
+  "Jewelry Supplies": ["thunderbird"],
+  "Antiques & Vintage": ["victorian","timeless"],
+  "Floral Shops": ["sutcliffe","floral-arts"],
+  "Sewing & Fabric": ["odegaards","wee-scotty"],
+  "Garden Centers": ["warner","plantae"],
+  "Music Stores": ["arizona-music-pro"],
+  "Custom Apparel": ["flagtfactory","too-cool"],
+  "Collectibles": ["flagstaff-sportscards"],
+  "Chocolate & Candy": ["chocolate","sweet-shoppe"],
+  "Specialty Food Shops": ["olive-best"],
+  "Farmstands": ["forestdale"],
+  "Local Food Markets": ["flagcsa"],
+  "Butcher Shops": ["propermeats"],
+  "Bakeries": ["flagbakery"],
+  "Juice & Desserts": ["acapulco-tropical-mall"],
+  "Pizza Restaurants": ["pizzicletta","nimarcos","fratelli","fat-olives"],
+  "Mexican Restaurants": ["martannes","tacos-los-altos-west","la-fonda","tacos-los-altos-east","mi-tesoro-mall"],
+  "Thai Restaurants": ["pato","red-curry","dara","swaddee"],
+  "Indian Restaurants": ["delhi-palace"],
+  "Breakfast & Brunch": ["toastedowl","touristhome","brandy","oldtowncrepe","morning-glory","foret"],
+  "Coffee Shops": ["macys","mix","white-dove","single-speed"],
+  "Barbecue Restaurants": ["bigfoot"],
+  "Burger Restaurants": ["diablo"],
+  "Restaurants": ["shift","cornish-pasty","tinderbox","sosta"],
+};
+const categoriesForPlace = Object.fromEntries(Object.entries(categoriesById).flatMap(([category, ids]) => ids.map(id => [id, category])));
+for (const place of listings) place.category = categoriesForPlace[place.id] || place.type;
+
 // Canonical URL for a place. Directory cards, map popups, and generated pages
 // all derive their paths from the same record ID.
 export const placePath = (place) => '/places/' + encodeURIComponent(place.id) + '/';
