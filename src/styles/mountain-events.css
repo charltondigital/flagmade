@@ -103,3 +103,37 @@ html,body{background:#f8f5ed;color:#102f2c}
     height:11px;
   }
 }
+
+/* Raster artwork is independently replaceable in public/ as WebP assets. */
+.calendar-heading .peaks-art{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:68%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+  background:url('/flagmade-mountain-banner.webp') right bottom / contain no-repeat;
+}
+.calendar-heading .heading-copy{position:relative;z-index:1}
+.illustrated-footer{
+  position:relative;
+  min-height:180px;
+  padding:110px 0 24px;
+  background:#123e35 url('/flagmade-forest-footer.webp') center bottom / 100% auto no-repeat;
+  color:#f6f1e4;
+  overflow:hidden;
+}
+.illustrated-footer .footer-content{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+  font-size:12px;
+  letter-spacing:.08em;
+}
+@media(max-width:650px){
+  .calendar-heading .peaks-art{width:88%;right:-20%;opacity:.5}
+  .illustrated-footer{min-height:150px;padding:94px 0 18px;background-size:auto 85px}
+  .illustrated-footer .footer-content{font-size:10px;letter-spacing:0}
+}
