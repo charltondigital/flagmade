@@ -179,3 +179,7 @@ html,body{background:#f8f5ed;color:#102f2c}
  .page-hero-eyebrow{font-size:9px}
  .page-hero-subtitle{font-size:14px}
 }
+
+/* Quiet street-map treatment while MapTiler credentials are not configured. */
+.leaflet-tile.flagmade-map-muted{filter:grayscale(.70) sepia(.14) saturate(.55) brightness(1.06) contrast(.84)}
+.leaflet-tile.flagmade-maptiler-basic{filter:saturate(.78)}

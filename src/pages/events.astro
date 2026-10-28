@@ -1,0 +1,211 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import PageHero from '../components/PageHero.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import {classifyEvent,eventCategories} from '../lib/event-categories.js';
+const events = Object.values(import.meta.glob('../data/events/*.json', { eager: true, import: 'default' }));
+const title = 'FlagMade Events Calendar | Flagstaff Arts & Culture';
+const categories = eventCategories;
+
+const validEvents = events.filter((e) => e && e.status === 'published' && e.id && e.title && e.start && e.organization && e.category && e.url && !Number.isNaN(Date.parse(e.start)))
+  .map(e=>({...e,sourceCategory:e.category,category:classifyEvent(e)}))
+  .sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
+const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.localeCompare(b));
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="Local Arts, Culture and Commerce in Flagstaff." />
+  <title>{title}</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://flagmade.pages.dev/events/" />
+<meta name="robots" content="noindex, nofollow, noarchive"/></head>
+<body>
+  <SiteHeader active="Events" />
+
+  <main><PageHero title="Events" subtitle="Discover what's happening in Flagstaff." />
+    <section class="calendar-shell">
+      <div class="container">
+        
+        <div class="filter-panel" aria-label="Filter and sort events">
+          <div class="search-box"><label for="search">SEARCH EVENTS</label><div class="search-input"><svg width="19" height="19" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Event, place, or keyword…" autocomplete="off" /></div></div>
+          <div class="filter"><label for="category">CATEGORY</label><select id="category"><option value="">All categories</option>{categories.map(x=><option value={x}>{x}</option>)}</select></div>
+          <div class="filter"><label for="organization">ORGANIZATION</label><select id="organization"><option value="">All organizations</option>{orgs.map(x=><option value={x}>{x}</option>)}</select></div>
+          <div class="filter"><label for="month">MONTH</label><select id="month"><option value="">Any upcoming month</option></select></div>
+          <div class="filter filter-sort"><label for="sort">SORT BY</label><select id="sort"><option value="date-asc">Date · soonest</option><option value="date-desc">Date · latest</option><option value="title-asc">Name · A to Z</option><option value="organization-asc">Organization · A to Z</option></select></div>
+        </div>
+        <div class="event-view-switch" role="group" aria-label="Events display"><button id="view-week" type="button" aria-pressed="true">Week</button><button id="view-month" type="button" aria-pressed="false">Month</button><button id="view-list" type="button" aria-pressed="false">List</button></div>
+<section class="events-calendar-section" aria-labelledby="events-calendar-heading">
+<h2 id="events-calendar-heading" class="sr-only">Event calendar</h2>
+<div class="market-cal-controls"><button type="button" id="events-prev" aria-label="Previous period">←</button><strong id="events-month" aria-live="polite"></strong><button type="button" id="events-next" aria-label="Next period">→</button><button type="button" id="events-today">Today</button></div>
+<div id="events-cal-grid" class="market-cal-grid"></div>
+<p class="calendar-hint">Select an event for organizer details. Times use Arizona time.</p>
+</section>
+        <div id="list-panel"><div class="results-bar"><span id="result-count" aria-live="polite">Events</span><button id="clear" class="clear-btn" hidden>Clear filters</button></div>
+        <div id="event-list" class="events" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state" hidden><div class="empty-symbol" aria-hidden="true">✳</div><h3 id="empty-title">No upcoming events.</h3><p id="empty-copy">Check back for new events.</p><button type="button" id="empty-reset" hidden>Reset filters</button></div>
+      </div></div>
+    </section>
+  </main>
+  <SiteFooter />
+
+<dialog id="event-detail-dialog" class="event-detail-dialog" aria-labelledby="event-dialog-title">
+<div class="event-dialog-heading"><div><span id="event-dialog-category"></span><h2 id="event-dialog-title"></h2></div><button id="event-dialog-close" type="button" aria-label="Close event details">×</button></div>
+<p id="event-dialog-description"></p>
+<dl><dt>Organizer</dt><dd id="event-dialog-org"></dd><dt>When</dt><dd id="event-dialog-when"></dd><dt>Where</dt><dd id="event-dialog-where"></dd><dt>Admission</dt><dd id="event-dialog-price"></dd></dl>
+<a id="event-dialog-link" target="_blank" rel="noopener noreferrer">View details on organizer website ↗</a>
+</dialog>
+  <script id="events-json" type="application/json" set:html={JSON.stringify(validEvents).replace(/</g,'\\u003c')}></script>
+  <script>
+    import {iconSvg, eventIcon} from '../lib/icons.js';
+    const events = JSON.parse(document.getElementById('events-json')?.textContent || '[]');
+    const search = document.querySelector('#search');
+    const category = document.querySelector('#category');
+    const organization = document.querySelector('#organization');
+    const month = document.querySelector('#month');
+    const sort = document.querySelector('#sort');
+    const chips = [];
+    const list = document.querySelector('#event-list');
+    const count = document.querySelector('#result-count');
+    const empty = document.querySelector('#empty-state');
+    const clear = document.querySelector('#clear');
+    const reset = document.querySelector('#empty-reset');
+    const now = new Date();
+    const localParts = (value, includeDay=true) => {const parts = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit',...(includeDay?{day:'2-digit'}:{})}).formatToParts(new Date(value));const get = t => parts.find(p=>p.type===t)?.value;return [get('year'),get('month'),...(includeDay?[get('day')]:[])].join('-');};
+    const today = localParts(now);
+    const fmtDay = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',day:'2-digit'});
+    const fmtMonth = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',month:'short'});
+    const fmtDate = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',month:'short',day:'numeric',year:'numeric'});
+    const fmtTime = new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',hour:'numeric',minute:'2-digit',hour12:true});
+    const keyFor = value => localParts(value,false);
+    const dateFor = value => localParts(value);
+    const esc = str => String(str ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const upcoming = events.filter(e => e.end ? dateFor(e.end)>=today : dateFor(e.start)>=today);
+    const months = [...new Set(upcoming.map(e=>keyFor(e.start)))].sort();
+    for(const m of months){const [y,mm]=m.split('-');const option=document.createElement('option');option.value=m;option.textContent=new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(Number(y),Number(mm)-1,1)));month.append(option);}
+    const params = new URLSearchParams(location.search);
+    if(params.has('category') && [...category.options].some(o=>o.value===params.get('category'))) category.value=params.get('category');
+    if(params.has('organization') && [...organization.options].some(o=>o.value===params.get('organization'))) organization.value=params.get('organization');
+    if(params.has('month') && months.includes(params.get('month'))) month.value=params.get('month');
+    if(params.has('q')) search.value=params.get('q') || '';
+    const eventDialog=document.querySelector('#event-detail-dialog');
+    function showEvent(e){
+      document.querySelector('#event-dialog-title').textContent=e.title;
+      const categoryEl=document.querySelector('#event-dialog-category');
+      categoryEl.textContent=e.category||'Event';
+      categoryEl.className=catClass(e.category);
+      document.querySelector('#event-dialog-description').textContent=e.description||'Please check the organizer for a full event description.';
+      document.querySelector('#event-dialog-org').textContent=e.organization||'Not specified';
+      const start=new Date(e.start),end=e.end?new Date(e.end):null;
+      document.querySelector('#event-dialog-when').textContent=fmtDate.format(start)+' · '+(e.allDay?'All day':fmtTime.format(start)+(end?' – '+(dateFor(e.end)===dateFor(e.start)?fmtTime.format(end):fmtDate.format(end)+' '+fmtTime.format(end)):''));
+      document.querySelector('#event-dialog-where').textContent=[e.venue,e.city].filter(Boolean).join(', ')||'See organizer';
+      document.querySelector('#event-dialog-price').textContent=e.price||'See organizer';
+      const link=document.querySelector('#event-dialog-link');
+      const url=new URL(e.url,location.origin);
+      link.href=['http:','https:'].includes(url.protocol)?url.href:'#';
+      if(!eventDialog.open)eventDialog.showModal();
+    }
+    document.querySelector('#event-dialog-close').onclick=()=>eventDialog.close();
+    eventDialog.addEventListener('click',e=>{if(e.target===eventDialog)eventDialog.close();});
+    const eventsCalendarGrid=document.querySelector('#events-cal-grid');
+    const eventsCalendarMonth=document.querySelector('#events-month');
+    const currentParts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',year:'numeric',month:'2-digit'}).formatToParts(new Date());
+    const currentYear=Number(currentParts.find(p=>p.type==='year').value);
+    const currentMonth=Number(currentParts.find(p=>p.type==='month').value)-1;
+    let viewYear=currentYear,viewMonth=currentMonth,selectedDay='';
+    let view='week';
+    const calendarPanel=document.querySelector('.events-calendar-section'),listPanel=document.querySelector('#list-panel');
+    const sortPanel=document.querySelector('.filter-sort');
+    const catClass=v=>'cat-'+String(v).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
+    const utcDay=key=>new Date(key+'T12:00:00Z');
+    const dayKey=day=>day.toISOString().slice(0,10);
+    const addDays=(key,days)=>{const day=utcDay(key);day.setUTCDate(day.getUTCDate()+days);return dayKey(day);};
+    const weekBeginning=key=>addDays(key,-utcDay(key).getUTCDay());
+    let visibleWeek=month.value?weekBeginning(month.value+'-01'):weekBeginning(today);
+    if(month.value){const [year,number]=month.value.split('-').map(Number);viewYear=year;viewMonth=number-1;}
+    const calendarDateLabel=key=>new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'short',day:'numeric'}).format(utcDay(key));
+    const eventMatchesDate=(e,key)=>dateFor(e.start)<=key&&dateFor(e.end||e.start)>=key;
+    const matchesCalendarFilters=e=>(!category.value||e.category===category.value)&&(!organization.value||e.organization===organization.value)&&(!month.value||keyFor(e.start)===month.value)&&(!search.value.trim()||[e.title,e.organization,e.category,e.venue,e.city,e.description,...(e.tags||[])].join(' ').toLowerCase().includes(search.value.trim().toLowerCase()));
+    function setView(next){
+      view=next;calendarPanel.hidden=next==='list';listPanel.hidden=next!=='list';sortPanel.hidden=true;
+      for(const name of ['week','month','list'])document.querySelector('#view-'+name).setAttribute('aria-pressed',String(next===name));
+      render();
+    }
+    document.querySelector('#view-week').onclick=()=>{selectedDay='';setView('week');};
+    document.querySelector('#view-month').onclick=()=>{selectedDay='';const day=utcDay(visibleWeek);viewYear=day.getUTCFullYear();viewMonth=day.getUTCMonth();setView('month');};
+    document.querySelector('#view-list').onclick=()=>{selectedDay='';setView('list');};
+    function renderCalendar(){
+      if(view==='list')return;
+      const isWeek=view==='week';
+      const first=isWeek?utcDay(visibleWeek):new Date(Date.UTC(viewYear,viewMonth,1,12));
+      const start=isWeek?0:first.getUTCDay();
+      const days=isWeek?7:new Date(Date.UTC(viewYear,viewMonth+1,0)).getUTCDate();
+      eventsCalendarGrid.classList.toggle('week-grid',isWeek);
+      eventsCalendarGrid.classList.toggle('month-grid',!isWeek);
+      eventsCalendarMonth.textContent=isWeek
+        ? calendarDateLabel(visibleWeek)+' – '+calendarDateLabel(addDays(visibleWeek,6))+', '+utcDay(addDays(visibleWeek,6)).getUTCFullYear()
+        :new Intl.DateTimeFormat('en-US',{month:'long',year:'numeric',timeZone:'UTC'}).format(first);
+      eventsCalendarGrid.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>'<div class="market-weekday">'+d+'</div>').join('')+Array(start).fill('<div class="market-day blank"></div>').join('');
+      for(let d=0;d<days;d++){
+        const key=isWeek?addDays(visibleWeek,d):dayKey(new Date(Date.UTC(viewYear,viewMonth,d+1,12)));
+        const matches=upcoming.filter(e=>eventMatchesDate(e,key)&&matchesCalendarFilters(e)).sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
+        const node=document.createElement('div');
+        node.className='market-day'+(key===today?' today-day':'');
+        const btn=document.createElement('button');
+        btn.className='calendar-date'+(selectedDay===key?' active':'');
+        btn.type='button';btn.textContent=isWeek?calendarDateLabel(key):String(d+1);
+        btn.setAttribute('aria-label',key+', '+matches.length+' events');
+        btn.disabled=!matches.length;
+        if(matches.length)btn.onclick=()=>{selectedDay=key;month.value='';setView('list');document.querySelector('#result-count').scrollIntoView({behavior:'smooth',block:'start'});};
+        node.append(btn);
+        for(const event of matches){
+          const button=document.createElement('button');
+          button.type='button';
+          button.className='calendar-event-title '+catClass(event.category);
+          button.innerHTML=iconSvg(eventIcon(event),'calendar-icon')+'<span>'+esc(event.title)+'</span>';
+          button.title=event.title+' — '+event.organization;
+          button.setAttribute('aria-label',event.title+' — '+(event.allDay?'All day':fmtTime.format(new Date(event.start))));
+          button.addEventListener('click',()=>showEvent(event));
+          node.append(button);
+        }
+        eventsCalendarGrid.append(node);
+      }
+    }
+    document.querySelector('#events-prev').onclick=()=>{
+      if(view==='week')visibleWeek=addDays(visibleWeek,-7);
+      else if(view==='month'){viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--;}}
+      selectedDay='';render();
+    };
+    document.querySelector('#events-next').onclick=()=>{
+      if(view==='week')visibleWeek=addDays(visibleWeek,7);
+      else if(view==='month'){viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++;}}
+      selectedDay='';render();
+    };
+    document.querySelector('#events-today').onclick=()=>{
+      visibleWeek=weekBeginning(today);viewYear=currentYear;viewMonth=currentMonth;selectedDay='';month.value='';render();
+    };
+    function render(){
+      renderCalendar();
+      const q=search.value.trim().toLocaleLowerCase();const cat=category.value;const org=organization.value;const mo=month.value;
+      chips.forEach(btn=>{const active=btn.dataset.chip===cat;btn.classList.toggle('selected',active);btn.setAttribute('aria-pressed',String(active));});
+      const rows=upcoming.filter(e=>(!selectedDay||(dateFor(e.start)<=selectedDay&&dateFor(e.end||e.start)>=selectedDay))&&(!cat||e.category===cat)&&(!org||e.organization===org)&&(!mo||keyFor(e.start)===mo)&&(!q||[e.title,e.organization,e.category,e.venue,e.city,e.description,...(e.tags||[])].join(' ').toLocaleLowerCase().includes(q)));
+      rows.sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
+      const filtered=!!(q||cat||org||mo||selectedDay);
+      clear.hidden=!filtered;reset.hidden=!filtered;
+      count.textContent=rows.length+' '+(rows.length===1?'event':'events')+(selectedDay?' on '+new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'long',day:'numeric',year:'numeric'}).format(new Date(selectedDay+'T12:00:00Z')):filtered?' matching your filters':' upcoming');
+      list.innerHTML=rows.map((e,index)=>{const dayKey=dateFor(e.start);const heading=index===0||dateFor(rows[index-1].start)!==dayKey?`<h2 class="event-day-heading">${esc(new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',weekday:'long',month:'long',day:'numeric'}).format(new Date(e.start)))}</h2>`:'';const d=new Date(e.start);const end=e.end?new Date(e.end):null;const time=e.allDay?'All day':fmtTime.format(d)+(end&&dateFor(e.end)===dateFor(e.start)?' – '+fmtTime.format(end):'');const url=new URL(e.url,location.origin);if(!['http:','https:'].includes(url.protocol))return '';return `${heading}<article class="event-card ${catClass(e.category)}"><div class="event-time-column">${esc(e.allDay?'All day':fmtTime.format(d))}</div><div class="event-detail"><div class="event-topline">${iconSvg(eventIcon(e),'listing-icon')}<span class="event-category">${esc(e.category)}</span><span class="event-divider">/</span><span class="event-org">${esc(e.organization)}</span></div><h3><a href="${esc(url.href)}" target="_blank" rel="noopener noreferrer">${esc(e.title)} <span aria-hidden="true">↗</span></a></h3>${e.description?`<p class="event-description">${esc(e.description)}</p>`:''}<div class="event-meta">${end&&dateFor(e.end)!==dateFor(e.start)?`<span>Through ${esc(fmtDate.format(end))}</span>`:''}${e.venue?`<span>⌖ ${esc(e.venue)}${e.city?', '+esc(e.city):''}</span>`:''}${e.price?`<span>${esc(e.price)}</span>`:''}</div></div><a class="event-arrow" href="${esc(url.href)}" target="_blank" rel="noopener noreferrer" aria-label="See details for ${esc(e.title)}">↗</a></article>`}).join('');
+      empty.hidden=rows.length!==0;list.hidden=rows.length===0;
+      document.querySelector('#empty-title').textContent=filtered?'No matching events.':'No upcoming events.';
+      document.querySelector('#empty-copy').textContent=filtered?'Try removing a filter.':'Check back for new events.';
+      const next=new URL(location.href);['q','category','organization','month'].forEach(k=>next.searchParams.delete(k));if(q)next.searchParams.set('q',search.value.trim());if(cat)next.searchParams.set('category',cat);if(org)next.searchParams.set('organization',org);if(mo)next.searchParams.set('month',mo);history.replaceState(null,'',next.pathname+next.search+next.hash);
+    }
+    [search,category,organization,month,sort].forEach(el=>el.addEventListener(el===search?'input':'change',()=>{if(el===month&&month.value){visibleWeek=weekBeginning(month.value+'-01');const parts=month.value.split('-');viewYear=Number(parts[0]);viewMonth=Number(parts[1])-1;}render();}));
+    chips.forEach(chip=>chip.addEventListener('click',()=>{category.value=chip.dataset.chip;render();}));
+    function resetAll(){selectedDay='';renderCalendar();search.value='';category.value='';organization.value='';month.value='';sort.value='date-asc';render();}
+    clear.addEventListener('click',resetAll);reset.addEventListener('click',resetAll);setView('week');
+  </script>
+</body></html>
