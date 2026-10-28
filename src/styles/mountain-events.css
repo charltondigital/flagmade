@@ -46,7 +46,7 @@ html,body{background:#f8f5ed;color:#102f2c}
 .events-calendar-section .week-grid .market-day{min-height:310px}
 .events-calendar-section .week-grid .calendar-date{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
 .events-calendar-section .week-grid button.calendar-event-title{font-size:12px;padding:8px 7px;min-height:36px}
-.events-calendar-section .week-grid .calendar-event-title span{-webkit-line-clamp:3;line-clamp:3}
+.events-calendar-section .week-grid .calendar-event-title span{display:block;-webkit-line-clamp:unset;line-clamp:unset;overflow:visible;text-overflow:clip;white-space:normal;overflow-wrap:break-word}
 .calendar-hint{color:#687c70;font-size:12px}
 #event-list .event-card{background:#fffdf8;border-radius:2px;box-shadow:none;border-color:#d3ded4;border-left:4px solid var(--event-border,#365d49)}
 #event-list .event-day-heading{color:#163d33;font-size:20px;letter-spacing:-.02em;border-color:#ccd4ca}
