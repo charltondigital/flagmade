@@ -15,11 +15,12 @@ const shapes = {
   candy: '<path d="M7 9 2 6l1 5-1 5 5-3M17 9l5-3-1 5 1 5-5-3"/><rect x="7" y="7" width="10" height="10" rx="3"/>',
  
   telescope: '<path d="m4 5 12-3 4 8-12 3z"/><path d="m8 13 3 3"/><path d="m16 11-3 5"/><path d="m12 16-4 6"/><path d="m12 16 4 6"/><path d="M6 18h12"/>',
-  drama: '<path d="M3 3h18v8c0 6-4 10-9 10S3 17 3 11V3Z"/><path d="M7 8h.01M17 8h.01"/><path d="M8 14c2.5 2 5.5 2 8 0"/>',
+  drama: '<path d="M3 4h10v7c0 4-2 7-5 8-3-1-5-4-5-8V4Z"/><path d="M6 8h.01M10 8h.01M6 13q2 2 4 0"/><path d="M13 6h8v7c0 4-2 7-5 8-1.5-.5-2.7-1.5-3.5-3"/><path d="M16 10h.01M19 10h.01M15 16q2-2 4 0"/>',
   music: '<path d="M9 18V5l12-2v13"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="18" cy="16" rx="3" ry="2"/>',
   palette: '<path d="M12 3a9 9 0 1 0 0 18h2a2 2 0 0 0 1.7-3c-.6-1-.2-2 1-2H19a3 3 0 0 0 3-3 10 10 0 0 0-10-10Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="11" cy="7.5" r="1"/><circle cx="16" cy="8.5" r="1"/>',
   science: '<path d="M9 3h6M10 3v7l-6 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-6-9V3"/><path d="M7 16h10"/>',
   history: '<path d="M3 10h18L12 3 3 10ZM5 10v10M10 10v10M14 10v10M19 10v10M3 21h18"/>',
+  produce: '<path d="M3 11h18l-2 10H5L3 11Z"/><path d="M7 11 10 5M17 11l-3-6M9 15v3M15 15v3"/><path d="M7 9C4 7 5 4 8 4c2 0 2 2 2 4M13 7c-1-3 1-5 4-5 0 3-1 5-4 5Z"/>',
   food: '<path d="M12 22V12"/><path d="M12 14c-7 0-9-4-9-9 6 0 9 3 9 9ZM12 11c0-6 3-9 9-9 0 5-2 9-9 9Z"/>',
   makers: '<path d="m5 4 14 16M19 4 5 20"/><circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/><path d="M8 16h8"/>',
   shop: '<path d="M4 10v11h16V10M3 10l2-7h14l2 7"/><path d="M3 10c0 3 4 3 4 0 0 3 4 3 4 0 0 3 4 3 4 0 0 3 6 3 6 0"/><path d="M9 21v-7h6v7"/>',
@@ -40,16 +41,16 @@ export function eventIcon(event) {
   if (/play|theatre|theater|performance|dance|ballet/i.test(title)) return 'drama';
   if (/art|gallery|exhibit|painting|photograph/i.test(title)) return 'palette';
   switch(event.category) {
-    case 'Arts & Performance': return 'palette';
+    case 'Arts & Performance': return 'drama';
     case 'Science & Discovery': return 'science';
     case 'History & Heritage': return 'history';
-    case 'Farms & Food': return 'food';
+    case 'Farms & Food': return 'produce';
     case 'Makers & Commerce': return 'makers';
     default: return 'pin';
   }
 }
 export function categoryIcon(category) {
-  return ({'Arts & Performance':'palette','Science & Discovery':'science','History & Heritage':'history','Farms & Food':'food','Makers & Commerce':'makers'})[category] || 'pin';
+  return ({'Arts & Performance':'drama','Science & Discovery':'science','History & Heritage':'history','Farms & Food':'produce','Makers & Commerce':'makers'})[category] || 'pin';
 }
 export function placeIcon(type) {
   const c=String(type).toLowerCase();
