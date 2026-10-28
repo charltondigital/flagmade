@@ -113,14 +113,14 @@ html,body{background:#f8f5ed;color:#102f2c}
   height:100%;
   z-index:0;
   pointer-events:none;
-  background:url('/flagmade-mountain-banner.webp') right bottom / contain no-repeat;
+  background:url('https://medical-boss-social.floot.app/_cdn/static/1e28eb84-e9ca-46e3-aac9-76e62bfbdb60-flagmade-mountain-banner.webp') right bottom / contain no-repeat;
 }
 .calendar-heading .heading-copy{position:relative;z-index:1}
 .illustrated-footer{
   position:relative;
   min-height:180px;
   padding:110px 0 24px;
-  background:#123e35 url('/flagmade-forest-footer.webp') center bottom / 100% auto no-repeat;
+  background:#123e35 url('https://medical-boss-social.floot.app/_cdn/static/dfbca470-ca5c-4206-aaf2-cd40ff6308ff-flagmade-forest-footer.webp') center bottom / 100% auto no-repeat;
   color:#f6f1e4;
   overflow:hidden;
 }
