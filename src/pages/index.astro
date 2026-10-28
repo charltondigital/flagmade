@@ -118,9 +118,10 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
     let viewYear=currentYear,viewMonth=currentMonth,selectedDay='';
     let view='calendar';
     const calendarPanel=document.querySelector('.events-calendar-section'),listPanel=document.querySelector('#list-panel');
+    const sortPanel=document.querySelector('.filter-sort');
     const catClass=v=>'cat-'+String(v).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'');
-    function setView(next){view=next;calendarPanel.hidden=next!=='calendar';listPanel.hidden=next!=='list';document.querySelector('#view-calendar').setAttribute('aria-pressed',String(next==='calendar'));document.querySelector('#view-list').setAttribute('aria-pressed',String(next==='list'));render();}
-    document.querySelector('#view-calendar').onclick=()=>setView('calendar');document.querySelector('#view-list').onclick=()=>setView('list');
+    function setView(next){view=next;calendarPanel.hidden=next!=='calendar';listPanel.hidden=next!=='list';sortPanel.hidden=next==='calendar';document.querySelector('#view-calendar').setAttribute('aria-pressed',String(next==='calendar'));document.querySelector('#view-list').setAttribute('aria-pressed',String(next==='list'));render();}
+    document.querySelector('#view-calendar').onclick=()=>{selectedDay='';setView('calendar');};document.querySelector('#view-list').onclick=()=>setView('list');
     function renderCalendar(){
       const first=new Date(Date.UTC(viewYear,viewMonth,1));
       const monthKey=viewYear+'-'+String(viewMonth+1).padStart(2,'0');
@@ -132,7 +133,7 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
         const matches=upcoming.filter(e=>dateFor(e.start)<=key&&dateFor(e.end||e.start)>=key&&(!category.value||e.category===category.value)&&(!organization.value||e.organization===organization.value)&&(!search.value.trim()||[e.title,e.organization,e.category,e.venue,e.city,e.description,...(e.tags||[])].join(' ').toLowerCase().includes(search.value.trim().toLowerCase())));
         const node=document.createElement('div');node.className='market-day';
         const btn=document.createElement('button');btn.className='calendar-date'+(selectedDay===key?' active':'');btn.type='button';btn.textContent=String(d);btn.setAttribute('aria-label',key+', '+matches.length+' events');btn.disabled=!matches.length;
-        if(matches.length){btn.onclick=()=>{selectedDay=selectedDay===key?'':key;renderCalendar();render();document.querySelector('#result-count').scrollIntoView({behavior:'smooth',block:'center'});};}
+        if(matches.length){btn.onclick=()=>{selectedDay=key;month.value='';setView('list');document.querySelector('#result-count').scrollIntoView({behavior:'smooth',block:'start'});};}
         node.append(btn);
         for(const event of matches.sort((a,b)=>Date.parse(a.start)-Date.parse(b.start))){
           const button=document.createElement('button');
@@ -146,8 +147,8 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
         eventsCalendarGrid.append(node);
       }
     }
-    document.querySelector('#events-prev').onclick=()=>{viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--;}renderCalendar();};
-    document.querySelector('#events-next').onclick=()=>{viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++;}renderCalendar();};
+    document.querySelector('#events-prev').onclick=()=>{viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--;}selectedDay='';renderCalendar();};
+    document.querySelector('#events-next').onclick=()=>{viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++;}selectedDay='';renderCalendar();};
     document.querySelector('#events-today').onclick=()=>{viewYear=currentYear;viewMonth=currentMonth;selectedDay='';renderCalendar();render();};
     function render(){
       renderCalendar();
@@ -157,7 +158,7 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
       rows.sort((a,b)=>sort.value==='date-desc'?Date.parse(b.start)-Date.parse(a.start):sort.value==='title-asc'?a.title.localeCompare(b.title):sort.value==='organization-asc'?a.organization.localeCompare(b.organization):Date.parse(a.start)-Date.parse(b.start));
       const filtered=!!(q||cat||org||mo||selectedDay);
       clear.hidden=!filtered;reset.hidden=!filtered;
-      count.textContent=rows.length+' '+(rows.length===1?'event':'events')+(filtered?' matching your filters':' on the calendar');
+      count.textContent=rows.length+' '+(rows.length===1?'event':'events')+(selectedDay?' on '+new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'long',day:'numeric',year:'numeric'}).format(new Date(selectedDay+'T12:00:00Z')):filtered?' matching your filters':' upcoming');
       list.innerHTML=rows.map(e=>{const d=new Date(e.start);const end=e.end?new Date(e.end):null;const time=e.allDay?'All day':fmtTime.format(d)+(end&&dateFor(e.end)===dateFor(e.start)?' – '+fmtTime.format(end):'');const url=new URL(e.url,location.origin);if(!['http:','https:'].includes(url.protocol))return '';return `<article class="event-card ${catClass(e.category)}"><div class="date-badge"><span>${fmtMonth.format(d)}</span><strong>${fmtDay.format(d)}</strong><small>${new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',weekday:'short'}).format(d)}</small></div><div class="event-detail"><div class="event-topline"><span class="event-category">${esc(e.category)}</span><span class="event-divider">/</span><span class="event-org">${esc(e.organization)}</span></div><h3><a href="${esc(url.href)}" target="_blank" rel="noopener noreferrer">${esc(e.title)} <span aria-hidden="true">↗</span></a></h3>${e.description?`<p class="event-description">${esc(e.description)}</p>`:''}<div class="event-meta"><span>◷ ${esc(time)}${end&&dateFor(e.end)!==dateFor(e.start)?' – '+fmtDate.format(end):''}</span>${e.venue?`<span>⌖ ${esc(e.venue)}${e.city?', '+esc(e.city):''}</span>`:''}${e.price?`<span>${esc(e.price)}</span>`:''}</div></div><a class="event-arrow" href="${esc(url.href)}" target="_blank" rel="noopener noreferrer" aria-label="See details for ${esc(e.title)}">↗</a></article>`}).join('');
       empty.hidden=rows.length!==0;list.hidden=rows.length===0;
       document.querySelector('#empty-title').textContent=filtered?'No matching events.':'No upcoming events.';
