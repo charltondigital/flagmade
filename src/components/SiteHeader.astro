@@ -1,0 +1,13 @@
+---
+const {active=''} = Astro.props;
+const links=[['Events','/'],['Local Food','/local-food/'],['Directory','/directory/'],['Search','/search/']];
+---
+<div class="construction-banner" role="status"><strong>Under construction.</strong> Flagmade is being developed; listings and schedules may change.</div>
+<header class="site-header">
+  <div class="header-inner container">
+    <a class="brand" href="/" aria-label="FlagMade home">flagmade<span class="brand-dot">.</span></a>
+    <nav aria-label="Main navigation">
+      {links.map(([name,url])=><a href={url} aria-current={active===name?'page':undefined}>{name}</a>)}
+    </nav>
+  </div>
+</header>
