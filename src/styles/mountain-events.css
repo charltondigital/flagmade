@@ -116,15 +116,17 @@ html,body{background:#f8f5ed;color:#102f2c}
   background:url('https://medical-boss-social.floot.app/_cdn/static/1e28eb84-e9ca-46e3-aac9-76e62bfbdb60-flagmade-mountain-banner.webp') right bottom / contain no-repeat;
 }
 .calendar-heading .heading-copy{position:relative;z-index:1}
-.illustrated-footer{
-  position:relative;
-  min-height:180px;
-  padding:110px 0 24px;
-  background:#123e35 url('https://medical-boss-social.floot.app/_cdn/static/dfbca470-ca5c-4206-aaf2-cd40ff6308ff-flagmade-forest-footer.webp') center bottom / 100% auto no-repeat;
-  color:#f6f1e4;
-  overflow:hidden;
+.site-landscape{
+  height:clamp(85px,10vw,156px);
+  background:#f8f5ed url('https://medical-boss-social.floot.app/_cdn/static/dfbca470-ca5c-4206-aaf2-cd40ff6308ff-flagmade-forest-footer.webp') center bottom / cover no-repeat;
+  pointer-events:none;
 }
-.illustrated-footer .footer-content{
+.site-footer{
+  background:#123e35;
+  color:#f6f1e4;
+  padding:24px 0 28px;
+}
+.site-footer-inner{
   display:flex;
   justify-content:space-between;
   flex-wrap:wrap;
@@ -134,7 +136,7 @@ html,body{background:#f8f5ed;color:#102f2c}
 }
 @media(max-width:650px){
   .calendar-heading .peaks-art{width:88%;right:-20%;opacity:.5}
-  .illustrated-footer{min-height:150px;padding:94px 0 18px;background-size:auto 85px}
-  .illustrated-footer .footer-content{font-size:10px;letter-spacing:0}
+  .site-landscape{height:90px;background-size:auto 90px}
+  .site-footer-inner{font-size:10px;letter-spacing:0}
 }
 
