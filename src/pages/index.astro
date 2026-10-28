@@ -69,7 +69,7 @@ const orgs = [...new Set(validEvents.map(e=>e.organization))].sort((a,b)=>a.loca
     import {iconSvg, eventIcon} from '../lib/icons.js';
     const bannerArt=new Image();
     bannerArt.onload=()=>document.querySelector('.peaks-art')?.classList.add('asset-ready');
-    bannerArt.src='/flagmade-mountain-banner.webp';
+    bannerArt.src='https://medical-boss-social.floot.app/_cdn/static/1e28eb84-e9ca-46e3-aac9-76e62bfbdb60-flagmade-mountain-banner.webp';
     const events = JSON.parse(document.getElementById('events-json')?.textContent || '[]');
     const search = document.querySelector('#search');
     const category = document.querySelector('#category');
