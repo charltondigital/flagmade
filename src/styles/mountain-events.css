@@ -140,3 +140,42 @@ html,body{background:#f8f5ed;color:#102f2c}
   .site-footer-inner{font-size:10px;letter-spacing:0}
 }
 
+
+/* Shared mountainous topographic heading on all public pages. */
+.brand-dot{color:#e8ae5e}
+.page-hero{
+ position:relative;
+ isolation:isolate;
+ min-height:210px;
+ display:flex;
+ align-items:center;
+ background:#f1ede2 url('/contour-hero.svg') center center / cover no-repeat;
+ border-bottom:1px solid #d7d8cb;
+ overflow:hidden;
+}
+.page-hero::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:-1;
+ pointer-events:none;
+ background:linear-gradient(90deg,#f1ede2 0%,rgba(241,237,226,.97) 20%,rgba(241,237,226,.80) 41%,rgba(241,237,226,.05) 76%);
+}
+.page-hero-inner{position:relative;z-index:1;padding-top:28px;padding-bottom:30px}
+.page-hero-eyebrow{margin:0 0 8px;font-size:11px;font-weight:800;letter-spacing:.21em;color:#376351}
+.page-hero h1{font-size:clamp(44px,6.5vw,84px);line-height:1.03;font-weight:850;letter-spacing:-.06em;color:#102f2c;margin:0 0 12px;max-width:960px;overflow-wrap:break-word}
+.page-hero-subtitle{font-size:clamp(15px,1.7vw,19px);line-height:1.45;color:#395a4d;max-width:700px;margin:0}
+.calendar-shell{padding-top:0}
+.calendar-shell>.container{padding-top:25px}
+.directory-page,.food-page,.search-page,.place-page{padding-top:26px}
+.directory-page>h1,.food-page>h1,.search-page>h1,.place-page h1{display:none}
+.search-page,.place-page{min-height:300px;padding-bottom:55px}
+.site-header .brand{white-space:nowrap}
+@media(max-width:650px){
+ .page-hero{min-height:174px;background-position:56% center}
+ .page-hero-inner{padding-top:22px;padding-bottom:22px}
+ .page-hero::after{background:linear-gradient(90deg,#f1ede2 0%,rgba(241,237,226,.94) 62%,rgba(241,237,226,.3) 100%)}
+ .page-hero h1{font-size:clamp(38px,10vw,58px)}
+ .page-hero-eyebrow{font-size:9px}
+ .page-hero-subtitle{font-size:14px}
+}
