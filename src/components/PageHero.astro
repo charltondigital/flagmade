@@ -1,0 +1,10 @@
+---
+const {title,subtitle='Discover local arts, culture and commerce in Flagstaff.'}=Astro.props;
+---
+<section class="page-hero" aria-labelledby="page-title">
+  <div class="container page-hero-inner">
+    <p class="page-hero-eyebrow">ARTS · CULTURE · LOCAL COMMERCE</p>
+    <h1 id="page-title">{title}</h1>
+    <p class="page-hero-subtitle">{subtitle}</p>
+  </div>
+</section>
