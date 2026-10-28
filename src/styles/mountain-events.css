@@ -1,0 +1,75 @@
+/* FlagMade mountain-modern event styling — separate, removable layer. */
+:root{--fm-ink:#102f2c;--fm-accent:#165443;--fm-accent-hover:#0e3e35;--fm-canvas:#f8f5ed;--fm-surface:#fffdf8;--fm-soft:#e7efdf;--fm-line:#dcdcd1;--fm-muted:#596d64;--fm-shadow:none}
+html,body{background:#f8f5ed;color:#102f2c}
+.site-header{background:#123e35;border-color:#23574d;box-shadow:none}
+.header-inner{min-height:80px}
+.brand,.header-inner nav a{color:#fff9e9}
+.brand{font-size:clamp(28px,3vw,37px);letter-spacing:-1.7px}
+.header-inner nav a{border-radius:2px;font-size:14px}
+.header-inner nav a:hover{color:#fff;background:#275c50}
+.header-inner nav a[aria-current="page"]{color:#fff3d2;background:transparent;border-bottom:3px solid #e9aa52}
+.construction-banner{background:#eee9d9;color:#345248;border-color:#d4d7c8;font-size:12px}
+.calendar-shell{padding-top:0}
+.calendar-heading{position:relative;min-height:240px;display:flex;align-items:center;overflow:hidden;margin:0 calc((min(1220px,100vw - 44px) - 100vw)/2) 22px;padding:30px max(24px,calc((100vw - 1220px)/2));background:#f1ede2;border-bottom:1px solid #dad8cc;isolation:isolate}
+.calendar-heading::before{content:"";position:absolute;inset:0;opacity:.34;z-index:-1;background-image:repeating-radial-gradient(ellipse at 82% 70%,transparent 0,transparent 15px,#8d9d8733 17px,#8d9d8733 18px,transparent 19px,transparent 32px)}
+.heading-copy{z-index:1;position:relative}
+.calendar-heading .eyebrow{font-size:11px;letter-spacing:.22em;font-weight:800;color:#457166;margin-bottom:12px}
+.calendar-heading h1{font-size:clamp(62px,8vw,108px);line-height:.96;letter-spacing:-.075em;font-weight:900;color:#102f2c;margin:0 0 12px}
+.calendar-heading p:not(.eyebrow){font-size:clamp(16px,2vw,22px);color:#314b43}
+.peaks-art{position:absolute;width:min(63%,760px);height:auto;right:0;bottom:-3px;z-index:0;pointer-events:none}
+.filter-panel{background:#fffdf8;border:1px solid #d4d8c9;border-radius:3px;padding:17px 19px;box-shadow:none;margin-bottom:12px}
+.filter-panel label{letter-spacing:.1em;font-size:10px;color:#396354}
+.filter-panel input,.filter-panel select{border:1px solid #c5d0c8;background:#fffdf8;border-radius:3px;height:46px}
+.filter-panel input:focus,.filter-panel select:focus{border-color:#226a52;outline-color:#c5decc}
+.event-view-switch{border:0;background:none;box-shadow:none;border-radius:0;gap:6px;margin:9px 0 16px;padding:0}
+.event-view-switch button{background:#fffdf8;color:#254c40;border:1px solid #c6d2c5;border-radius:3px;padding:10px 22px;min-width:86px}
+.event-view-switch button[aria-pressed="true"]{background:#14513f;border-color:#14513f;color:#fff}
+.event-category-legend{display:flex;gap:0;margin:6px 0 19px;border-top:1px solid #d5d7cb;border-bottom:1px solid #d5d7cb}
+.category-legend-item{flex:1;min-width:120px;justify-content:center;gap:9px;padding:14px 8px;border-right:1px solid #d5d7cb;font-weight:650;color:#234238;font-size:12px}
+.category-legend-item:last-child{border-right:0}
+.category-legend-item .legend-icon{width:22px;height:22px}
+.market-cal-controls{margin:15px 0;gap:10px}
+.market-cal-controls strong{font-size:clamp(17px,2.2vw,23px);min-width:0;text-align:left;margin:0 14px;letter-spacing:-.04em}
+.market-cal-controls button{border-radius:3px;background:#fffdf8;border-color:#cbd5c8}
+#events-today{margin-left:auto}
+.events-calendar-section #events-cal-grid{background:#fffdf8;border:1px solid #ccd4c9;border-radius:3px;overflow:hidden}
+.events-calendar-section .market-weekday{background:#e4ebe2;border-color:#d4ddd1;color:#284e40;padding:11px 4px;letter-spacing:.1em}
+.events-calendar-section .market-day{min-height:135px;padding:7px;background:#fffdf8;border-color:#d9ded4;overflow:hidden}
+.events-calendar-section .market-day.today-day{background:#eef4e8}
+.events-calendar-section .market-day.blank{background:#f3f3ed}
+.events-calendar-section .calendar-date{border-radius:2px;font-size:13px;color:#234e41;padding:2px 6px;margin-bottom:6px}
+.events-calendar-section .calendar-date:disabled{opacity:1;color:#335649}
+.events-calendar-section button.calendar-event-title{display:flex;align-items:flex-start;text-align:left;gap:5px;padding:5px 6px;margin:4px 0;border-left-width:3px;font-size:11px;line-height:1.3;min-height:27px;border-radius:2px;color:#19372f}
+.events-calendar-section .calendar-event-title .calendar-icon{margin-top:0;width:14px;height:14px}
+.events-calendar-section .calendar-event-title span{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:anywhere;text-overflow:ellipsis}
+.events-calendar-section .week-grid{grid-template-columns:repeat(7,minmax(0,1fr))}
+.events-calendar-section .week-grid .market-day{min-height:310px}
+.events-calendar-section .week-grid .calendar-date{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+.events-calendar-section .week-grid button.calendar-event-title{font-size:12px;padding:8px 7px;min-height:36px}
+.events-calendar-section .week-grid .calendar-event-title span{-webkit-line-clamp:3;line-clamp:3}
+.calendar-hint{color:#687c70;font-size:12px}
+#event-list .event-card{background:#fffdf8;border-radius:2px;box-shadow:none;border-color:#d3ded4;border-left:4px solid var(--event-border,#365d49)}
+#event-list .event-day-heading{color:#163d33;font-size:20px;letter-spacing:-.02em;border-color:#ccd4ca}
+@media(max-width:950px){
+ .calendar-heading{min-height:200px}
+ .peaks-art{width:65%;opacity:.55}
+ .events-calendar-section .week-grid{min-width:850px}
+ .events-calendar-section:has(.week-grid){overflow-x:auto}
+ .category-legend-item{min-width:105px}
+}
+@media(max-width:650px){
+ .header-inner{min-height:70px}
+ .calendar-heading{margin:0 -14px 16px;padding:28px 20px;min-height:200px}
+ .calendar-heading h1{font-size:64px}
+ .calendar-heading .eyebrow{font-size:9px}
+ .peaks-art{width:110%;right:-47%;opacity:.3}
+ .filter-panel{padding:12px;gap:9px}
+ .event-category-legend{overflow-x:auto;justify-content:flex-start}
+ .category-legend-item{flex:0 0 125px}
+ .events-calendar-section .month-grid .market-day{min-height:92px;padding:3px}
+ .events-calendar-section .month-grid .calendar-event-title{font-size:9px;padding:3px;gap:2px}
+ .events-calendar-section .month-grid .calendar-event-title .calendar-icon{display:none}
+ .events-calendar-section .week-grid{min-width:820px}
+ .market-cal-controls strong{font-size:17px;margin:0 3px}
+ .market-cal-controls button{padding:8px 10px}
+}
