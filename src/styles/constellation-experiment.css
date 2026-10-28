@@ -83,3 +83,26 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(max-width:750px){.directory-layout,.farmstand-layout{grid-template-columns:1fr}.directory-layout aside{position:static;grid-row:1}.farmstand-map-wrap{position:static}}
 @media(max-width:650px){.container{width:min(100% - 28px,1220px)}.header-inner{height:auto;min-height:66px;gap:10px;flex-wrap:wrap;padding:12px 0}.header-inner nav{gap:1px;flex-wrap:wrap}.header-inner nav a{padding:7px 9px;font-size:12px}.filter-panel{padding:14px;gap:10px}.events-calendar-section .market-day{min-height:75px}.events-calendar-section button.calendar-event-title{font-size:9px;padding:3px}.event-card{padding:12px;grid-template-columns:50px minmax(0,1fr);gap:10px}.date-badge{min-height:62px}.food-card,.artist-card{padding:16px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Squarer controls, cards, and map panels — intentionally not pill-shaped. */
+.header-inner nav a,.filter-panel,.filter-panel input,.filter-panel select,
+.event-view-switch,.event-view-switch button,.market-cal-controls button,
+.market-cal-grid,.events-calendar-section button.calendar-event-title,
+.event-card,.date-badge,.directory-item,.directory-layout select,
+.directory-layout input[type=search],#directory-map,#farmstand-map,
+.directory-pagination button,.farmstand-pagination button,.food-card,
+.artist-card,.food-page .food-tabs button,.market-detail-dialog,
+.event-detail-dialog,.empty-state button,.event-card .event-category,
+.farmstand-card {border-radius:5px}
+.filter-panel,.directory-item,.event-card,.food-card,.artist-card{box-shadow:0 2px 9px rgba(20,52,32,.045)}
+.calendar-date:not(:disabled){text-decoration:none}
+.calendar-date:not(:disabled):hover{background:var(--fm-soft);color:var(--fm-accent);text-decoration:none}
+.calendar-date.active{background:var(--fm-accent)!important;color:#fff!important}
+/* Markers should clearly be overlays, not part of the base map. */
+.directory-point{width:26px!important;height:26px!important}
+.directory-point span{display:block;width:24px;height:24px;border-radius:50%;background:#d94f32;border:3px solid #fff;box-shadow:0 0 0 2px #a7341c,0 3px 10px #0007}
+.farmstand-marker{background:#d94f32;border:3px solid white;border-radius:50%;box-shadow:0 0 0 2px #a7341c,0 3px 10px #0008;width:28px;height:28px}
+.farmstand-marker span{font-size:12px;font-weight:800;line-height:22px;color:#fff}
+.leaflet-marker-icon:focus-visible{outline:3px solid #ffbe78;outline-offset:3px}
+@media(max-width:850px){.filter-panel:has(.filter-sort[hidden]){grid-template-columns:repeat(2,minmax(0,1fr))}}
