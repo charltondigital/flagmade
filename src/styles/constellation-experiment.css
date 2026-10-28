@@ -4,10 +4,10 @@
  * Preserve all existing data rendering, calendars, map scripts and filters.
  */
 :root {
-  --fm-ink:#172c34;--fm-muted:#657580;--fm-line:#dfE7e9;
-  --fm-canvas:#f6f9f9;--fm-surface:#fff;
-  --fm-accent:#136b76;--fm-accent-hover:#0e4c58;
-  --fm-soft:#e9f3f3;--fm-shadow:0 8px 28px rgba(22,49,57,.055);
+  --fm-ink:#1e3027;--fm-muted:#66756b;--fm-line:#dfe8df;
+  --fm-canvas:#f7f9f5;--fm-surface:#fff;
+  --fm-accent:#21734b;--fm-accent-hover:#145533;
+  --fm-soft:#e8f3ea;--fm-shadow:0 8px 28px rgba(22,49,57,.055);
 }
 html{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--fm-ink);background:var(--fm-canvas)}
 body{background:var(--fm-canvas);color:var(--fm-ink);font-size:14px;line-height:1.5}
@@ -15,13 +15,13 @@ body{background:var(--fm-canvas);color:var(--fm-ink);font-size:14px;line-height:
 a{color:var(--fm-accent)}
 a:hover{color:var(--fm-accent-hover)}
 button,input,select{font-family:inherit}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #68adba;outline-offset:2px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #68ad81;outline-offset:2px}
 .site-header{background:var(--fm-surface);border-bottom:1px solid var(--fm-line);box-shadow:0 1px 2px #152d3309}
 .header-inner{height:78px}
 .brand{color:var(--fm-ink);font-size:29px;font-weight:800;letter-spacing:-1.25px}
 .brand:hover{text-decoration:none}
 .header-inner nav{gap:6px}
-.header-inner nav a{padding:11px 15px;border-radius:9px;color:#425861;font-weight:600;font-size:13px}
+.header-inner nav a{padding:11px 15px;border-radius:9px;color:#46584b;font-weight:600;font-size:13px}
 .header-inner nav a:hover{background:var(--fm-soft);text-decoration:none;color:var(--fm-accent)}
 .header-inner nav a[aria-current="page"]{color:var(--fm-accent);background:var(--fm-soft)}
 .construction-banner{background:#eff5ed;border-bottom:1px solid #d7e3d3;color:#52644d}
@@ -30,49 +30,49 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .calendar-heading p,.directory-page>p,.food-intro,.artist-page>p{font-size:15px;color:var(--fm-muted)}
 .calendar-heading{margin-bottom:26px}
 .filter-panel{background:var(--fm-surface);border:1px solid var(--fm-line);border-radius:14px;padding:21px;box-shadow:var(--fm-shadow);gap:13px;margin-bottom:20px}
-.filter-panel label,.directory-layout label,.artist-controls label{font-size:11px;font-weight:750;color:#58717a;letter-spacing:.05em}
-.filter-panel input,.filter-panel select,.directory-layout select,.directory-layout input[type=search],.artist-controls input,.artist-controls select{border:1px solid #d4e0e3;border-radius:9px;background:#fff;color:var(--fm-ink);height:44px;padding:0 12px;box-shadow:0 1px 1px #152d3308}
-.filter-panel input:focus,.filter-panel select:focus,.directory-layout input:focus,.directory-layout select:focus{border-color:#4a9ca7;outline:2px solid #c4e5e8;outline-offset:0}
-.event-view-switch{border:1px solid #dbe6e9;border-radius:10px;background:white;padding:4px;box-shadow:0 2px 8px #152d3309}
-.event-view-switch button{border-radius:7px;background:transparent;color:#60747b}
+.filter-panel label,.directory-layout label,.artist-controls label{font-size:11px;font-weight:750;color:#5c7564;letter-spacing:.05em}
+.filter-panel input,.filter-panel select,.directory-layout select,.directory-layout input[type=search],.artist-controls input,.artist-controls select{border:1px solid #d4e1d7;border-radius:9px;background:#fff;color:var(--fm-ink);height:44px;padding:0 12px;box-shadow:0 1px 1px #152d3308}
+.filter-panel input:focus,.filter-panel select:focus,.directory-layout input:focus,.directory-layout select:focus{border-color:#4d9c68;outline:2px solid #ccead3;outline-offset:0}
+.event-view-switch{border:1px solid #dbe8df;border-radius:10px;background:white;padding:4px;box-shadow:0 2px 8px #152d3309}
+.event-view-switch button{border-radius:7px;background:transparent;color:#61796a}
 .event-view-switch button[aria-pressed="true"]{background:var(--fm-accent);color:#fff}
 .event-category-legend{gap:9px 17px}
-.category-legend-item{font-size:12px;color:#536a74}
+.category-legend-item{font-size:12px;color:#566d5e}
 .category-legend-item i{border-radius:50%}
-.market-cal-controls button,.directory-pagination button,.farmstand-pagination button,.empty-state button{background:white;border:1px solid #d6e2e5;border-radius:9px;padding:9px 14px;color:#30515a;font-weight:600}
+.market-cal-controls button,.directory-pagination button,.farmstand-pagination button,.empty-state button{background:white;border:1px solid #d6e4da;border-radius:9px;padding:9px 14px;color:#305840;font-weight:600}
 .market-cal-controls button:hover,.directory-pagination button:hover,.farmstand-pagination button:hover{background:var(--fm-soft)}
 .market-cal-controls strong{font-size:17px;letter-spacing:-.3px}
 .market-cal-grid{border-top-color:var(--fm-line);border-left-color:var(--fm-line);background:white;border-radius:12px;overflow:hidden}
-.market-weekday{background:#edf3f4;color:#667982;font-size:11px;font-weight:750;letter-spacing:.05em;padding:12px 5px;border-color:var(--fm-line)}
+.market-weekday{background:#edf3ed;color:#657a69;font-size:11px;font-weight:750;letter-spacing:.05em;padding:12px 5px;border-color:var(--fm-line)}
 .market-day{border-color:var(--fm-line)}
-.market-day.blank{background:#f7fafb}
+.market-day.blank{background:#f7faf6}
 .events-calendar-section .market-day{min-height:113px}
-.events-calendar-section .calendar-date{font-weight:700;font-size:12px;color:#4c656d}
+.events-calendar-section .calendar-date{font-weight:700;font-size:12px;color:#496650}
 .events-calendar-section .calendar-date.active{background:var(--fm-accent);color:white}
 .events-calendar-section button.calendar-event-title{border-radius:5px;font-size:11px;padding:5px 6px}
 .results-bar{border-color:var(--fm-line);font-size:13px;color:var(--fm-muted);font-weight:600}
-.event-card{background:white;border:1px solid var(--fm-line);border-left:4px solid var(--event-border,#adc6ca);border-radius:11px;padding:17px 18px;margin:10px 0;box-shadow:0 2px 8px #17374209;grid-template-columns:68px minmax(0,1fr)}
-.date-badge{background:#f4f8f9;border-radius:9px;min-height:76px}
+.event-card{background:white;border:1px solid var(--fm-line);border-left:4px solid var(--event-border,#b2cdb9);border-radius:11px;padding:17px 18px;margin:10px 0;box-shadow:0 2px 8px #17374209;grid-template-columns:68px minmax(0,1fr)}
+.date-badge{background:#f3f8f3;border-radius:9px;min-height:76px}
 .date-badge strong{color:var(--fm-ink)}
 .event-detail h3{font-size:17px;letter-spacing:-.25px}
 .event-detail h3 a{color:var(--fm-ink)}
 .event-detail h3 a:hover{color:var(--fm-accent)}
-.event-description{color:#5c6d74}
-.event-meta,.event-topline{color:#697b82}
+.event-description{color:#5d7061}
+.event-meta,.event-topline{color:#697c6d}
 .event-card .event-category{border-left:0;border-radius:5px;font-weight:650}
 .directory-layout{gap:26px;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .directory-item{padding:18px;background:white;border:1px solid var(--fm-line);border-radius:12px;margin:0 0 12px;box-shadow:var(--fm-shadow)}
 .directory-item h2{font-size:18px;letter-spacing:-.3px}
-.directory-item p{color:#536b73}
+.directory-item p{color:#526e59}
 .directory-layout aside{top:20px}
-#directory-map,#farmstand-map{border:1px solid #d5e3e5;border-radius:13px;box-shadow:var(--fm-shadow)}
+#directory-map,#farmstand-map{border:1px solid #d5e4d8;border-radius:13px;box-shadow:var(--fm-shadow)}
 .directory-pagination{border-top:1px solid var(--fm-line)}
 .directory-links>a,.map-focus,.farmstand-actions button{color:var(--fm-accent);font-weight:600}
 .food-section h2,.food-page [role="tabpanel"]>h2{border-color:var(--fm-line);font-size:21px;color:var(--fm-ink)}
 .food-card,.artist-card{background:white;border:1px solid var(--fm-line);border-radius:12px;box-shadow:var(--fm-shadow);padding:21px}
 .food-card h3,.artist-card h2{color:var(--fm-ink)}
-.food-card p,.artist-card p{color:#526971}
-.food-page .food-tabs button{background:white;border-color:#d5e1e4;color:#47646d;border-radius:9px}
+.food-card p,.artist-card p{color:#526c59}
+.food-page .food-tabs button{background:white;border-color:#d5e3d8;color:#46654f;border-radius:9px}
 .food-page .food-tabs button[aria-selected="true"]{background:var(--fm-accent);border-color:var(--fm-accent);color:white}
 .farmstand-list{gap:13px}
 .farmstand-rank{color:var(--fm-accent)}
