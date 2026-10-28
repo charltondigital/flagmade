@@ -73,3 +73,33 @@ html,body{background:#f8f5ed;color:#102f2c}
  .market-cal-controls strong{font-size:17px;margin:0 3px}
  .market-cal-controls button{padding:8px 10px}
 }
+
+/* Color and category icons belong to calendar entries, independent of the legend. */
+.events-calendar-section button.calendar-event-title{
+  background:var(--event-light,#f1f3ed);
+  border-left:3px solid var(--event-border,#527261);
+  color:#17362f;
+}
+.events-calendar-section button.calendar-event-title .calendar-icon{
+  display:block;
+  flex:0 0 16px;
+  width:16px;
+  height:16px;
+  stroke:var(--event-border,#527261);
+  stroke-width:2.2;
+  margin-top:1px;
+}
+.events-calendar-section .month-grid button.calendar-event-title .calendar-icon{
+  display:block;
+  flex-basis:13px;
+  width:13px;
+  height:13px;
+}
+@media(max-width:650px){
+  .events-calendar-section .month-grid button.calendar-event-title .calendar-icon{
+    display:block;
+    flex-basis:11px;
+    width:11px;
+    height:11px;
+  }
+}
