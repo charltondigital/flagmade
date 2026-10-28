@@ -55,7 +55,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
       cluster.addTo(map);
       for(const p of records){
         if(!Array.isArray(p.coordinates))continue;
-        const marker=L.marker(p.coordinates,{icon:L.divIcon({className:'directory-point',html:'<span></span>',iconSize:[18,18],iconAnchor:[9,9]})}).bindPopup('<strong><a href="/places/'+encodeURIComponent(p.id)+'/">'+safe(p.name)+'</a></strong><p>'+safe(p.address)+'</p><a href="/places/'+encodeURIComponent(p.id)+'/">View details</a>');
+        const marker=L.marker(p.coordinates,{icon:L.divIcon({className:'directory-point',html:'<span></span>',iconSize:[26,26],iconAnchor:[13,13]})}).bindPopup('<strong><a href="/places/'+encodeURIComponent(p.id)+'/">'+safe(p.name)+'</a></strong><p>'+safe(p.address)+'</p><a href="/places/'+encodeURIComponent(p.id)+'/">View details</a>');
         markers.set(p.id,marker);
       }
       update();
