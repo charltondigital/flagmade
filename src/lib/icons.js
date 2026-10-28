@@ -1,5 +1,19 @@
 // Small, self-hosted outline icon set. SVG paths use a consistent 24px grid.
 const shapes = {
+  book: '<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1ZM12 6v14"/>',
+  shirt: '<path d="m8 3-6 5 4 4 2-2v11h8V10l2 2 4-4-6-5c-2 3-6 3-8 0Z"/>',
+  gift: '<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M12 9v12M3 13h18M12 9C8 9 6 7 7 5c2-3 5 2 5 4ZM12 9c4 0 6-2 5-4-2-3-5 2-5 4Z"/>',
+  coffee: '<path d="M4 8h13v7a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V8ZM17 9h2a3 3 0 0 1 0 6h-2M7 3v2M12 3v2"/>',
+  bike: '<circle cx="5" cy="17" r="4"/><circle cx="19" cy="17" r="4"/><path d="m5 17 5-9 4 9H5m9 0 5-9m-9 0H7m8-4h4"/>',
+  disc: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 3a9 9 0 0 1 9 9"/>',
+  flower: '<circle cx="12" cy="12" r="2"/><circle cx="12" cy="6" r="3"/><circle cx="18" cy="12" r="3"/><circle cx="12" cy="18" r="3"/><circle cx="6" cy="12" r="3"/>',
+  pizza: '<path d="M3 4c8-3 15-3 18 0L12 22 3 4Z"/><path d="M6 10c4-2 9-2 12 0"/><circle cx="10" cy="12" r="1"/><circle cx="14" cy="16" r="1"/>',
+  bread: '<path d="M4 10a5 5 0 0 1 6-6 6 6 0 0 1 8 2 4 4 0 0 1 2 7v8H4V10Z"/><path d="M10 9v7M15 9v7"/>',
+  gem: '<path d="M6 3h12l5 6-11 13L1 9 6 3ZM1 9h22M9 3 7 9l5 13 5-13-2-6"/>',
+  scissors: '<circle cx="5" cy="6" r="3"/><circle cx="5" cy="18" r="3"/><path d="m8 8 13 13M8 16 21 3"/>',
+  leaf: '<path d="M20 4C9 3 3 9 4 17c8 4 17-3 16-13ZM4 21c3-7 8-10 13-13"/>',
+  candy: '<path d="M7 9 2 6l1 5-1 5 5-3M17 9l5-3-1 5 1 5-5-3"/><rect x="7" y="7" width="10" height="10" rx="3"/>',
+ 
   telescope: '<path d="m4 5 12-3 4 8-12 3z"/><path d="m8 13 3 3"/><path d="m16 11-3 5"/><path d="m12 16-4 6"/><path d="m12 16 4 6"/><path d="M6 18h12"/>',
   drama: '<path d="M3 3h18v8c0 6-4 10-9 10S3 17 3 11V3Z"/><path d="M7 8h.01M17 8h.01"/><path d="M8 14c2.5 2 5.5 2 8 0"/>',
   music: '<path d="M9 18V5l12-2v13"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="18" cy="16" rx="3" ry="2"/>',
@@ -38,7 +52,23 @@ export function categoryIcon(category) {
   return ({'Arts & Performance':'palette','Science & Discovery':'science','History & Heritage':'history','Farms & Food':'food','Makers & Commerce':'makers'})[category] || 'pin';
 }
 export function placeIcon(type) {
-  if (/restaurant/i.test(type))return 'restaurant';
-  if (/food|farm/i.test(type))return 'food';
+  const c=String(type).toLowerCase();
+  if(/bookstore/.test(c))return 'book';
+  if(/clothing|boutique|apparel/.test(c))return 'shirt';
+  if(/gift/.test(c))return 'gift';
+  if(/art galler/.test(c))return 'palette';
+  if(/art studio|art supplies|creative/.test(c))return 'makers';
+  if(/coffee/.test(c))return 'coffee';
+  if(/pizza/.test(c))return 'pizza';
+  if(/bike|running|outdoor/.test(c))return 'bike';
+  if(/record|music store/.test(c))return 'disc';
+  if(/floral/.test(c))return 'flower';
+  if(/garden|plant/.test(c))return 'leaf';
+  if(/bakery/.test(c))return 'bread';
+  if(/jewel/.test(c))return 'gem';
+  if(/sewing|fabric/.test(c))return 'scissors';
+  if(/chocolate|candy/.test(c))return 'candy';
+  if(/restaurant|breakfast|barbecue|burger/.test(c))return 'restaurant';
+  if(/food|farm|butcher|juice/.test(c))return 'food';
   return 'shop';
 }
