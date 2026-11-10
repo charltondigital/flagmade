@@ -16,24 +16,28 @@ const highlights=[
 const eventDate=(v)=>new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',month:'short',day:'numeric'}).format(new Date(v));
 const eventTime=(v)=>new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',hour:'numeric',minute:'2-digit'}).format(new Date(v));
 ---
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#123e35"/><meta name="description" content="Discover Flagstaff's local shops, independent businesses, real food from Northern Arizona farms, farmers markets, and arts and cultural events. Shop local. Eat local. Experience Flagstaff."/><title>FlagMade | Shop Local, Eat Real Food & Discover Flagstaff</title><link rel="canonical" href="https://flagmade.pages.dev/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#006E52"/><meta name="description" content="Find Flagstaff events, independent shops, farmers markets, farmstands and local food."/><title>FlagMade | Shop Local, Eat Real Food & Discover Flagstaff</title><link rel="canonical" href="https://flagmade.pages.dev/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head>
 <body><SiteHeader active="Home" />
 <main>
 <section class="home-hero"><div class="container home-hero-inner">
-<p class="home-kicker">LOCAL SHOPS · REAL FOOD · ARTS & CULTURE</p>
-<h1>Discover Flagstaff, locally</h1>
-<p class="home-lede">Find independent businesses, farmers markets, and cultural events—all in one place.</p>
-<div class="home-actions"><a class="home-button home-button-primary" href="/directory/">Shop local <span aria-hidden="true">↗</span></a><a class="home-button home-button-outline" href="/events/">Explore events <span aria-hidden="true">↗</span></a></div>
+  <div class="home-hero-copy">
+    <p class="home-kicker">FLAGSTAFF, ARIZONA</p>
+    <h1>Events, shops <span>&amp;</span> local food</h1>
+    <p class="home-lede">Discover what’s happening and where to shop, eat and explore in Flagstaff.</p>
+    <div class="home-actions"><a class="home-button home-button-primary" href="/events/">Browse events <span aria-hidden="true">↗</span></a><a class="home-button home-button-outline" href="/directory/">Explore businesses <span aria-hidden="true">↗</span></a></div>
+  </div>
+  <div class="home-hero-panel" aria-hidden="true"><span class="home-panel-small">SHOP LOCAL</span><strong>FLG<span>✳</span></strong><span class="home-panel-bottom">MADE HERE. FOUND HERE.</span></div>
 </div></section>
-<section class="container home-pillar-section" aria-labelledby="explore-heading"><div class="home-section-head"><div><p class="home-overline">EXPLORE FLAGSTAFF</p><h2 id="explore-heading">Find your Flagstaff</h2></div><p>Find where to go, what to do, and who to support—with the local businesses and people behind it all.</p></div>
-<div class="home-pillars">
-<a class="home-pillar" href="/directory/"><h3>Shop local</h3><p>Independent boutiques, bookstores, makers, neighborhood shops, and places worth knowing.</p><span class="home-pillar-link">Explore local businesses →</span></a>
-<a class="home-pillar home-pillar-food" href="/local-food/"><h3>Real food</h3><p>Farmers markets, farmstands, CSAs, and Northern Arizona growers. Know where your food comes from.</p><span class="home-pillar-link">Find local food →</span></a>
-<a class="home-pillar home-pillar-events" href="/events/"><h3>Arts &amp; culture</h3><p>Live music, art, theater, science, history, markets, and creative happenings around town.</p><span class="home-pillar-link">Open the events calendar →</span></a>
+<section class="container home-pillar-section" aria-labelledby="explore-heading">
+  <div class="home-section-head"><h2 id="explore-heading">Explore Flagstaff</h2></div>
+  <div class="home-pillars">
+    <a class="home-pillar home-pillar-events" href="/events/"><span class="home-pillar-label">01 / DO</span><h3>Events</h3><p>Concerts, art, markets, talks and performances</p><span class="home-pillar-link">View calendar ↗</span></a>
+    <a class="home-pillar home-pillar-shop" href="/directory/"><span class="home-pillar-label">02 / SHOP</span><h3>Local businesses</h3><p>Independent stores, makers and neighborhood favorites</p><span class="home-pillar-link">Browse directory ↗</span></a>
+    <a class="home-pillar home-pillar-food" href="/local-food/"><span class="home-pillar-label">03 / EAT</span><h3>Local food</h3><p>Farmstands, farmers markets, CSAs and growers</p><span class="home-pillar-link">Find local food ↗</span></a>
+  </div>
+</section>
+<section class="home-now"><div class="container">
+  <div class="home-section-head"><h2>Upcoming events</h2><a class="home-text-link" href="/events/">All events ↗</a></div>
+  {upcoming.length?<div class="home-events">{upcoming.map(e=><a class="home-event" href={'/events/?q='+encodeURIComponent(e.title)}><span class="home-event-date">{eventDate(e.start)}</span><span class="home-event-info"><strong>{e.title}</strong><small>{e.organization} · {e.allDay?'All day':eventTime(e.start)}</small></span><span class="home-event-arrow" aria-hidden="true">↗</span></a>)}</div>:<div class="home-no-events">No upcoming events listed. <a href="/events/">Open calendar ↗</a></div>}
 </div></section>
-<section class="home-now"><div class="container"><div class="home-section-head"><div><p class="home-overline">WHAT'S HAPPENING</p><h2>Coming up in Flagstaff</h2></div><a class="home-text-link" href="/events/">View the full calendar →</a></div>
-{upcoming.length?<div class="home-events">{upcoming.map(e=><a class="home-event" href={'/events/?q='+encodeURIComponent(e.title)}><span class="home-event-date">{eventDate(e.start)}</span><span class="home-event-info"><strong>{e.title}</strong><small>{e.organization} · {e.allDay?'All day':eventTime(e.start)}</small></span><span class="home-event-arrow" aria-hidden="true">↗</span></a>)}</div>:<div class="home-no-events">New local events are added regularly. <a href="/events/">Explore the calendar →</a></div>}
-</div></section>
-<section class="container home-story"><div class="home-story-visual"><span class="home-stamp">LOCAL ROOTS<br/>GOOD THINGS</span><span class="home-story-large" aria-hidden="true">F<span>✳</span></span></div><div class="home-story-copy"><p class="home-overline">BEYOND THE CHAIN STORES</p><h2>Keep Flagstaff local</h2><p>Flagstaff is full of people making things, growing food, running independent shops, and creating experiences you won't find just anywhere.</p><p>FlagMade brings those places and happenings together so it's easier to spend locally, eat seasonally, and discover what's around the corner.</p><a class="home-button home-button-primary" href="/directory/">Explore the directory ↗</a></div></section>
-
 </main><SiteFooter /></body></html>

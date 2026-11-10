@@ -71,3 +71,7 @@ For now, discover events manually from `src/data/event-sources.json`, then add o
 ## Visual design (November 2026)
 
 The site uses a clean editorial visual direction: lighter heading weights, neutral letter spacing, green-and-white colors, minimal cards, and no decorative topographic contours. `src/styles/editorial-reset.css` holds site-wide overrides; `src/styles/home.css` controls the homepage. The legacy Constellation stylesheet remains for functional layout and map styles. Do not reintroduce condensed ultra-bold headlines, periods added solely as headline decoration, contour backgrounds, or muddy decorative surfaces. Keep pages and maps functional and verify with `npm run build` after design changes.
+
+## Design iteration — November 10, 2026
+
+Following the first editorial reset, the homepage was simplified further: direct category labels, short factual descriptions, no decorative brand-story section, and a modern high-contrast palette. The primary hero is bright chartreuse-green (`#D8F975`), paired with raspberry (`#BC245E`) for contrast, dark text, and white content panels. Interactive highlights use raspberry rather than green-on-green. The type stack is Inter/system sans, avoiding heavy compressed headlines. Functional event/calendar/directory code remains unchanged.
