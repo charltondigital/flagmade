@@ -67,3 +67,7 @@ For performance, event data is bundled at build time, with no runtime event-feed
 ## Manual curation and pricing
 
 For now, discover events manually from `src/data/event-sources.json`, then add only verified and relevant public events as one JSON record per occurrence. Do not automatically publish scraped event candidates. Check organizer, start/end time, venue, and source before publication. For `price`, use an exact published ticket price (e.g. `$30 general / $25 senior`), `Free` or `Free admission` only if confirmed, or `Price not listed` when the organizer has not stated an amount. Avoid inventing prices or assuming a museum event is included in admission. The calendar renders this price next to the venue and time. Source registry now includes theater, libraries, educational sites, galleries, artisan markets, and local food markets.
+
+## Visual design (November 2026)
+
+The site uses a clean editorial visual direction: lighter heading weights, neutral letter spacing, green-and-white colors, minimal cards, and no decorative topographic contours. `src/styles/editorial-reset.css` holds site-wide overrides; `src/styles/home.css` controls the homepage. The legacy Constellation stylesheet remains for functional layout and map styles. Do not reintroduce condensed ultra-bold headlines, periods added solely as headline decoration, contour backgrounds, or muddy decorative surfaces. Keep pages and maps functional and verify with `npm run build` after design changes.

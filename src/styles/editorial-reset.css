@@ -1,0 +1,26 @@
+/* Editorial reset. Deliberately isolated and reversible; overrides legacy theme. */
+:root{--fm-ink:#202b27;--fm-muted:#64746b;--fm-line:#e0e7e2;--fm-canvas:#f8faf8;--fm-surface:#fff;--fm-accent:#246449;--fm-accent-hover:#194a37;--fm-soft:#edf4ef;--fm-shadow:none}
+html{font-family:"Source Sans 3", "Segoe UI", Arial, sans-serif;letter-spacing:0;color:var(--fm-ink);background:var(--fm-canvas)}
+body{font-size:15px;line-height:1.6;background:var(--fm-canvas)}
+h1,h2,h3,h4,h5,h6{font-family:inherit;font-weight:550;letter-spacing:.006em;line-height:1.24;text-wrap:pretty}
+.brand{font-size:26px;font-weight:650;letter-spacing:.004em}
+.brand-dot{color:var(--fm-accent)}
+.site-header{box-shadow:none}
+.header-inner{height:70px}
+.header-inner nav a{font-weight:500;border-radius:4px}
+.calendar-heading h1,.directory-page>h1,.food-page h1,.artist-page h1,.page-hero h1{font-size:clamp(30px,3vw,39px);font-weight:550;letter-spacing:.006em;line-height:1.22}
+.calendar-heading p,.directory-page>p,.food-intro,.artist-page>p{line-height:1.65}
+.page-hero,.page-hero-inner{background-image:none!important}
+.page-hero-eyebrow,.home-kicker,.home-overline{font-size:11px;letter-spacing:.085em;font-weight:600;color:#507866;margin:0 0 12px}
+.filter-panel,.directory-item,.event-card,.food-card,.artist-card{box-shadow:none}
+.filter-panel label,.directory-layout label,.artist-controls label{font-size:12px;font-weight:600;letter-spacing:.01em}
+.event-detail h3,.directory-item h2,.food-card h3,.artist-card h2{font-weight:600;letter-spacing:.005em;line-height:1.35}
+.event-view-switch button,.food-page .food-tabs button,.market-cal-controls button{font-weight:550}
+.market-weekday{font-weight:600;letter-spacing:.015em}
+.event-card .event-category{font-weight:550}
+.results-bar{font-weight:500}
+.food-section h2,.food-page [role="tabpanel"]>h2,.events-calendar-section h2,#event-list .event-day-heading{font-weight:550;letter-spacing:.005em}
+.date-badge strong{font-weight:600}
+.directory-item p,.food-card p,.artist-card p,.event-description{color:#53645b}
+.flagmade-tiles{filter:none}
+@media(max-width:650px){.header-inner{height:auto}.calendar-heading h1,.directory-page>h1,.food-page h1,.artist-page h1{font-size:30px}}
