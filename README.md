@@ -108,3 +108,7 @@ These assets were copied from the exact photo identities supplied by the user, c
 ## Search page banner
 
 Search uses the locally hosted storefront photograph by Tem Rysh (Unsplash ID F6-U5fGAOik): `public/images/flagmade-search-storefront.jpg`. The shared `PageHero` has `variant="search"`; styling and responsive pine gradient reside in `src/styles/brand-system.css`. The image is illustrative, not a Flagstaff business. Never hotlink the page banner.
+
+## Events banner photograph
+
+The Events page uses the Alex Cooper orchestra photo supplied by the user (Unsplash ID 9SajRZ5Zgew), copied into `public/images/flagmade-events-orchestra.jpg`. The hero uses `variant="events"` and the shared pine-to-transparent gradient from `src/styles/brand-system.css`. All banner images must remain locally hosted. The photo is illustrative and should not be described as a Flagstaff performance.

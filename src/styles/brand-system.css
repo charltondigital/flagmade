@@ -109,3 +109,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   .page-hero--search{min-height:210px;background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.83) 60%,rgba(13,52,44,.42) 100%),url('/images/flagmade-search-storefront.jpg')!important}
   .page-hero--search .page-hero-inner{padding-top:47px;padding-bottom:48px}
 }
+
+/* Events photo hero — same pine gradient as Local Food, exact Alex Cooper photo */
+.page-hero--events {
+  position:relative;isolation:isolate;min-height:275px;
+  background-color:#163f38!important;
+  background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.92) 28%,rgba(13,52,44,.70) 50%,rgba(13,52,44,.14) 82%,rgba(13,52,44,.06) 100%),url('/images/flagmade-events-orchestra.jpg')!important;
+  background-size:cover!important;background-position:center,center 48%!important;
+}
+.page-hero--events .page-hero-inner{padding-top:66px;padding-bottom:65px}
+.page-hero--events .page-hero-eyebrow{display:none}
+.page-hero--events .page-hero-subtitle{max-width:525px;color:#fff!important}
+@media(max-width:650px){
+  .page-hero--events{min-height:210px;background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.83) 60%,rgba(13,52,44,.40) 100%),url('/images/flagmade-events-orchestra.jpg')!important}
+  .page-hero--events .page-hero-inner{padding-top:47px;padding-bottom:48px}
+}
