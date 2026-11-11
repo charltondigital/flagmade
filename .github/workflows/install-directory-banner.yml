@@ -1,0 +1,63 @@
+name: Install Directory banner photo
+on:
+  push:
+    paths:
+      - '.github/workflows/install-directory-banner.yml'
+permissions:
+  contents: write
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact storefront image
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/images
+          curl --fail --location --retry 3 --silent --show-error 'https://static.wixstatic.com/media/nsplsh_46362d55356647414f696b~mv2_d_4879_3232_s_4_2.jpg/v1/fill/w_1600,h_1060,al_c,q_85/nsplsh_46362d55356647414f696b~mv2_d_4879_3232_s_4_2.jpg' -o public/images/flagmade-directory-storefront.jpg
+          file public/images/flagmade-directory-storefront.jpg
+          test "$(wc -c < public/images/flagmade-directory-storefront.jpg)" -gt 40000
+          file --mime-type public/images/flagmade-directory-storefront.jpg | grep -q image/jpeg
+      - name: Apply matching Directory hero
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('src/pages/directory.astro')
+          s=p.read_text()
+          old='<PageHero title="Directory" subtitle="Local restaurants, food stands, makers and shops in Flagstaff." />'
+          new='<PageHero title="Directory" subtitle="Independent shops, makers and restaurants around Flagstaff." variant="directory" />'
+          assert old in s
+          p.write_text(s.replace(old,new))
+          p=Path('src/styles/brand-system.css')
+          s=p.read_text()+"""
+          /* Directory storefront banner: same responsive pine gradient as other heroes */
+          .page-hero--directory{
+            position:relative;isolation:isolate;min-height:275px;
+            background-color:#163f38!important;
+            background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.92) 27%,rgba(13,52,44,.68) 50%,rgba(13,52,44,.14) 82%,rgba(13,52,44,.05) 100%),url('/images/flagmade-directory-storefront.jpg')!important;
+            background-size:cover!important;background-position:center,center 52%!important;
+          }
+          .page-hero--directory .page-hero-inner{padding-top:66px;padding-bottom:65px}
+          .page-hero--directory .page-hero-eyebrow{display:none}
+          .page-hero--directory .page-hero-subtitle{color:#fff!important;max-width:540px}
+          @media(max-width:650px){
+            .page-hero--directory{min-height:210px;background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.83) 60%,rgba(13,52,44,.40) 100%),url('/images/flagmade-directory-storefront.jpg')!important}
+            .page-hero--directory .page-hero-inner{padding-top:47px;padding-bottom:48px}
+          }
+          """
+          p.write_text(s)
+          p=Path('README.md')
+          p.write_text(p.read_text()+"\n## Directory banner photograph\n\nThe Directory page banner uses the user-selected Falaq Lazuardi blue storefront with bicycle image (Unsplash ID 9lAIIREDePQ), hosted in `public/images/flagmade-directory-storefront.jpg`. `PageHero variant=\"directory\"` selects the same responsive pine green photo overlay as Events and Local Food. It is illustrative stock photography, not a Flagstaff storefront.\n")
+          PY
+      - name: Commit the image and hero changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/flagmade-directory-storefront.jpg src/pages/directory.astro src/styles/brand-system.css README.md
+          git commit -m 'Install self-hosted Directory storefront banner'
+          git pull --rebase origin main
+          git push origin HEAD:main
