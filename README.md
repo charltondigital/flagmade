@@ -83,3 +83,7 @@ The current brand system is intentionally based on a consistent outdoor/craft ed
 ## Homepage hero photo — November 2026
 
 The homepage uses a farmers-market photograph supplied by the project owner (Unsplash original by Remy Gieling). The current image URL is an exact-match third-party public copy at `lpcohio.com`; this is a temporary external dependency, not a local asset. Before launch, replace it with the supplied image optimized and hosted under `public/images/` in this repository, and update the `img src` in `src/pages/index.astro`. The photograph is illustrative stock photography, **not** an identified Flagstaff market; do not caption or describe it as Flagstaff. The hero layout lives in `src/styles/home.css` and keeps real HTML content separate from the photo for responsive legibility.
+
+## Homepage hero overlay (November 2026)
+
+Desktop: one continuous farmers-market image spans the full hero in `home.css`; a masked blur and semi-transparent pine gradient over the left preserve legibility while revealing the photo beneath it. The previous right-side `img` is kept in the DOM for mobile, where it appears beneath solid-color copy. Both references currently use the same third-party source; replace both with a locally hosted optimized version when available. Do not use a second image crop on desktop or add text to the photo itself.
