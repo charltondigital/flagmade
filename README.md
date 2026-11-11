@@ -104,3 +104,7 @@ Both banner photos are now **self-hosted in this GitHub repository** and deploye
 - `public/images/flagmade-local-food.jpg`: Brad, carrots and greens, Local Food hero. Used in `src/styles/brand-system.css`.
 
 These assets were copied from the exact photo identities supplied by the user, committed to the repository, and all live CSS/HTML references switched to local paths. Earlier README mentions of temporary third-party URLs are historical and no longer apply. The temporary import workflows have been removed after their successful one-time run. Do not restore hotlinked images.
+
+## Search page banner
+
+Search uses the locally hosted storefront photograph by Tem Rysh (Unsplash ID F6-U5fGAOik): `public/images/flagmade-search-storefront.jpg`. The shared `PageHero` has `variant="search"`; styling and responsive pine gradient reside in `src/styles/brand-system.css`. The image is illustrative, not a Flagstaff business. Never hotlink the page banner.

@@ -94,3 +94,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
     background-image:linear-gradient(90deg,rgba(13,52,44,.96) 0%,rgba(13,52,44,.85) 57%,rgba(13,52,44,.40) 100%),url('/images/flagmade-local-food.jpg')!important}
   .page-hero--food .page-hero-inner{padding-top:47px;padding-bottom:48px}
 }
+
+/* Search: storefront photo under the same pine-to-clear overlay as other pages. */
+.page-hero--search {
+  position:relative;isolation:isolate;min-height:275px;
+  background-color:#163f38!important;
+  background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.92) 26%,rgba(13,52,44,.70) 49%,rgba(13,52,44,.16) 79%,rgba(13,52,44,.05) 100%),url('/images/flagmade-search-storefront.jpg')!important;
+  background-size:cover!important;background-position:center,center 46%!important;
+}
+.page-hero--search .page-hero-inner{padding-top:66px;padding-bottom:65px}
+.page-hero--search .page-hero-eyebrow{display:none}
+.page-hero--search .page-hero-subtitle{max-width:540px;color:#fff!important}
+@media(max-width:650px){
+  .page-hero--search{min-height:210px;background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.83) 60%,rgba(13,52,44,.42) 100%),url('/images/flagmade-search-storefront.jpg')!important}
+  .page-hero--search .page-hero-inner{padding-top:47px;padding-bottom:48px}
+}
