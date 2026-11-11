@@ -61,20 +61,19 @@
   position:relative;
   isolation:isolate;
   background-color:#163f38;
-  background-image:url('/images/flagmade-farmers-market.jpg');
-  background-size:cover;
-  background-position:56% 50%;
  }
+ /* Oversized photo layer moves independently, while the gradient and text scroll normally. */
  .fm-home-intro::before{
   content:"";
   position:absolute;
   z-index:0;
-  inset:0 auto 0 0;
-  width:65%;
-  backdrop-filter:blur(7px);
-  -webkit-backdrop-filter:blur(7px);
-  mask-image:linear-gradient(to right,#000 0%,#000 50%,transparent 100%);
-  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 50%,transparent 100%);
+  top:-70px;
+  bottom:-70px;
+  left:0;
+  right:0;
+  background:url('/images/flagmade-farmers-market.jpg') 56% 50% / cover no-repeat;
+  transform:translate3d(0,var(--hero-parallax-y,0px),0);
+  will-change:transform;
   pointer-events:none;
  }
  .fm-home-intro::after{
@@ -108,3 +107,11 @@
 .fm-spot h3{margin-top:15px}
 .fm-spot p{margin-bottom:0}
 @media(max-width:800px){.fm-home-intro-inner{padding-top:36px;padding-bottom:32px}.fm-upcoming{grid-template-columns:74px minmax(0,1fr)}.fm-local-spots{padding-top:38px;padding-bottom:45px}}
+
+/* Mobile and reduced motion: static banner; no scroll-linked movement. */
+@media(max-width:800px),(prefers-reduced-motion:reduce){
+ .fm-home-intro::before{display:none!important;transform:none!important}
+}
+@media(min-width:801px) and (prefers-reduced-motion:reduce){
+ .fm-home-intro{background:url('/images/flagmade-farmers-market.jpg') 56% 50% / cover no-repeat}
+}

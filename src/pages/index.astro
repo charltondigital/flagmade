@@ -38,4 +38,27 @@ const eventTime=(v)=>new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix'
   <div class="fm-section-heading"><div><h2>Local businesses</h2></div><a class="fm-section-link" href="/directory/">View directory</a></div>
   <div class="fm-spots-grid">{highlights.map(p=><a class="fm-spot" href={placePath(p)}><span class="fm-spot-type">{p.type}</span><h3>{p.name}</h3><p>{p.description}</p></a>)}</div>
 </section>}
-</main><SiteFooter /></body></html>
+</main><SiteFooter />
+<script is:inline>
+/* Homepage only: scroll the photo at 35% of page speed. No external dependencies. */
+(() => {
+  const hero=document.querySelector('.fm-home-intro');
+  if(!hero || !window.matchMedia || !window.requestAnimationFrame) return;
+  const enabled=window.matchMedia('(min-width: 801px) and (prefers-reduced-motion: no-preference)');
+  let scheduled=false;
+  const update=()=>{
+    scheduled=false;
+    if(!enabled.matches){hero.style.removeProperty('--hero-parallax-y');return;}
+    const rect=hero.getBoundingClientRect();
+    if(rect.bottom<0 || rect.top>window.innerHeight) return;
+    // Positive displacement of the image offsets ordinary upward page movement.
+    const distance=Math.max(0,Math.min(100,-rect.top*.35));
+    hero.style.setProperty('--hero-parallax-y',distance.toFixed(1)+'px');
+  };
+  const schedule=()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update);}};
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  enabled.addEventListener?.('change',schedule);
+  schedule();
+})();
+</script></body></html>

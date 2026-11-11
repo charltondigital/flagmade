@@ -116,3 +116,7 @@ The Events page uses the Alex Cooper orchestra photo supplied by the user (Unspl
 ## Directory banner photograph
 
 The Directory page banner uses the user-selected Falaq Lazuardi blue storefront with bicycle image (Unsplash ID 9lAIIREDePQ), hosted in `public/images/flagmade-directory-storefront.jpg`. `PageHero variant="directory"` selects the same responsive pine green photo overlay as Events and Local Food. It is illustrative stock photography, not a Flagstaff storefront.
+
+## Homepage banner parallax — November 2026
+
+The homepage alone has subtle scroll-driven background motion. Desktop users without a reduced-motion preference see the local farmers-market photo in an oversized CSS pseudo-element that translates by approximately 35% of scroll travel, capped at 100px. The translucent pine overlay and headline continue to scroll normally. The tiny inline script in `src/pages/index.astro` uses one passive scroll listener and `requestAnimationFrame`, and updates only while the banner is in view. Mobile (`800px` or smaller) and `prefers-reduced-motion: reduce` use the static banner. No animation library or externally hosted image is required.
