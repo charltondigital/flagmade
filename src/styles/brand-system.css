@@ -124,3 +124,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   .page-hero--events{min-height:210px;background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.83) 60%,rgba(13,52,44,.40) 100%),url('/images/flagmade-events-orchestra.jpg')!important}
   .page-hero--events .page-hero-inner{padding-top:47px;padding-bottom:48px}
 }
+
+/* Directory storefront banner: same responsive pine gradient as other heroes */
+.page-hero--directory{
+  position:relative;isolation:isolate;min-height:275px;
+  background-color:#163f38!important;
+  background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.92) 27%,rgba(13,52,44,.68) 50%,rgba(13,52,44,.14) 82%,rgba(13,52,44,.05) 100%),url('/images/flagmade-directory-storefront.jpg')!important;
+  background-size:cover!important;background-position:center,center 52%!important;
+}
+.page-hero--directory .page-hero-inner{padding-top:66px;padding-bottom:65px}
+.page-hero--directory .page-hero-eyebrow{display:none}
+.page-hero--directory .page-hero-subtitle{color:#fff!important;max-width:540px}
+@media(max-width:650px){
+  .page-hero--directory{min-height:210px;background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.83) 60%,rgba(13,52,44,.40) 100%),url('/images/flagmade-directory-storefront.jpg')!important}
+  .page-hero--directory .page-hero-inner{padding-top:47px;padding-bottom:48px}
+}

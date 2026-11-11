@@ -112,3 +112,7 @@ Search uses the locally hosted storefront photograph by Tem Rysh (Unsplash ID F6
 ## Events banner photograph
 
 The Events page uses the Alex Cooper orchestra photo supplied by the user (Unsplash ID 9SajRZ5Zgew), copied into `public/images/flagmade-events-orchestra.jpg`. The hero uses `variant="events"` and the shared pine-to-transparent gradient from `src/styles/brand-system.css`. All banner images must remain locally hosted. The photo is illustrative and should not be described as a Flagstaff performance.
+
+## Directory banner photograph
+
+The Directory page banner uses the user-selected Falaq Lazuardi blue storefront with bicycle image (Unsplash ID 9lAIIREDePQ), hosted in `public/images/flagmade-directory-storefront.jpg`. `PageHero variant="directory"` selects the same responsive pine green photo overlay as Events and Local Food. It is illustrative stock photography, not a Flagstaff storefront.
