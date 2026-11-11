@@ -87,3 +87,7 @@ The homepage uses a farmers-market photograph supplied by the project owner (Uns
 ## Homepage hero overlay (November 2026)
 
 Desktop: one continuous farmers-market image spans the full hero in `home.css`; a masked blur and semi-transparent pine gradient over the left preserve legibility while revealing the photo beneath it. The previous right-side `img` is kept in the DOM for mobile, where it appears beneath solid-color copy. Both references currently use the same third-party source; replace both with a locally hosted optimized version when available. Do not use a second image crop on desktop or add text to the photo itself.
+
+## Homepage information hierarchy — November 2026
+
+Home intentionally has only three major blocks: a photo-backed introduction with links to Events, Directory and Local Food; a live upcoming-events list; and three featured businesses. Avoid repeating category links in a second shortcuts grid, redundant section eyebrow labels, decorative numbers/coordinates, and repeated “view listing” prompts inside fully clickable cards. Keep real entries and useful metadata prominent. The existing CSS selectors for earlier experiments may remain during consolidation, but should not be used for new content.
