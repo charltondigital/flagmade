@@ -91,3 +91,7 @@ Desktop: one continuous farmers-market image spans the full hero in `home.css`; 
 ## Homepage information hierarchy — November 2026
 
 Home intentionally has only three major blocks: a photo-backed introduction with links to Events, Directory and Local Food; a live upcoming-events list; and three featured businesses. Avoid repeating category links in a second shortcuts grid, redundant section eyebrow labels, decorative numbers/coordinates, and repeated “view listing” prompts inside fully clickable cards. Keep real entries and useful metadata prominent. The existing CSS selectors for earlier experiments may remain during consolidation, but should not be used for new content.
+
+## Local Food page hero — November 2026
+
+Uses the supplied carrots-and-greens photograph by Brad (Unsplash b0IELTWBvT4), resolved to the original Unsplash image CDN rather than a copy from an unrelated website. The `PageHero` component supports optional `variant="food"` so only the Local Food page receives the background photo. The full-bleed image is under the same left-to-right translucent pine gradient as the homepage; the text remains semantic HTML. CSS is kept in `src/styles/brand-system.css`. Unsplash is an external asset dependency; for long-term reliability self-host an optimized copy when binary upload is available.
