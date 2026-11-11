@@ -1,0 +1,73 @@
+/* FlagMade brand system v1 — Topo energy x Snow Peak utility.
+   Palette: pine #163F38, berry #BF315E, ivory #F7F7F3, ink #172F29.
+   One accent on interactive elements, typography + spacing shared sitewide. */
+:root{--fm-ink:#172f29;--fm-muted:#61736a;--fm-line:#dce4de;--fm-canvas:#f7f7f3;--fm-surface:#fff;--fm-accent:#ae2854;--fm-accent-hover:#8c1840;--fm-soft:#f9eaf0;--fm-shadow:none}
+html{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--fm-canvas);color:var(--fm-ink)}
+body{background:var(--fm-canvas);color:var(--fm-ink);font-size:15px;line-height:1.6}
+h1,h2,h3,h4,h5,h6{font-family:inherit;letter-spacing:-.012em;line-height:1.22;font-weight:620;color:var(--fm-ink)}
+a{color:var(--fm-accent)}
+a:hover{color:var(--fm-accent-hover)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ca5378;outline-offset:3px}
+.container{width:min(1180px,calc(100% - 44px))}
+.construction-banner{background:#f0f1eb!important;color:#4d5c52!important;border-bottom:1px solid #d9dfd8!important;font-size:11px!important;padding:6px 14px!important}
+.site-header{background:#fff!important;border-bottom:1px solid #dce4de!important;box-shadow:none!important}
+.header-inner{height:74px;min-height:74px}
+.site-header .brand{color:#163f38!important;font-size:28px;font-weight:750;letter-spacing:-.025em}
+.brand-dot{color:#bf315e!important}
+.header-inner nav{gap:1px}
+.site-header .header-inner nav a{color:#29483b!important;font-size:13px;font-weight:600;border-radius:3px;padding:9px 13px;border-bottom:0!important;background:transparent}
+.site-header .header-inner nav a:hover,.site-header .header-inner nav a[aria-current="page"]{color:#a62150!important;background:#f9eaf0!important}
+.site-landscape{display:none!important}
+.site-footer{background:#163f38;color:#edf2e8;padding:27px 0;border-top:4px solid #bf315e}
+.site-footer-inner{font-size:12px;letter-spacing:.025em}
+.page-hero{min-height:0;background:#163f38!important;border-bottom:4px solid #bf315e;isolation:auto}
+.page-hero::after{display:none!important}
+.page-hero-inner{padding-top:42px;padding-bottom:45px}
+.page-hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:.11em;color:#eeb0c4!important;margin:0 0 10px}
+.page-hero h1{font-size:clamp(37px,4vw,54px)!important;font-weight:650!important;letter-spacing:-.02em!important;line-height:1.17!important;margin:0 0 9px;color:#fff!important}
+.page-hero-subtitle{font-size:16px;color:#d5e5de!important;line-height:1.55;max-width:760px}
+.calendar-shell{padding-top:0}
+.calendar-shell>.container{padding-top:26px}
+.calendar-heading{background:#163f38!important;border:0!important;min-height:0;padding:32px max(24px,calc((100vw - 1180px)/2));}
+.calendar-heading::before,.calendar-heading .peaks-art{display:none!important}
+.calendar-heading h1{font-size:clamp(36px,4vw,52px)!important;font-weight:650!important;letter-spacing:-.02em!important;line-height:1.17!important;color:white!important}
+.calendar-heading p,.calendar-heading .eyebrow{color:#d6e7df!important}
+.filter-panel,.directory-item,.event-card,.food-card,.artist-card{background:#fff!important;border-color:#dce4de!important;box-shadow:none!important;border-radius:4px!important}
+.filter-panel{padding:18px;border:1px solid #dce4de}
+.filter-panel label,.directory-layout label,.artist-controls label{font-size:12px;font-weight:650;letter-spacing:.015em;color:#51685b}
+.filter-panel input,.filter-panel select,.directory-layout select,.directory-layout input[type=search],.artist-controls input,.artist-controls select{background:white;color:var(--fm-ink);border:1px solid #cfdcd4;border-radius:4px;height:43px}
+.filter-panel input:focus,.filter-panel select:focus,.directory-layout input:focus,.directory-layout select:focus{border-color:#b62d59;outline-color:#edb7ca}
+.event-view-switch button,.market-cal-controls button,.directory-pagination button,.farmstand-pagination button{border-radius:4px!important;font-weight:600}
+.event-view-switch button[aria-pressed="true"],.food-page .food-tabs button[aria-selected="true"]{background:#163f38!important;border-color:#163f38!important;color:white!important}
+.event-category-legend{border-color:#dce4de}
+.category-legend-item{background:transparent;color:#3d574c;border-color:#dce4de}
+.events-calendar-section #events-cal-grid,.market-cal-grid{border-radius:4px!important;background:#fff!important}
+.events-calendar-section .market-weekday,.market-weekday{background:#eff3ee!important;color:#4e665a!important;letter-spacing:.025em;font-weight:650}
+.events-calendar-section .market-day{background:#fff!important}
+.events-calendar-section .market-day.today-day{background:#f4f7ef!important}
+.events-calendar-section .market-day.blank{background:#f7f8f4!important}
+.events-calendar-section .calendar-date.active,.calendar-date.active{background:#163f38!important;color:#fff!important}
+.events-calendar-section button.calendar-event-title{border-radius:3px!important}
+#event-list .event-card{border-left:4px solid var(--event-border,#bf315e)!important}
+#event-list .event-day-heading{color:#173f35;font-size:19px;font-weight:650;letter-spacing:-.01em}
+.event-detail h3,.directory-item h2,.food-card h3,.artist-card h2{font-size:17px;line-height:1.34;font-weight:650;letter-spacing:-.01em}
+.event-card .event-category{font-weight:600}
+.directory-layout{gap:24px}
+.directory-item{padding:19px}
+.directory-item p,.food-card p,.artist-card p,.event-description{color:#5b6e62}
+.directory-links a,.map-focus,.farmstand-actions a,.farmstand-actions button{color:#ae2854!important}
+#directory-map,#farmstand-map{border:1px solid #dce4de!important;border-radius:4px!important;box-shadow:none!important}
+.flagmade-tiles{filter:none!important}
+.food-page .food-tabs button{border-radius:4px!important;font-weight:600}
+.food-section h2,.food-page [role="tabpanel"]>h2{font-weight:650;color:#173e35;font-size:21px}
+@media(max-width:650px){
+ .container{width:calc(100% - 30px)}
+ .header-inner{min-height:66px;height:auto;padding:12px 0}
+ .site-header .brand{font-size:25px}
+ .site-header .header-inner nav a{font-size:12px;padding:7px 9px}
+ .page-hero-inner{padding-top:29px;padding-bottom:31px}
+ .page-hero h1{font-size:35px!important}
+ .page-hero-subtitle{font-size:14px}
+ .calendar-heading{margin:0 -15px 16px; padding:26px 15px}
+ .calendar-heading h1{font-size:36px!important}
+}

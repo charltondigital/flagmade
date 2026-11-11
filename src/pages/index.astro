@@ -16,28 +16,36 @@ const highlights=[
 const eventDate=(v)=>new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',month:'short',day:'numeric'}).format(new Date(v));
 const eventTime=(v)=>new Intl.DateTimeFormat('en-US',{timeZone:'America/Phoenix',hour:'numeric',minute:'2-digit'}).format(new Date(v));
 ---
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#006E52"/><meta name="description" content="Find Flagstaff events, independent shops, farmers markets, farmstands and local food."/><title>FlagMade | Shop Local, Eat Real Food & Discover Flagstaff</title><link rel="canonical" href="https://flagmade.pages.dev/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#163F38"/><meta name="description" content="Find Flagstaff events, independent shops, farmers markets, farmstands and local food."/><title>FlagMade | Shop Local, Eat Real Food & Discover Flagstaff</title><link rel="canonical" href="https://flagmade.pages.dev/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><meta name="robots" content="noindex, nofollow, noarchive"/></head>
 <body><SiteHeader active="Home" />
 <main>
-<section class="home-hero"><div class="container home-hero-inner">
-  <div class="home-hero-copy">
-    <p class="home-kicker">FLAGSTAFF, ARIZONA</p>
-    <h1>Events, shops <span>&amp;</span> local food</h1>
-    <p class="home-lede">Discover what’s happening and where to shop, eat and explore in Flagstaff.</p>
-    <div class="home-actions"><a class="home-button home-button-primary" href="/events/">Browse events <span aria-hidden="true">↗</span></a><a class="home-button home-button-outline" href="/directory/">Explore businesses <span aria-hidden="true">↗</span></a></div>
-  </div>
-  <div class="home-hero-panel" aria-hidden="true"><span class="home-panel-small">SHOP LOCAL</span><strong>FLG<span>✳</span></strong><span class="home-panel-bottom">MADE HERE. FOUND HERE.</span></div>
-</div></section>
-<section class="container home-pillar-section" aria-labelledby="explore-heading">
-  <div class="home-section-head"><h2 id="explore-heading">Explore Flagstaff</h2></div>
-  <div class="home-pillars">
-    <a class="home-pillar home-pillar-events" href="/events/"><span class="home-pillar-label">01 / DO</span><h3>Events</h3><p>Concerts, art, markets, talks and performances</p><span class="home-pillar-link">View calendar ↗</span></a>
-    <a class="home-pillar home-pillar-shop" href="/directory/"><span class="home-pillar-label">02 / SHOP</span><h3>Local businesses</h3><p>Independent stores, makers and neighborhood favorites</p><span class="home-pillar-link">Browse directory ↗</span></a>
-    <a class="home-pillar home-pillar-food" href="/local-food/"><span class="home-pillar-label">03 / EAT</span><h3>Local food</h3><p>Farmstands, farmers markets, CSAs and growers</p><span class="home-pillar-link">Find local food ↗</span></a>
+<section class="fm-home-intro">
+  <div class="container fm-home-intro-inner">
+    <p class="fm-eyebrow">MADE HERE / FLAGSTAFF, AZ</p>
+    <h1>Good stuff.<br/><span>Right here.</span></h1>
+    <p class="fm-home-summary">A local guide to Flagstaff events, independent shops, makers, and food grown close to home.</p>
+    <div class="fm-home-links">
+      <a href="/events/">Explore events <span aria-hidden="true">↗</span></a>
+      <a href="/directory/">Find local businesses <span aria-hidden="true">↗</span></a>
+      <a href="/local-food/">Shop local food <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="fm-home-intro-index" aria-hidden="true"><span>35° 11′ N</span><span>LOCAL IS THE POINT</span></div>
   </div>
 </section>
-<section class="home-now"><div class="container">
-  <div class="home-section-head"><h2>Upcoming events</h2><a class="home-text-link" href="/events/">All events ↗</a></div>
-  {upcoming.length?<div class="home-events">{upcoming.map(e=><a class="home-event" href={'/events/?q='+encodeURIComponent(e.title)}><span class="home-event-date">{eventDate(e.start)}</span><span class="home-event-info"><strong>{e.title}</strong><small>{e.organization} · {e.allDay?'All day':eventTime(e.start)}</small></span><span class="home-event-arrow" aria-hidden="true">↗</span></a>)}</div>:<div class="home-no-events">No upcoming events listed. <a href="/events/">Open calendar ↗</a></div>}
+<section class="container fm-discover" aria-labelledby="fm-discover-title">
+  <div class="fm-section-heading"><div><p class="fm-section-kicker">THE SHORTCUTS</p><h2 id="fm-discover-title">Find what you’re looking for</h2></div></div>
+  <div class="fm-discover-grid">
+    <a class="fm-discover-item" href="/events/"><span class="fm-discover-n">01</span><span class="fm-discover-title">Events</span><span class="fm-discover-copy">Music, art, markets, classes &amp; more</span><span class="fm-discover-arrow" aria-hidden="true">↗</span></a>
+    <a class="fm-discover-item" href="/directory/"><span class="fm-discover-n">02</span><span class="fm-discover-title">Shops &amp; makers</span><span class="fm-discover-copy">Independent businesses worth visiting</span><span class="fm-discover-arrow" aria-hidden="true">↗</span></a>
+    <a class="fm-discover-item" href="/local-food/"><span class="fm-discover-n">03</span><span class="fm-discover-title">Local food</span><span class="fm-discover-copy">Farmstands, markets, growers &amp; CSAs</span><span class="fm-discover-arrow" aria-hidden="true">↗</span></a>
+  </div>
+</section>
+<section class="fm-home-events"><div class="container">
+  <div class="fm-section-heading"><div><p class="fm-section-kicker">ON THE CALENDAR</p><h2>Coming up</h2></div><a class="fm-section-link" href="/events/">Full events calendar ↗</a></div>
+  {upcoming.length ? <div class="fm-upcoming-list">{upcoming.map(e=><a class="fm-upcoming" href={'/events/?q='+encodeURIComponent(e.title)}><time datetime={e.start} class="fm-upcoming-date">{eventDate(e.start)}</time><span class="fm-upcoming-body"><strong>{e.title}</strong><small>{e.organization} · {e.allDay?'All day':eventTime(e.start)}</small></span><span class="fm-upcoming-arrow" aria-hidden="true">↗</span></a>)}</div> : <p class="fm-no-events">No upcoming events listed. <a href="/events/">Browse the calendar ↗</a></p>}
 </div></section>
+{highlights.length > 0 && <section class="container fm-local-spots">
+  <div class="fm-section-heading"><div><p class="fm-section-kicker">AROUND TOWN</p><h2>Local places</h2></div><a class="fm-section-link" href="/directory/">All local businesses ↗</a></div>
+  <div class="fm-spots-grid">{highlights.map(p=><a class="fm-spot" href={placePath(p)}><span class="fm-spot-type">{p.type}</span><h3>{p.name}</h3><p>{p.description}</p><span class="fm-spot-more">View listing ↗</span></a>)}</div>
+</section>}
 </main><SiteFooter /></body></html>
