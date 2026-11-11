@@ -10,44 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download exact Alex Cooper photo
+      - name: Download exact Alex Cooper orchestra photograph
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p public/images
-          python3 - <<'PY'
-          import re, html, urllib.request, pathlib
-          urls=[
-            'https://unsplash.com/photos/a-group-of-people-playing-musical-instruments-in-a-room-9SajRZ5Zgew',
-            'https://jecherchedieu.ch/question/une-interrogation-concernant-deux-passages-bibliques-qui-a-premiere-vue-semble-se-contredire/',
-          ]
-          target=pathlib.Path('public/images/flagmade-events-orchestra.jpg')
-          for page_url in urls:
-              try:
-                  req=urllib.request.Request(page_url, headers={'User-Agent':'Mozilla/5.0'})
-                  page=urllib.request.urlopen(req,timeout=25).read().decode('utf-8','ignore')
-                  candidates=[]
-                  for pat in [
-                      r'<meta[^>]+property=["\\\']og:image["\\\'][^>]+content=["\\\']([^"\\\']+)',
-                      r'<meta[^>]+content=["\\\']([^"\\\']+)["\\\'][^>]+property=["\\\']og:image',
-                      r'https://images\\.unsplash\\.com/photo-[^"\\s<>]+'
-                  ]:
-                      candidates.extend(re.findall(pat,page,flags=re.I))
-                  for candidate in candidates[:10]:
-                      photo=html.unescape(candidate).replace('&amp;','&')
-                      if 'images.unsplash.com' not in photo: continue
-                      img_req=urllib.request.Request(photo,headers={'User-Agent':'Mozilla/5.0'})
-                      content=urllib.request.urlopen(img_req,timeout=30).read()
-                      if content[:3]==b'\\xff\\xd8\\xff' and len(content)>40000:
-                          target.write_bytes(content)
-                          print('Saved image, bytes:',len(content))
-                          break
-                  if target.exists(): break
-              except Exception as e:
-                  print('Source unavailable',page_url,repr(e))
-          if not target.exists():
-              raise SystemExit('Could not resolve the exact original orchestra photo')
-          PY
+          curl --fail --location --retry 3 --silent --show-error 'https://jecherchedieu.ch/wp-content/uploads/2025/03/alex-cooper-9SajRZ5Zgew-unsplash-920x613.jpg' -o public/images/flagmade-events-orchestra.jpg
+          file public/images/flagmade-events-orchestra.jpg
+          test "$(wc -c < public/images/flagmade-events-orchestra.jpg)" -gt 40000
       - name: Apply local photo and overlay
         shell: bash
         run: |
