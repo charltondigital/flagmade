@@ -1,0 +1,55 @@
+name: Self-host FlagMade banner images
+on:
+  push:
+    paths:
+      - '.github/workflows/self-host-banner-images.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  vendor-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download exact Unsplash photos into the repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/images
+          curl --fail --location --retry 3 --silent --show-error --user-agent 'FlagMade/1.0' 'https://lpcohio.com/wp-content/uploads/2026/08/unsplash-image-H0v6g8FGvFQ.jpg' -o public/images/flagmade-farmers-market.jpg
+          curl --fail --location --retry 3 --silent --show-error --user-agent 'FlagMade/1.0' 'https://images.unsplash.com/photo-1533478583204-680d4ff74891?auto=format&fit=crop&w=1920&q=85' -o public/images/flagmade-local-food.jpg
+          file public/images/*.jpg
+          test "$(wc -c < public/images/flagmade-farmers-market.jpg)" -gt 20000
+          test "$(wc -c < public/images/flagmade-local-food.jpg)" -gt 20000
+          file --mime-type public/images/*.jpg | grep -Eq 'image/(jpeg|png|webp)'
+      - name: Reference self-hosted photos only
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/pages/index.astro')
+          s = p.read_text()
+          s = s.replace('https://lpcohio.com/wp-content/uploads/2026/08/unsplash-image-H0v6g8FGvFQ.jpg', '/images/flagmade-farmers-market.jpg')
+          p.write_text(s)
+          p = Path('src/styles/home.css')
+          s = p.read_text().replace('https://lpcohio.com/wp-content/uploads/2026/08/unsplash-image-H0v6g8FGvFQ.jpg', '/images/flagmade-farmers-market.jpg')
+          p.write_text(s)
+          p = Path('src/styles/brand-system.css')
+          s = p.read_text().replace('https://images.unsplash.com/photo-1533478583204-680d4ff74891?auto=format&fit=crop&w=2000&q=85', '/images/flagmade-local-food.jpg').replace('https://images.unsplash.com/photo-1533478583204-680d4ff74891?auto=format&fit=crop&w=1000&q=80', '/images/flagmade-local-food.jpg')
+          p.write_text(s)
+          PY
+          if grep -qE 'lpcohio.com/wp-content/uploads|images.unsplash.com/photo-1533478583204' src/pages/index.astro src/styles/home.css src/styles/brand-system.css; then
+            echo 'External banner image reference remains' >&2
+            exit 1
+          fi
+      - name: Commit vendored banner photos and local references
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/flagmade-farmers-market.jpg public/images/flagmade-local-food.jpg src/pages/index.astro src/styles/home.css src/styles/brand-system.css
+          git commit -m "Self-host FlagMade homepage and food banner photos"
+          git push
