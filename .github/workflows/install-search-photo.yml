@@ -1,0 +1,60 @@
+name: Install Search banner photograph
+on:
+  push:
+    paths:
+      - '.github/workflows/install-search-photo.yml'
+permissions:
+  contents: write
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Save exact storefront photograph locally
+        run: |
+          set -euo pipefail
+          mkdir -p public/images
+          curl -fL --retry 3 --silent --show-error 'https://patrickiverson.com/wp-content/uploads/2026/07/unsplash-F6-U5fGAOik-small-business-storefront-entrance.jpg' -o public/images/flagmade-search-storefront.jpg
+          file public/images/flagmade-search-storefront.jpg
+          test "$(wc -c < public/images/flagmade-search-storefront.jpg)" -gt 30000
+          file --mime-type public/images/flagmade-search-storefront.jpg | grep -q image/jpeg
+      - name: Apply Search page hero design
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('src/pages/search.astro')
+          s=p.read_text()
+          before='<PageHero title="Search" subtitle="Find events, businesses and places around Flagstaff." />'
+          after='<PageHero title="Search" subtitle="Find events, businesses and places around Flagstaff." variant="search" />'
+          assert before in s
+          p.write_text(s.replace(before,after))
+          p=Path('src/styles/brand-system.css')
+          s=p.read_text()+"""
+          /* Search: storefront photo under the same pine-to-clear overlay as other pages. */
+          .page-hero--search {
+            position:relative;isolation:isolate;min-height:275px;
+            background-color:#163f38!important;
+            background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.92) 26%,rgba(13,52,44,.70) 49%,rgba(13,52,44,.16) 79%,rgba(13,52,44,.05) 100%),url('/images/flagmade-search-storefront.jpg')!important;
+            background-size:cover!important;background-position:center,center 46%!important;
+          }
+          .page-hero--search .page-hero-inner{padding-top:66px;padding-bottom:65px}
+          .page-hero--search .page-hero-eyebrow{display:none}
+          .page-hero--search .page-hero-subtitle{max-width:540px;color:#fff!important}
+          @media(max-width:650px){
+            .page-hero--search{min-height:210px;background-image:linear-gradient(90deg,rgba(13,52,44,.97) 0%,rgba(13,52,44,.83) 60%,rgba(13,52,44,.42) 100%),url('/images/flagmade-search-storefront.jpg')!important}
+            .page-hero--search .page-hero-inner{padding-top:47px;padding-bottom:48px}
+          }
+          """
+          p.write_text(s)
+          p=Path('README.md')
+          p.write_text(p.read_text()+"\n## Search page banner\n\nSearch uses the locally hosted storefront photograph by Tem Rysh (Unsplash ID F6-U5fGAOik): `public/images/flagmade-search-storefront.jpg`. The shared `PageHero` has `variant=\"search\"`; styling and responsive pine gradient reside in `src/styles/brand-system.css`. The image is illustrative, not a Flagstaff business. Never hotlink the page banner.\n")
+          PY
+      - name: Commit files and clean up workflow
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/flagmade-search-storefront.jpg src/pages/search.astro src/styles/brand-system.css README.md
+          git commit -m 'Self-host Search storefront photo and apply matching banner'
+          git pull --rebase origin main
+          git push origin HEAD:main
