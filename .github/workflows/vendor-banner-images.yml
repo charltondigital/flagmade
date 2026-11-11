@@ -18,8 +18,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p public/images
-          curl --fail --location --retry 3 --silent --show-error --user-agent 'FlagMade/1.0' 'https://unsplash.com/photos/H0v6g8FGvFQ/download?force=true&w=1920' -o public/images/flagmade-farmers-market.jpg
-          curl --fail --location --retry 3 --silent --show-error --user-agent 'FlagMade/1.0' 'https://unsplash.com/photos/b0IELTWBvT4/download?force=true&w=1920' -o public/images/flagmade-local-food.jpg
+          curl --fail --location --retry 3 --silent --show-error --user-agent 'FlagMade/1.0' 'https://lpcohio.com/wp-content/uploads/2026/08/unsplash-image-H0v6g8FGvFQ.jpg' -o public/images/flagmade-farmers-market.jpg
+          curl --fail --location --retry 3 --silent --show-error --user-agent 'FlagMade/1.0' 'https://images.unsplash.com/photo-1533478583204-680d4ff74891?auto=format&fit=crop&w=1920&q=85' -o public/images/flagmade-local-food.jpg
           file public/images/*.jpg
           test "$(wc -c < public/images/flagmade-farmers-market.jpg)" -gt 20000
           test "$(wc -c < public/images/flagmade-local-food.jpg)" -gt 20000
