@@ -95,3 +95,12 @@ Home intentionally has only three major blocks: a photo-backed introduction with
 ## Local Food page hero — November 2026
 
 Uses the supplied carrots-and-greens photograph by Brad (Unsplash b0IELTWBvT4), resolved to the original Unsplash image CDN rather than a copy from an unrelated website. The `PageHero` component supports optional `variant="food"` so only the Local Food page receives the background photo. The full-bleed image is under the same left-to-right translucent pine gradient as the homepage; the text remains semantic HTML. CSS is kept in `src/styles/brand-system.css`. Unsplash is an external asset dependency; for long-term reliability self-host an optimized copy when binary upload is available.
+
+## Banner image assets — current source of truth
+
+Both banner photos are now **self-hosted in this GitHub repository** and deployed by Astro/Cloudflare Pages from `public/images/`:
+
+- `public/images/flagmade-farmers-market.jpg`: Remy Gieling, homepage hero. Used in both `src/pages/index.astro` and `src/styles/home.css`.
+- `public/images/flagmade-local-food.jpg`: Brad, carrots and greens, Local Food hero. Used in `src/styles/brand-system.css`.
+
+These assets were copied from the exact photo identities supplied by the user, committed to the repository, and all live CSS/HTML references switched to local paths. Earlier README mentions of temporary third-party URLs are historical and no longer apply. The temporary import workflows have been removed after their successful one-time run. Do not restore hotlinked images.
